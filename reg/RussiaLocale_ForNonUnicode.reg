@@ -1,0 +1,10 @@
+Windows Registry Editor Version 5.00
+ 
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage]
+"OEMCP"="866"
+ 
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\Language]
+"Default"="0419"
+ 
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\Locale]
+"(Default)"="00000419"
