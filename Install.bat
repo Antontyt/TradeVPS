@@ -62,7 +62,7 @@ ECHO Только буквы и цифры
 SET /P newusername=Введите имя пользователя:
 ECHO RENAME_USERNAME_RUN
 REM ====================================================================================
-ECHO Для переименования пользователя "%userp%" > : "%newusername%"
+ECHO Для переименования пользователя "%userp%" на : "%newusername%"
 ECHO Нажмите любую кнопку для подтверждения
 PAUSE
 wmic useraccount where name='%userp%' rename %newusername%
