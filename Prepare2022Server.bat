@@ -93,18 +93,19 @@ REM ============================================================================
 REM Firefox ESR
 ECHO Firefox ESR
 IF NOT EXIST "C:\Security\TEMP\lnk\" MD C:\Security\TEMP\lnk\
-"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
+IF NOT EXIST "C:\Security\TEMP\app\" MD C:\Security\TEMP\app\
+"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\app\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
 "sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/lnk/CreateFirefoxLnk.vbs"
 timeout 5
 REM "temp\FirefoxESR.exe" -ms -ma
-CALL "C:\Security\TEMP\FirefoxESR.exe" -ms
+CALL "C:\Security\TEMP\app\FirefoxESR.exe" -ms
 cscript /Nologo "C:\Security\TEMP\lnk\CreateFirefoxLnk.vbs"
 
 REM Notepad++
 ECHO Notepad++
-"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o NotepadPlusPlus.exe "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.7/npp.8.4.7.Installer.exe"
+"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\app\ -o NotepadPlusPlus.exe "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.7/npp.8.4.7.Installer.exe"
 timeout 5
-"C:\Security\TEMP\NotepadPlusPlus.exe" /S
+"C:\Security\TEMP\app\NotepadPlusPlus.exe" /S
 
 REM TASKKILL PROGRAMS
 ECHO TASKKILL PROGRAMS
@@ -119,14 +120,14 @@ ECHO MS EDGE Remove
 
 REM NET 4.8
 ECHO NET 4.8
-"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o ndp48-x86-x64-allos-enu.exe "https://go.microsoft.com/fwlink/?linkid=2088631"
+"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\app\ -o ndp48-x86-x64-allos-enu.exe "https://go.microsoft.com/fwlink/?linkid=2088631"
 timeout 5
-"C:\Security\TEMP\ndp48-x86-x64-allos-enu.exe" /passive /norestart
+"C:\Security\TEMP\app\ndp48-x86-x64-allos-enu.exe" /passive /norestart
 
 REM TSLAB 2.2
 ECHO TSLAB 2.2
 IF NOT EXIST "temp" MD temp
-"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
+"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\app\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
 
 REM RESENTLY PROGRAMS
 ECHO RESENTLY PROGRAMS
