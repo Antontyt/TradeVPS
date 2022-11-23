@@ -325,7 +325,6 @@ regedit /s "C:\Service\TEMP\reg\Disable_Search.reg"
 regedit /s "C:\Service\TEMP\reg\Disable_ShowTaskViewButton.reg"
 regedit /s "C:\Service\TEMP\reg\Disable_Shutdown_Event_Tracker.reg"
 CALL "C:\Service\TEMP\Hide_search_on_taskbar.bat"
-PAUSE
 
 REM REGIONAL SETTINGS
 ECHO REGIONAL SETTINGS
@@ -333,18 +332,15 @@ IF NOT EXIST "C:\Service\TEMP\reg\RegionalSettings" MD C:\Service\TEMP\reg\Regio
 "C:\Service\sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\reg\RegionalSettings\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/reg/RegionalSettings/Settings.xml"
 C:\Windows\System32\control.exe intl.cpl,, /f:"C:\Service\TEMP\reg\RegionalSettings\Settings.xml"
 regedit /s "C:\Service\TEMP\reg\RussiaLocale_ForNonUnicode.reg"
-PAUSE
 
 REM DISABLE SMB1 Protocol
 ECHO DISABLE SMB1 Protocol
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v SMB1 /t REG_DWORD /d 0 /F
-PAUSE
 
 REM Update Windows Defender
 ECHO Update Windows Defender
 CALL "%ProgramFiles%\Windows Defender\MpCmdRun.exe" -removedefinitions -dynamicsignatures
 CALL "%ProgramFiles%\Windows Defender\MpCmdRun.exe" -SignatureUpdate
-PAUSE
 
 REM Enable Windows Firewall
 ECHO Enable Windows Firewall
@@ -353,7 +349,6 @@ netsh advfirewall set allprofiles state on
 netsh advfirewall set domainprofile state on
 netsh advfirewall set privateprofile state on
 netsh advfirewall set publicprofile state on
-PAUSE
 
 REM Copy Security Lnk
 ECHO Copy Security Lnk
@@ -363,7 +358,6 @@ IF NOT EXIST "C:\Service\TEMP\lnk\" MD "C:\Service\TEMP\lnk\"
 "C:\Service\sys\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/WindowsUpdateInstall_Auto.vbs"
 "C:\Service\sys\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/UpdateSecurity.bat"
 cscript /Nologo "C:\Service\TEMP\lnk\CreateSecurityLnk.vbs"
-PAUSE
 
 REM Get Windows Updates
 ECHO Get Windows Updates
