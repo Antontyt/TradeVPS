@@ -233,6 +233,7 @@ REM TSLAB 2.2
 ECHO TSLAB 2.2
 IF NOT EXIST "temp" MD temp
 "C:\Service\sys\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
+CALL C:\Service\TEMP\app\TSLab22Setup.exe /exenoui /quiet /qn
 
 REM RESENTLY PROGRAMS
 ECHO RESENTLY PROGRAMS
