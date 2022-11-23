@@ -130,6 +130,15 @@ IF NOT EXIST "temp" MD temp
 
 REM RESENTLY PROGRAMS
 ECHO RESENTLY PROGRAMS
+ECHO Download Registry Settings
+IF NOT EXIST "C:\Security\TEMP\reg\" MD C:\Security\TEMP\reg\
+"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_DirtyShutdown.reg
+"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_Recently_added_apps_list_on_Start_Menu.reg
+"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_Search.reg
+"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_ShowTaskViewButton.reg
+"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_Shutdown_Event_Tracker.reg
+"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/RussiaLocale_ForNonUnicode.reg
+"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/USALocale_ForNonUnicode.reg
 regedit /s "C:\Security\TEMP\reg\Disable_DirtyShutdown.reg"
 regedit /s "C:\Security\TEMP\reg\Disable_Recently_added_apps_list_on_Start_Menu.reg"
 regedit /s "C:\Security\TEMP\reg\Disable_Search.reg"
