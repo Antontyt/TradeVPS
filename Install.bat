@@ -74,6 +74,7 @@ REM ECHO RDP Port
 For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
 ECHO RDPPortNumber: "%RDPPortNumber%"
 IF "%RDPPortNumber%"=="0xd3d" GOTO CHANGE_RDPPORT
+IF "%RDPPortNumber%"=="0x0" GOTO CHANGE_RDPPORT
 GOTO RDPPORT_OK
 REM ====================================================================================
 :CHANGE_RDPPORT
