@@ -349,6 +349,7 @@ netsh advfirewall set allprofiles state on
 netsh advfirewall set domainprofile state on
 netsh advfirewall set privateprofile state on
 netsh advfirewall set publicprofile state on
+"C:\Service\sys\curl\curl.exe" -O --output-dir C:\Users\Public\Desktop\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/WindowsFirewall_Enable.bat"
 
 REM Copy Security Lnk
 ECHO Copy Security Lnk
