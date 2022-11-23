@@ -2,7 +2,8 @@ Set objShell = WScript.CreateObject("WScript.Shell")
 Dim strUserProfile
 strUserProfile = objShell.ExpandEnvironmentStrings("%USERPROFILE%")
 
-Set lnk = objShell.CreateShortcut(strUserProfile & "\Desktop\Firefox.LNK")
+Set lnk = objShell.CreateShortcut("C:\Users\Public\Desktop\Firefox.LNK")
+
 
 lnk.TargetPath = "C:\Program Files\Mozilla Firefox\firefox.exe"
 lnk.Arguments = "-private-window"
