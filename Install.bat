@@ -68,7 +68,7 @@ REM ============================================================================
 REM ECHO RDP Port
 For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
 ECHO RDPPortNumber: "%RDPPortNumber%"
-IF "%RDPPortNumber%"=="3389" GOTO RDPPORT_NOTOK
+IF "%RDPPortNumber%"=="0xd3d" GOTO CHANGE_RDPPORT
 GOTO RDPPORT_OK
 REM ====================================================================================
 :CHANGE_RDPPORT
@@ -247,6 +247,7 @@ REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability" /v Shutdown
 REM =============================================================================================================
 REM Firefox ESR
 ECHO Firefox ESR
+IF EXIST "C:\Program Files\Mozilla Firefox\firefox.exe" GOTO Notepad
 IF NOT EXIST "C:\Service\TEMP\lnk\" MD C:\Service\TEMP\lnk\
 IF NOT EXIST "C:\Service\TEMP\app\" MD C:\Service\TEMP\app\
 "C:\Service\sys\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
@@ -256,12 +257,15 @@ REM "temp\FirefoxESR.exe" -ms -ma
 CALL "C:\Service\TEMP\app\FirefoxESR.exe" -ms
 cscript /Nologo "C:\Service\TEMP\lnk\CreateFirefoxLnk.vbs"
 
+:Notepad
+IF EXIST "C:\Program Files (x86)\Notepad++\notepad++.exe" GOTO TASKKILL
 REM Notepad++
 ECHO Notepad++
 "C:\Service\sys\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o NotepadPlusPlus.exe "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.7/npp.8.4.7.Installer.exe"
 timeout 5
 "C:\Service\TEMP\app\NotepadPlusPlus.exe" /S
 
+:TASKKILL
 REM TASKKILL PROGRAMS
 ECHO TASKKILL PROGRAMS
 TASKKILL /IM MicrosoftEdgeUpdate.exe /F
@@ -286,10 +290,12 @@ timeout 5
 
 REM TSLAB 2.2
 ECHO TSLAB 2.2
+IF EXIST "C:\Program Files\TSLab\TSLab 2.2\TSLab.exe" GOTO RESENTLY
 IF NOT EXIST "temp" MD temp
 "C:\Service\sys\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
 CALL C:\Service\TEMP\app\TSLab22Setup.exe /exenoui /quiet /qn
 
+:RESENTLY
 REM RESENTLY PROGRAMS
 ECHO RESENTLY PROGRAMS
 ECHO Download Registry Settings
