@@ -65,6 +65,7 @@ ECHO USERNAME_OK
 REM ================================================================================================================================
 REM DISABLE DEFENDER
 ECHO DISABLE DEFENDER
+ECHO ®¦ «γ©αβ  ―®¤®¦¤¨β¥...
 REM ================================================================================================================================
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v DisableAntiSpyware /t REG_DWORD /d 1 /F
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-MpPreference -DisableRealtimeMonitoring $true" > NUL
@@ -172,9 +173,9 @@ REM WindowsSearch Disable
 ECHO WindowsSearch Disable
 sc stop WSearch
 sc config "WSearch" start= disabled
-powershell -command "Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage"
-powershell -command "Get-AppxPackage -allusers Microsoft.Windows.Search | Remove-AppxPackage"
-powershell -command "Get-AppxPackage -allusers Microsoft.MicrosoftEdge.Stable | Remove-AppxPackage"
+powershell -command "Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage" > NUL
+powershell -command "Get-AppxPackage -allusers Microsoft.Windows.Search | Remove-AppxPackage" > NUL
+powershell -command "Get-AppxPackage -allusers Microsoft.MicrosoftEdge.Stable | Remove-AppxPackage" > NUL
 REM DISABLE CORTANA
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v AllowCortana /t REG_DWORD /d 0 /F
 TASKKILL /IM SearchApp.exe /F
