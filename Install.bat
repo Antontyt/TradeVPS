@@ -11,7 +11,7 @@ CALL C:\Security\TEMP\DisableSmartScreen.bat
 PAUSE
 ECHO Download SearchDisable
 IF NOT EXIST "C:\Security\TEMP\" MD C:\Security\TEMP\
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/Hide_search_on_taskbar.bat
+"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\ https://raw.githubusercontent.com/Antontyt/TradeVPS/main/reg/Hide_search_on_taskbar.bat
 "sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\ https://raw.githubusercontent.com/Antontyt/TradeVPS/main/SearchDisable.bat
 CALL C:\Security\TEMP\SearchDisable.bat
 PAUSE
@@ -28,7 +28,6 @@ IF NOT EXIST "C:\Security\TEMP\reg\" MD C:\Security\TEMP\reg\
 "sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_Search.reg
 "sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_ShowTaskViewButton.reg
 "sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_Shutdown_Event_Tracker.reg
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Hide_search_on_taskbar.bat
 "sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/RussiaLocale_ForNonUnicode.reg
 "sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/USALocale_ForNonUnicode.reg
 "sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/RegionalSettings/Settings.xml
