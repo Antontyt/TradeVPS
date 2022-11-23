@@ -20,6 +20,7 @@ GOTO NOTSUPPORTOS
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 REM ====================================================================================================================
 IF "%username%"=="Administrator" GOTO RENAME_USERNAME
+IF "%username%"=="Администратор" GOTO RENAME_USERNAME
 GOTO USERNAME_OK
 REM ====================================================================================
 :RENAME_USERNAME
@@ -60,7 +61,10 @@ ECHO Только буквы и цифры
 SET /P newusername=Введите имя пользователя:
 ECHO RENAME_USERNAME_RUN
 REM ====================================================================================
-wmic useraccount where name='Administrator' rename %newusername%
+ECHO Для переименования пользователя "%username%" > : "%newusername%"
+ECHO Нажмите любую кнопку для подтверждения
+PAUSE
+wmic useraccount where name='%username%' rename %newusername%
 :USERNAME_OK
 ECHO USERNAME_OK
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -109,9 +113,12 @@ GOTO CHANGE_RDPPORT
 :CHANGE_RDPPORT_RUN
 CLS
 ECHO Только буквы и цифры
-SET /A newrdpport=Введите номер порта - любой четырехзначный порт:
+SET /P newrdpport=Введите номер порта - любой четырехзначный порт:
 ECHO RENAME_USERNAME_RUN
 REM ====================================================================================
+ECHO Введённый новый порт: "%newrdpport%"
+ECHO Нажмите любую кнопку для подтверждения
+PAUSE
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d %newrdpport% /F
 :RDPPORT_OK
 ECHO RDPPORT_OK
@@ -249,15 +256,16 @@ REM Firefox ESR
 ECHO Firefox ESR
 IF NOT EXIST "C:\Service\TEMP\lnk\" MD C:\Service\TEMP\lnk\
 IF NOT EXIST "C:\Service\TEMP\app\" MD C:\Service\TEMP\app\
-IF EXIST "C:\Program Files\Mozilla Firefox\firefox.exe" GOTO Notepad
+IF EXIST "C:\Program Files\Mozilla Firefox\firefox.exe" GOTO FFLNK
 "C:\Service\sys\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
-"C:\Service\sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/lnk/CreateFirefoxLnk.vbs"
 timeout 5
 REM "temp\FirefoxESR.exe" -ms -ma
 CALL "C:\Service\TEMP\app\FirefoxESR.exe" -ms
+
+:FFLNK
+"C:\Service\sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/lnk/CreateFirefoxLnk.vbs"
 cscript /Nologo "C:\Service\TEMP\lnk\CreateFirefoxLnk.vbs"
 
-:Notepad
 IF EXIST "C:\Program Files (x86)\Notepad++\notepad++.exe" GOTO TASKKILL
 REM Notepad++
 ECHO Notepad++
