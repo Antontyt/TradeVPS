@@ -80,16 +80,19 @@ REM DISABLE CORTANA
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v AllowCortana /t REG_DWORD /d 0 /F
 TASKKILL /IM SearchApp.exe /F
 move %windir%\SystemApps\Microsoft.Windows.Search_cw5n1h2txyewy %windir%\SystemApps\Microsoft.Windows.Search_cw5n1h2txyewy.old
+CLS
 PAUSE
 
 REM Search on TaskBar
 ECHO Search on TaskBar
-REG ADD "HKСU\Default\Software\Microsoft\Windows\CurrentVersion\Search" /v SearchboxTaskbarMode /t REG_DWORD /d 1 /F
+REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /V SearchboxTaskbarMode /T REG_DWORD /D 1 /F
+CLS
 PAUSE
 
 REM Shutdown Event Tracker
 ECHO Shutdown Event Tracker
 REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability" /v ShutdownReasonUI /t REG_DWORD /d 0 /F
+CLS
 PAUSE
 
 REM =============================================================================================================
