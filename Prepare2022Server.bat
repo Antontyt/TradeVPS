@@ -171,9 +171,11 @@ REM cscript /Nologo "sys\wp\WindowsUpdateInstall_Auto.vbs"
 REM Copy Security Lnk
 ECHO Copy Security Lnk
 IF NOT EXIST "C:\Security" MD "C:\Security"
-xcopy /s "sys\wp\WindowsUpdateInstall_Auto.vbs" "C:\Security" /y
-xcopy /s "sys\wp\UpdateSecurity.bat" "C:\Security" /y
-xcopy /s "lnk\UpdateSecurity.lnk" "C:\Users\Public\Desktop" /y
+"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/lnk/CreateSecurityLnk.vbs
+"sys\curl\curl.exe" -O --output-dir C:\Security\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/WindowsUpdateInstall_Manual.vbs"
+"sys\curl\curl.exe" -O --output-dir C:\Security\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/WindowsUpdateInstall_Manual.vbs"
+"sys\curl\curl.exe" -O --output-dir C:\Security\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/UpdateSecurity.bat"
+cscript /Nologo "C:\Security\TEMP\lnk\CreateSecurityLnk.vbs"
 PAUSE
 
 CLS
