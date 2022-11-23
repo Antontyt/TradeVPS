@@ -80,38 +80,30 @@ REM DISABLE CORTANA
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v AllowCortana /t REG_DWORD /d 0 /F
 TASKKILL /IM SearchApp.exe /F
 move %windir%\SystemApps\Microsoft.Windows.Search_cw5n1h2txyewy %windir%\SystemApps\Microsoft.Windows.Search_cw5n1h2txyewy.old
-CLS
-PAUSE
 
 REM Search on TaskBar
 ECHO Search on TaskBar
 REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /V SearchboxTaskbarMode /T REG_DWORD /D 1 /F
-CLS
-PAUSE
 
 REM Shutdown Event Tracker
 ECHO Shutdown Event Tracker
 REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability" /v ShutdownReasonUI /t REG_DWORD /d 0 /F
-CLS
-PAUSE
 
 REM =============================================================================================================
 REM Firefox ESR
 ECHO Firefox ESR
-IF NOT EXIST "temp" MD temp
-"sys\curl\curl.exe" -L --output-dir temp -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
+"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
 timeout 5
 REM "temp\FirefoxESR.exe" -ms -ma
-CALL "temp\FirefoxESR.exe" -ms
-xcopy /s "lnk\Firefox.lnk" "C:\Users\Public\Desktop" /y
+CALL "C:\Security\TEMP\FirefoxESR.exe" -ms
+xcopy /s "C:\Security\TEMP\lnk\Firefox.lnk" "C:\Users\Public\Desktop" /y
 PAUSE
 
 REM Notepad++
 ECHO Notepad++
-IF NOT EXIST "temp" MD temp
-"sys\curl\curl.exe" -L --output-dir temp -o NotepadPlusPlus.exe "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.7/npp.8.4.7.Installer.exe"
+"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o NotepadPlusPlus.exe "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.7/npp.8.4.7.Installer.exe"
 timeout 5
-"temp\NotepadPlusPlus.exe" /S
+"C:\Security\TEMP\NotepadPlusPlus.exe" /S
 PAUSE
 
 REM TASKKILL PROGRAMS
@@ -129,32 +121,31 @@ PAUSE
 
 REM NET 4.8
 ECHO NET 4.8
-IF NOT EXIST "temp" MD temp
-"sys\curl\curl.exe" -L --output-dir temp -o ndp48-x86-x64-allos-enu.exe "https://go.microsoft.com/fwlink/?linkid=2088631"
+"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o ndp48-x86-x64-allos-enu.exe "https://go.microsoft.com/fwlink/?linkid=2088631"
 timeout 5
-"temp\ndp48-x86-x64-allos-enu.exe" /passive /norestart
+"C:\Security\TEMP\ndp48-x86-x64-allos-enu.exe" /passive /norestart
 PAUSE
 
 REM TSLAB 2.2
 ECHO TSLAB 2.2
 IF NOT EXIST "temp" MD temp
-"sys\curl\curl.exe" -L --output-dir temp -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
+"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
 PAUSE
 
 REM RESENTLY PROGRAMS
 ECHO RESENTLY PROGRAMS
-regedit /s "reg\Disable_DirtyShutdown.reg"
-regedit /s "reg\Disable_Recently_added_apps_list_on_Start_Menu.reg"
-regedit /s "reg\Disable_Search.reg"
-regedit /s "reg\Disable_ShowTaskViewButton.reg"
-regedit /s "reg\Disable_Shutdown_Event_Tracker.reg"
-CALL "reg\Hide_search_on_taskbar.bat"
+regedit /s "C:\Security\TEMP\reg\Disable_DirtyShutdown.reg"
+regedit /s "C:\Security\TEMP\reg\Disable_Recently_added_apps_list_on_Start_Menu.reg"
+regedit /s "C:\Security\TEMP\reg\Disable_Search.reg"
+regedit /s "C:\Security\TEMP\reg\Disable_ShowTaskViewButton.reg"
+regedit /s "C:\Security\TEMP\reg\Disable_Shutdown_Event_Tracker.reg"
+CALL "C:\Security\TEMP\reg\Hide_search_on_taskbar.bat"
 PAUSE
 
 REM REGIONAL SETTINGS
 ECHO REGIONAL SETTINGS
-C:\Windows\System32\control.exe intl.cpl,, /f:"reg\RegionalSettings\Settings.xml"
-regedit /s "reg\RussiaLocale_ForNonUnicode.reg"
+C:\Windows\System32\control.exe intl.cpl,, /f:"C:\Security\TEMP\reg\RegionalSettings\Settings.xml"
+regedit /s "C:\Security\TEMP\reg\RussiaLocale_ForNonUnicode.reg"
 PAUSE
 
 REM DISABLE SMB1 Protocol
