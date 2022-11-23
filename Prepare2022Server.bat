@@ -140,6 +140,7 @@ PAUSE
 
 REM REGIONAL SETTINGS
 ECHO REGIONAL SETTINGS
+"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\RegionalSettings\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/reg/RegionalSettings/Settings.xml"
 C:\Windows\System32\control.exe intl.cpl,, /f:"C:\Security\TEMP\reg\RegionalSettings\Settings.xml"
 regedit /s "C:\Security\TEMP\reg\RussiaLocale_ForNonUnicode.reg"
 PAUSE
