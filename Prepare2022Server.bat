@@ -99,14 +99,12 @@ timeout 5
 REM "temp\FirefoxESR.exe" -ms -ma
 CALL "C:\Security\TEMP\FirefoxESR.exe" -ms
 cscript /Nologo "C:\Security\TEMP\lnk\CreateFirefoxLnk.vbs"
-PAUSE
 
 REM Notepad++
 ECHO Notepad++
 "sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o NotepadPlusPlus.exe "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.7/npp.8.4.7.Installer.exe"
 timeout 5
 "C:\Security\TEMP\NotepadPlusPlus.exe" /S
-PAUSE
 
 REM TASKKILL PROGRAMS
 ECHO TASKKILL PROGRAMS
@@ -114,25 +112,21 @@ TASKKILL /IM MicrosoftEdgeUpdate.exe /F
 TASKKILL /IM SearchApp.exe /F
 TASKKILL /IM msedge.exe /F
 TASKKILL /IM firefox.exe /F
-PAUSE
 
 REM MS EDGE Remove
 ECHO MS EDGE Remove
 "C:\Program Files (x86)\Microsoft\Edge\Application\86.0.622.38\Installer\setup.exe" --uninstall --system-level --verbose-logging --force-uninstall
-PAUSE
 
 REM NET 4.8
 ECHO NET 4.8
 "sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o ndp48-x86-x64-allos-enu.exe "https://go.microsoft.com/fwlink/?linkid=2088631"
 timeout 5
 "C:\Security\TEMP\ndp48-x86-x64-allos-enu.exe" /passive /norestart
-PAUSE
 
 REM TSLAB 2.2
 ECHO TSLAB 2.2
 IF NOT EXIST "temp" MD temp
 "sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
-PAUSE
 
 REM RESENTLY PROGRAMS
 ECHO RESENTLY PROGRAMS
@@ -141,7 +135,7 @@ regedit /s "C:\Security\TEMP\reg\Disable_Recently_added_apps_list_on_Start_Menu.
 regedit /s "C:\Security\TEMP\reg\Disable_Search.reg"
 regedit /s "C:\Security\TEMP\reg\Disable_ShowTaskViewButton.reg"
 regedit /s "C:\Security\TEMP\reg\Disable_Shutdown_Event_Tracker.reg"
-CALL "C:\Security\TEMP\reg\Hide_search_on_taskbar.bat"
+CALL "C:\Security\TEMP\Hide_search_on_taskbar.bat"
 PAUSE
 
 REM REGIONAL SETTINGS
