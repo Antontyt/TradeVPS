@@ -92,20 +92,20 @@ REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability" /v Shutdown
 REM =============================================================================================================
 REM Firefox ESR
 ECHO Firefox ESR
-IF NOT EXIST "C:\Security\TEMP\lnk\" MD C:\Security\TEMP\lnk\
-IF NOT EXIST "C:\Security\TEMP\app\" MD C:\Security\TEMP\app\
-"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\app\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/lnk/CreateFirefoxLnk.vbs"
+IF NOT EXIST "C:\Service\TEMP\lnk\" MD C:\Service\TEMP\lnk\
+IF NOT EXIST "C:\Service\TEMP\app\" MD C:\Service\TEMP\app\
+"sys\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
+"sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/lnk/CreateFirefoxLnk.vbs"
 timeout 5
 REM "temp\FirefoxESR.exe" -ms -ma
-CALL "C:\Security\TEMP\app\FirefoxESR.exe" -ms
-cscript /Nologo "C:\Security\TEMP\lnk\CreateFirefoxLnk.vbs"
+CALL "C:\Service\TEMP\app\FirefoxESR.exe" -ms
+cscript /Nologo "C:\Service\TEMP\lnk\CreateFirefoxLnk.vbs"
 
 REM Notepad++
 ECHO Notepad++
-"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\app\ -o NotepadPlusPlus.exe "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.7/npp.8.4.7.Installer.exe"
+"sys\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o NotepadPlusPlus.exe "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.7/npp.8.4.7.Installer.exe"
 timeout 5
-"C:\Security\TEMP\app\NotepadPlusPlus.exe" /S
+"C:\Service\TEMP\app\NotepadPlusPlus.exe" /S
 
 REM TASKKILL PROGRAMS
 ECHO TASKKILL PROGRAMS
@@ -120,40 +120,40 @@ ECHO MS EDGE Remove
 
 REM NET 4.8
 ECHO NET 4.8
-"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\app\ -o ndp48-x86-x64-allos-enu.exe "https://go.microsoft.com/fwlink/?linkid=2088631"
+"sys\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o ndp48-x86-x64-allos-enu.exe "https://go.microsoft.com/fwlink/?linkid=2088631"
 timeout 5
-"C:\Security\TEMP\app\ndp48-x86-x64-allos-enu.exe" /passive /norestart
+"C:\Service\TEMP\app\ndp48-x86-x64-allos-enu.exe" /passive /norestart
 
 REM TSLAB 2.2
 ECHO TSLAB 2.2
 IF NOT EXIST "temp" MD temp
-"sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\app\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
+"sys\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
 
 REM RESENTLY PROGRAMS
 ECHO RESENTLY PROGRAMS
 ECHO Download Registry Settings
-IF NOT EXIST "C:\Security\TEMP\reg\" MD C:\Security\TEMP\reg\
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_DirtyShutdown.reg
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_Recently_added_apps_list_on_Start_Menu.reg
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_Search.reg
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_ShowTaskViewButton.reg
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_Shutdown_Event_Tracker.reg
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/RussiaLocale_ForNonUnicode.reg
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/USALocale_ForNonUnicode.reg
-regedit /s "C:\Security\TEMP\reg\Disable_DirtyShutdown.reg"
-regedit /s "C:\Security\TEMP\reg\Disable_Recently_added_apps_list_on_Start_Menu.reg"
-regedit /s "C:\Security\TEMP\reg\Disable_Search.reg"
-regedit /s "C:\Security\TEMP\reg\Disable_ShowTaskViewButton.reg"
-regedit /s "C:\Security\TEMP\reg\Disable_Shutdown_Event_Tracker.reg"
-CALL "C:\Security\TEMP\Hide_search_on_taskbar.bat"
+IF NOT EXIST "C:\Service\TEMP\reg\" MD C:\Service\TEMP\reg\
+"sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_DirtyShutdown.reg
+"sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_Recently_added_apps_list_on_Start_Menu.reg
+"sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_Search.reg
+"sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_ShowTaskViewButton.reg
+"sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/Disable_Shutdown_Event_Tracker.reg
+"sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/RussiaLocale_ForNonUnicode.reg
+"sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\reg\ https://raw.githubusercontent.com/Antontyt/TradeVPS/reg/RegionalSettings/USALocale_ForNonUnicode.reg
+regedit /s "C:\Service\TEMP\reg\Disable_DirtyShutdown.reg"
+regedit /s "C:\Service\TEMP\reg\Disable_Recently_added_apps_list_on_Start_Menu.reg"
+regedit /s "C:\Service\TEMP\reg\Disable_Search.reg"
+regedit /s "C:\Service\TEMP\reg\Disable_ShowTaskViewButton.reg"
+regedit /s "C:\Service\TEMP\reg\Disable_Shutdown_Event_Tracker.reg"
+CALL "C:\Service\TEMP\Hide_search_on_taskbar.bat"
 PAUSE
 
 REM REGIONAL SETTINGS
 ECHO REGIONAL SETTINGS
-IF NOT EXIST "C:\Security\TEMP\reg\RegionalSettings" MD C:\Security\TEMP\reg\RegionalSettings
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\reg\RegionalSettings\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/reg/RegionalSettings/Settings.xml"
-C:\Windows\System32\control.exe intl.cpl,, /f:"C:\Security\TEMP\reg\RegionalSettings\Settings.xml"
-regedit /s "C:\Security\TEMP\reg\RussiaLocale_ForNonUnicode.reg"
+IF NOT EXIST "C:\Service\TEMP\reg\RegionalSettings" MD C:\Service\TEMP\reg\RegionalSettings
+"sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\reg\RegionalSettings\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/reg/RegionalSettings/Settings.xml"
+C:\Windows\System32\control.exe intl.cpl,, /f:"C:\Service\TEMP\reg\RegionalSettings\Settings.xml"
+regedit /s "C:\Service\TEMP\reg\RussiaLocale_ForNonUnicode.reg"
 PAUSE
 
 REM DISABLE SMB1 Protocol
@@ -182,12 +182,12 @@ REM cscript /Nologo "sys\wp\WindowsUpdateInstall_Auto.vbs"
 
 REM Copy Security Lnk
 ECHO Copy Security Lnk
-IF NOT EXIST "C:\Security" MD "C:\Security"
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/lnk/CreateSecurityLnk.vbs
-"sys\curl\curl.exe" -O --output-dir C:\Security\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/WindowsUpdateInstall_Manual.vbs"
-"sys\curl\curl.exe" -O --output-dir C:\Security\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/WindowsUpdateInstall_Manual.vbs"
-"sys\curl\curl.exe" -O --output-dir C:\Security\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/UpdateSecurity.bat"
-cscript /Nologo "C:\Security\TEMP\lnk\CreateSecurityLnk.vbs"
+IF NOT EXIST "C:\Service" MD "C:\Service"
+"sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/lnk/CreateSecurityLnk.vbs
+"sys\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/WindowsUpdateInstall_Manual.vbs"
+"sys\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/WindowsUpdateInstall_Manual.vbs"
+"sys\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/UpdateSecurity.bat"
+cscript /Nologo "C:\Service\TEMP\lnk\CreateSecurityLnk.vbs"
 PAUSE
 
 CLS
