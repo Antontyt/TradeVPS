@@ -3,7 +3,6 @@ ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
 ECHO WindowsProduct: "%WindowsProduct%"
 ECHO Username: "%username%"
-PAUSE
 IF "%WindowsProduct%"=="Windows Server 2022 Standard" (
 SET WindowsProduct=WindowsServer2022Standard
 GOTO OPERATIONOS_OK
@@ -18,6 +17,8 @@ GOTO OPERATIONOS_OK
 )
 GOTO NOTSUPPORTOS
 :OPERATIONOS_OK
+REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+REM ====================================================================================================================
 IF "%username%"=="Administrator" GOTO RENAME_USERNAME
 GOTO USERNAME_OK
 REM ====================================================================================
@@ -62,7 +63,61 @@ REM ============================================================================
 wmic useraccount where name='Administrator' rename %newusername%
 :USERNAME_OK
 ECHO USERNAME_OK
+REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 REM ================================================================================================================================
+REM ECHO RDP Port
+For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
+ECHO RDPPortNumber: "%RDPPortNumber%"
+IF "%RDPPortNumber%"=="3389" GOTO RDPPORT_NOTOK
+GOTO RDPPORT_OK
+REM ====================================================================================
+:CHANGE_RDPPORT
+CLS
+TITLE Смена порта RDP
+ECHO.
+ECHO Для безопасности советую изменить номер порта RDP
+ECHO Стандартный порт:3389
+ECHO.
+ECHO Подключаться нужно IP_ADDRESS:PORT
+ECHO Используйте только цифры
+ECHO.
+ECHO Выберите требуемое действие
+ECHO ===============================================================================
+ECHO.
+ECHO 0. Поменять RDP Port
+ECHO 1. Продолжить без изменения
+ECHO.
+SET choice=
+SET /p choice="Для подтверждения после ввода нажмите Enter :"
+ECHO.
+
+IF /I '%choice%'=='0' (
+GOTO CHANGE_RDPPORT_RUN
+)
+IF /I '%choice%'=='1' (
+GOTO RDPPORT_OK
+)
+CLS
+ECHO ================ Отсутствует выбранный параметр =================
+ECHO -----------------------------------------------------------------
+ECHO Доступные варианты 0 или 1
+ECHO Нажмите любую кнопку для повторного ввода
+ECHO -----------------------------------------------------------------
+ECHO ================ Отсутствует выбранный параметр =================
+PAUSE
+GOTO CHANGE_RDPPORT
+:CHANGE_RDPPORT_RUN
+CLS
+ECHO Только буквы и цифры
+SET /A newrdpport=Введите номер порта - любой четырехзначный порт:
+ECHO RENAME_USERNAME_RUN
+REM ====================================================================================
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d %newrdpport% /F
+:RDPPORT_OK
+ECHO RDPPORT_OK
+REM ================================================================================================================================
+REM ================================================================================================================================
+REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 REM DISABLE DEFENDER
 ECHO DISABLE DEFENDER
 ECHO Пожалуйста подождите...
