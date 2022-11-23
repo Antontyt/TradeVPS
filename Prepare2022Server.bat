@@ -84,7 +84,7 @@ PAUSE
 
 REM Search on TaskBar
 ECHO Search on TaskBar
-REG ADD "HKU\Default\Software\Microsoft\Windows\CurrentVersion\Search" /v SearchboxTaskbarMode /t REG_DWORD /d 1 /F
+REG ADD "HKСU\Default\Software\Microsoft\Windows\CurrentVersion\Search" /v SearchboxTaskbarMode /t REG_DWORD /d 1 /F
 PAUSE
 
 REM Shutdown Event Tracker
