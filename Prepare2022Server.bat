@@ -94,11 +94,11 @@ REM Firefox ESR
 ECHO Firefox ESR
 IF NOT EXIST "C:\Security\TEMP\lnk\" MD C:\Security\TEMP\lnk\
 "sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
-"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\lnk\ https://github.com/Antontyt/TradeVPS/blob/main/lnk/Firefox.lnk
+"sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\lnk\ https://github.com/Antontyt/TradeVPS/blob/main/lnk/CreateFirefoxLnk.vbs
 timeout 5
 REM "temp\FirefoxESR.exe" -ms -ma
 CALL "C:\Security\TEMP\FirefoxESR.exe" -ms
-xcopy /s "C:\Security\TEMP\lnk\Firefox.lnk" "C:\Users\Public\Desktop" /y
+cscript /Nologo "C:\Security\TEMP\lnk\CreateFirefoxLnk.vbs"
 PAUSE
 
 REM Notepad++
