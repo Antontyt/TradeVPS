@@ -92,6 +92,7 @@ REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability" /v Shutdown
 REM =============================================================================================================
 REM Firefox ESR
 ECHO Firefox ESR
+IF NOT EXIST "C:\Security\TEMP\lnk\" MD C:\Security\TEMP\lnk\
 "sys\curl\curl.exe" -L --output-dir C:\Security\TEMP\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
 "sys\curl\curl.exe" -O --output-dir C:\Security\TEMP\lnk\ https://github.com/Antontyt/TradeVPS/blob/main/lnk/Firefox.lnk
 timeout 5
