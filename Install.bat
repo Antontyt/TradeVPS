@@ -247,9 +247,9 @@ REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability" /v Shutdown
 REM =============================================================================================================
 REM Firefox ESR
 ECHO Firefox ESR
-IF EXIST "C:\Program Files\Mozilla Firefox\firefox.exe" GOTO Notepad
 IF NOT EXIST "C:\Service\TEMP\lnk\" MD C:\Service\TEMP\lnk\
 IF NOT EXIST "C:\Service\TEMP\app\" MD C:\Service\TEMP\app\
+IF EXIST "C:\Program Files\Mozilla Firefox\firefox.exe" GOTO Notepad
 "C:\Service\sys\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
 "C:\Service\sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/lnk/CreateFirefoxLnk.vbs"
 timeout 5
@@ -291,7 +291,7 @@ timeout 5
 REM TSLAB 2.2
 ECHO TSLAB 2.2
 IF EXIST "C:\Program Files\TSLab\TSLab 2.2\TSLab.exe" GOTO RESENTLY
-IF NOT EXIST "temp" MD temp
+IF NOT EXIST "C:\Service\TEMP\app\" MD C:\Service\TEMP\app\
 "C:\Service\sys\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
 CALL C:\Service\TEMP\app\TSLab22Setup.exe /exenoui /quiet /qn
 
@@ -346,7 +346,7 @@ PAUSE
 
 REM Copy Security Lnk
 ECHO Copy Security Lnk
-IF NOT EXIST "C:\Service" MD "C:\Service"
+IF NOT EXIST "C:\Service\TEMP\lnk\" MD "C:\Service\TEMP\lnk\"
 "C:\Service\sys\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/lnk/CreateSecurityLnk.vbs
 "C:\Service\sys\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/WindowsUpdateInstall_Manual.vbs"
 "C:\Service\sys\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/WindowsUpdateInstall_Auto.vbs"
