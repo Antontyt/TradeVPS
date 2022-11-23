@@ -19,8 +19,9 @@ GOTO NOTSUPPORTOS
 :OPERATIONOS_OK
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 REM ====================================================================================================================
-IF "%username%"=="Administrator" GOTO RENAME_USERNAME
-IF "%username%"=="Администратор" GOTO RENAME_USERNAME
+SET userp=%username%
+IF "%userp%"=="Administrator" GOTO RENAME_USERNAME
+IF "%userp%"=="Администратор" GOTO RENAME_USERNAME
 GOTO USERNAME_OK
 REM ====================================================================================
 :RENAME_USERNAME
@@ -61,10 +62,10 @@ ECHO Только буквы и цифры
 SET /P newusername=Введите имя пользователя:
 ECHO RENAME_USERNAME_RUN
 REM ====================================================================================
-ECHO Для переименования пользователя "%username%" > : "%newusername%"
+ECHO Для переименования пользователя "%userp%" > : "%newusername%"
 ECHO Нажмите любую кнопку для подтверждения
 PAUSE
-wmic useraccount where name='%username%' rename %newusername%
+wmic useraccount where name='%userp%' rename %newusername%
 :USERNAME_OK
 ECHO USERNAME_OK
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
