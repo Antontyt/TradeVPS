@@ -9,7 +9,7 @@ lnk.TargetPath = "C:\Service\UpdateSecurity.bat"
 lnk.Arguments = ""
 lnk.Description = "Firefox"
 'lnk.HotKey = "ALT+CTRL+F"
-lnk.IconLocation = "%SystemRoot%\System32\SHELL32.dll, 6"
+lnk.IconLocation = "%SystemRoot%\System32\SHELL32.dll, 244"
 lnk.WindowStyle = "1"
 lnk.WorkingDirectory = "C:\Service"
 lnk.Save
