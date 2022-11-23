@@ -18,7 +18,7 @@ GOTO OPERATIONOS_OK
 )
 GOTO NOTSUPPORTOS
 :OPERATIONOS_OK
-IF "%username%"=="Administrator" GOTO USERNAME_OK
+IF "%username%"=="Administrator" GOTO RENAME_USERNAME
 GOTO USERNAME_OK
 REM ====================================================================================
 :RENAME_USERNAME
