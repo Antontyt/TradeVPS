@@ -223,9 +223,11 @@ ECHO NET 4.8
 REM ECHO NETVersion
 For /F tokens^=^3 %%i in ('reg query "HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\full" /v version')DO SET "NETVersion=%%i"
 ECHO NETVersion: "%NETVersion%"
+IF "%NETVersion%"=="4.8.04161" GOTO NET48_OK
 "C:\Service\sys\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o ndp48-x86-x64-allos-enu.exe "https://go.microsoft.com/fwlink/?linkid=2088631"
 timeout 5
 "C:\Service\TEMP\app\ndp48-x86-x64-allos-enu.exe" /passive /norestart
+:NET48_OK
 
 REM TSLAB 2.2
 ECHO TSLAB 2.2
