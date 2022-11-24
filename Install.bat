@@ -382,9 +382,9 @@ REM Copy Security Lnk
 ECHO Copy Security Lnk
 IF NOT EXIST "C:\Service\TEMP\lnk\" MD "C:\Service\TEMP\lnk\"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/lnk/CreateSecurityLnk.vbs
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/WindowsUpdateInstall_Manual.vbs"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/WindowsUpdateInstall_Auto.vbs"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/sys/wp/UpdateSecurity.bat"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/System/wp/WindowsUpdateInstall_Manual.vbs"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/System/wp/WindowsUpdateInstall_Auto.vbs"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/System/wp/UpdateSecurity.bat"
 cscript /Nologo "C:\Service\TEMP\lnk\CreateSecurityLnk.vbs"
 
 REM Get Windows Updates
