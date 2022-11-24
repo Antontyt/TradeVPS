@@ -84,8 +84,8 @@ if "%lTime%"=="%RDPPortNumber%" (
  PAUSE
 )
 REM ====================================================================================
-IF "%RDPPortNumber%"=="0xd3d" GOTO CHANGE_RDPPORT
-IF "%RDPPortNumber%"=="0x0" GOTO CHANGE_RDPPORT
+IF "%RDPPortNumber%"=="3389" GOTO CHANGE_RDPPORT
+IF "%RDPPortNumber%"=="0" GOTO CHANGE_RDPPORT
 GOTO RDPPORT_OK
 REM ====================================================================================
 :CHANGE_RDPPORT
@@ -127,7 +127,7 @@ GOTO CHANGE_RDPPORT
 CLS
 ECHO Только буквы и цифры
 SET /P newrdpport=Введите номер порта - любой четырехзначный порт:
-ECHO Текущий порт:3389 \ Выберите любой от 3000 до 3999
+ECHO Текущий порт:"%RDPPortNumber%" \ Выберите любой от 3000 до 3999
 ECHO RENAME_USERNAME_RUN
 REM ====================================================================================
 ECHO Введённый новый порт: "%newrdpport%"
