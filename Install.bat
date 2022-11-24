@@ -72,14 +72,15 @@ REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 REM ================================================================================================================================
 REM ECHO RDP Port
 For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
+set /a RDPPortNumber=%RDPPortNumber%
 ECHO RDPPortNumber: "%RDPPortNumber%"
 REM ====================================================================================
 set/a lTime=%RDPPortNumber%*1
 if "%lTime%"=="%RDPPortNumber%" (
- echo Целое число.
+ echo Целое число. "%RDPPortNumber%"
  PAUSE
 ) else (
- echo Что-то другое.
+ echo Что-то другое. "%RDPPortNumber%"
  PAUSE
 )
 REM ====================================================================================
