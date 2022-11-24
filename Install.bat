@@ -128,20 +128,24 @@ CLS
 ECHO Только буквы и цифры
 SET /P newrdpport=Введите номер порта - любой четырехзначный порт:
 ECHO Текущий порт:"%RDPPortNumber%" \ Выберите любой от 3000 до 3999
-ECHO RENAME_USERNAME_RUN
+ECHO.
 REM ====================================================================================
 ECHO Введённый новый порт: "%newrdpport%"
 ECHO Нажмите любую кнопку для подтверждения
 PAUSE
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d %newrdpport% /F
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName "AllowRDP TCP""
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName "AllowRDP UDP""
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "AllowRDP TCP" -Direction Inbound -Protocol TCP -LocalPort %newrdpport% -Action Allow"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "AllowRDP UDP" -Direction Inbound -Protocol UDP -LocalPort %newrdpport% -Action Allow"
+PAUSE
 :RDPPORT_OK
 ECHO RDPPORT_OK
 REM ================================================================================================================================
 REM ================================================================================================================================
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 REM DISABLE DEFENDER
+CLS
 ECHO DISABLE DEFENDER
 ECHO Пожалуйста подождите...
 REM ================================================================================================================================
