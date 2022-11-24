@@ -1,6 +1,6 @@
 @echo off
 REM ======================================================================================================================
-REM VERSION 1.0.1 - 24.11.2022
+REM VERSION 1.0.2 - 24.11.2022
 REM ======================================================================================================================
 ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
