@@ -6,8 +6,8 @@ ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
 ECHO WindowsProduct: "%WindowsProduct%"
 ECHO Username: "%username%"
-IF "%WindowsProduct%"=="Windows Server 2022 Standard" (
-SET WindowsProduct=WindowsServer2022Standard
+IF "%WindowsProduct%"=="Windows Server 2019 Standard" (
+SET WindowsProduct=WindowsServer2019Standard
 GOTO OPERATIONOS_OK
 )
 IF "%WindowsProduct%"=="Windows Server 2022 Standard" (
