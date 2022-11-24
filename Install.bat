@@ -320,6 +320,7 @@ TASKKILL /IM TSLab22Setup.exe /F
 TASKKILL /IM msiexec.exe /F
 "C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
 timeout 5
+ECHO Install TSLab22Setup
 CALL C:\Service\TEMP\app\TSLab22Setup.exe /exenoui /quiet /qn
 
 :RESENTLY
