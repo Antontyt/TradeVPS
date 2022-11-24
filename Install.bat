@@ -73,6 +73,16 @@ REM ============================================================================
 REM ECHO RDP Port
 For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
 ECHO RDPPortNumber: "%RDPPortNumber%"
+REM ====================================================================================
+set/a lTime=%RDPPortNumber%*1
+if "%lTime%"=="%RDPPortNumber%" (
+ echo Целое число.
+ PAUSE
+) else (
+ echo Что-то другое.
+ PAUSE
+)
+REM ====================================================================================
 IF "%RDPPortNumber%"=="0xd3d" GOTO CHANGE_RDPPORT
 IF "%RDPPortNumber%"=="0x0" GOTO CHANGE_RDPPORT
 GOTO RDPPORT_OK
@@ -123,6 +133,8 @@ ECHO Введённый новый порт: "%newrdpport%"
 ECHO Нажмите любую кнопку для подтверждения
 PAUSE
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d %newrdpport% /F
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "AllowRDP TCP" -Direction Inbound -Protocol TCP -LocalPort %newrdpport% -Action Allow"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "AllowRDP UDP" -Direction Inbound -Protocol UDP -LocalPort %newrdpport% -Action Allow"
 :RDPPORT_OK
 ECHO RDPPORT_OK
 REM ================================================================================================================================
@@ -349,6 +361,10 @@ netsh advfirewall set allprofiles state on
 netsh advfirewall set domainprofile state on
 netsh advfirewall set privateprofile state on
 netsh advfirewall set publicprofile state on
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-NetFirewallProfile -All -Enabled True"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-NetFirewallProfile -All -DefaultInboundAction Block"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetFirewallRule -Name FPS-ICMP4-ERQ-In"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetFirewallRule -Name FPS-ICMP6-ERQ-In"
 "C:\Service\sys\curl\curl.exe" -O --output-dir C:\Users\Public\Desktop\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/WindowsFirewall_Enable.bat"
 
 REM Copy Security Lnk
