@@ -134,9 +134,6 @@ ECHO Введённый новый порт: "%newrdpport%"
 ECHO Нажмите любую кнопку для подтверждения
 PAUSE
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d %newrdpport% /F
-REM PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName "AllowRDP""
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "AllowRDP" -Direction Inbound -Protocol TCP -LocalPort %newrdpport% -Action Allow"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "AllowRDP" -Direction Inbound -Protocol UDP -LocalPort %newrdpport% -Action Allow"
 PAUSE
 :RDPPORT_OK
 ECHO RDPPORT_OK
@@ -369,7 +366,15 @@ PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-NetFirewallProfile -All
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-NetFirewallProfile -All -DefaultInboundAction Block"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetFirewallRule -Name FPS-ICMP4-ERQ-In"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetFirewallRule -Name FPS-ICMP6-ERQ-In"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Users\Public\Desktop\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/WindowsFirewall_Enable.bat"
+For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
+set /a RDPPortNumber=%RDPPortNumber%
+ECHO RDPPortNumber: "%RDPPortNumber%"
+REM -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName "AllowRDP TCP""
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName "AllowRDP UDP""
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "AllowRDP TCP" -Direction Inbound -Protocol TCP -LocalPort %RDPPortNumber% -Action Allow"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "AllowRDP UDP" -Direction Inbound -Protocol UDP -LocalPort %RDPPortNumber% -Action Allow"
+REM "C:\Service\System\curl\curl.exe" -O --output-dir C:\Users\Public\Desktop\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/WindowsFirewall_Enable.bat"
 
 REM Copy Security Lnk
 ECHO Copy Security Lnk
