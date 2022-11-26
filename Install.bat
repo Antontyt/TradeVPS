@@ -163,7 +163,6 @@ ECHO Введённый новый порт: "%newrdpport%"
 ECHO Нажмите любую кнопку для подтверждения
 PAUSE
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d %newrdpport% /F
-PAUSE
 :RDPPORT_OK
 ECHO RDPPORT_OK
 REM ================================================================================================================================
