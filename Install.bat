@@ -1,6 +1,7 @@
 @echo off
+REM https://github.com/W4RH4WK/Debloat-Windows-10/tree/master/utils
 REM ======================================================================================================================
-REM VERSION 1.0.2 - 24.11.2022
+REM VERSION 1.0.3 - 24.11.2022
 REM ======================================================================================================================
 ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
@@ -14,12 +15,20 @@ IF "%WindowsProduct%"=="Windows Server 2022 Standard" (
 SET WindowsProduct=WindowsServer2022Standard
 GOTO OPERATIONOS_OK
 )
-IF "%WindowsProduct%"=="Windows Server 2022 Standard" (
-SET WindowsProduct=WindowsServer2022Standard
-GOTO OPERATIONOS_OK
-)
 GOTO NOTSUPPORTOS
 :OPERATIONOS_OK
+REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+IF "%WindowsProduct%"=="WindowsServer2019Standard" IF NOT EXIST "C:\Windows\TEMP\FLG\WindowsServer2019Standard_ID1.FLG" (
+ECHO PLEASE REBOOT PC AND RESTART
+ECHO.
+ECHO PRESS BUTTON FOR REBOOT
+IF NOT EXIST "C:\Windows\TEMP\FLG\" MD C:\Windows\TEMP\FLG\
+ECHO 1 > "C:\Windows\TEMP\FLG\WindowsServer2019Standard_ID1.FLG"
+PAUSE
+REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce" /v RunScript /t REG_SZ /d "\"C:\\Service\\TEMP\\install.bat\"" /f
+shutdown /r /t 5 /c "The server will be shutdown in 5 seconds"
+EXIT
+)
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 REM ====================================================================================================================
 SET userp=%username%
@@ -256,11 +265,14 @@ sc stop WSearch
 sc config "WSearch" start= disabled
 powershell -command "Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage" > NUL
 powershell -command "Get-AppxPackage -allusers Microsoft.Windows.Search | Remove-AppxPackage" > NUL
+powershell -command "Get-AppxPackage -allusers Microsoft.Windows.Cortana_cw5n1h2txyewy | Remove-AppxPackage" > NUL
 powershell -command "Get-AppxPackage -allusers Microsoft.MicrosoftEdge.Stable | Remove-AppxPackage" > NUL
 REM DISABLE CORTANA
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v AllowCortana /t REG_DWORD /d 0 /F
 TASKKILL /IM SearchApp.exe /F
-move %windir%\SystemApps\Microsoft.Windows.Search_cw5n1h2txyewy %windir%\SystemApps\Microsoft.Windows.Search_cw5n1h2txyewy.old
+TASKKILL /IM SearchUI.exe /F
+move "%windir%\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy" "%windir%\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy.bak"
+move "%windir%\SystemApps\Microsoft.Windows.Search_cw5n1h2txyewy" "%windir%\SystemApps\Microsoft.Windows.Search_cw5n1h2txyewy.bak"
 
 REM Search on TaskBar
 ECHO Search on TaskBar
@@ -295,14 +307,16 @@ timeout 5
 :TASKKILL
 REM TASKKILL PROGRAMS
 ECHO TASKKILL PROGRAMS
-TASKKILL /IM MicrosoftEdgeUpdate.exe /F
-TASKKILL /IM SearchApp.exe /F
-TASKKILL /IM msedge.exe /F
-TASKKILL /IM firefox.exe /F
+TASKKILL /IM MicrosoftEdgeUpdate.exe /F /T
+TASKKILL /IM SearchApp.exe /F /T
+TASKKILL /IM msedge.exe /F /T
+TASKKILL /IM firefox.exe /F /T
 
 REM MS EDGE Remove
 ECHO MS EDGE Remove
 "C:\Program Files (x86)\Microsoft\Edge\Application\86.0.622.38\Installer\setup.exe" --uninstall --system-level --verbose-logging --force-uninstall
+schtasks /Delete /TN "MicrosoftEdgeUpdateTaskMachineCore{B95B19F5-FCC1-4E69-93F1-4E645586C4DC}" /F
+schtasks /Delete /TN "MicrosoftEdgeUpdateTaskMachineUA{46DB8337-FB73-4FC6-864D-7462C85416B9}" /F																					
 
 REM NET 4.8
 ECHO NET 4.8
@@ -318,13 +332,22 @@ timeout 5
 REM TSLAB 2.2
 ECHO TSLAB 2.2
 IF EXIST "C:\Program Files\TSLab\TSLab 2.2\TSLab.exe" GOTO RESENTLY
+IF EXIST "C:\Program Files\TSLab\TSLab 2.2 Beta\TSLab.exe" GOTO RESENTLY
 IF NOT EXIST "C:\Service\TEMP\app\" MD C:\Service\TEMP\app\
-TASKKILL /IM TSLab22Setup.exe /F
-TASKKILL /IM msiexec.exe /F
-"C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
+TASKKILL /IM TSLab22Setup.exe /F /T
+TASKKILL /IM TSLab22BetaSetup.exe /F /T
+TASKKILL /IM msiexec.exe /F /T
+REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+REM "C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
+REM timeout 5
+REM ECHO Install TSLab22Setup
+REM CALL C:\Service\TEMP\app\TSLab22Setup.exe /exenoui /quiet /qn
+REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+"C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o TSLab22BetaSetup.exe "https://files.tslab.pro/beta/TSLab22BetaSetup.exe"
 timeout 5
-ECHO Install TSLab22Setup
-CALL C:\Service\TEMP\app\TSLab22Setup.exe /exenoui /quiet /qn
+ECHO Install TSLab22BetaSetup
+CALL C:\Service\TEMP\app\TSLab22BetaSetup.exe /exenoui /quiet /qn
+
 
 :RESENTLY
 REM RESENTLY PROGRAMS
@@ -397,10 +420,9 @@ REM cscript /Nologo "C:\Service\WindowsUpdateInstall_Auto.vbs"
 CLS
 ECHO PROGRAM END
 ECHO NEEDED REBOOT SERVER - OR PRESS BUTTON FOR REBOOT AUTOMATICALY
-EXIT
 PAUSE
-shutdown /r /t 60 /c "The server will be shutdown in 1 minute"
-
+shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
+EXIT
 
 
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
