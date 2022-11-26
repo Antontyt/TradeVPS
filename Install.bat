@@ -2,7 +2,7 @@
 chcp 866> nul
 REM https://github.com/W4RH4WK/Debloat-Windows-10/tree/master/utils
 REM ======================================================================================================================
-REM VERSION 1.0.6 - 26.11.2022
+REM VERSION 1.0.7 - 26.11.2022
 REM ======================================================================================================================
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
 reg add "HKCU\Console" /v "InsertMode" /t REG_DWORD /d 0 /f
