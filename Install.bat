@@ -1,7 +1,7 @@
 @echo off
 REM https://github.com/W4RH4WK/Debloat-Windows-10/tree/master/utils
 REM ======================================================================================================================
-REM VERSION 1.0.4 - 26.11.2022
+REM VERSION 1.0.6 - 26.11.2022
 REM ======================================================================================================================
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
 reg add "HKCU\Console" /v "InsertMode" /t REG_DWORD /d 0 /f
@@ -428,6 +428,12 @@ cscript /Nologo "C:\Service\TEMP\lnk\CreateSecurityLnk.vbs"
 REM Get Windows Updates
 ECHO Get Windows Updates
 REM cscript /Nologo "C:\Service\WindowsUpdateInstall_Auto.vbs"
+
+REM Global Windows Settings
+ECHO Включение возможности RDP подключений
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+
+REM Remove Programs from Startup
 
 CLS
 ECHO PROGRAM END
