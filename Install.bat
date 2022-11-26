@@ -16,6 +16,8 @@ REM ----------------------------------------------------------------------------
 reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe" /v "QuickEdit" /t REG_DWORD /d 0 /f
 reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe" /v "InsertMode" /t REG_DWORD /d 0 /f
 REM ======================================================================================================================
+ECHO VERSION 1.0.7 - 26.11.2022
+ECHO =====================================
 ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
 ECHO WindowsProduct: "%WindowsProduct%"
