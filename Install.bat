@@ -1,4 +1,5 @@
 @echo off
+chcp 866> nul
 REM https://github.com/W4RH4WK/Debloat-Windows-10/tree/master/utils
 REM ======================================================================================================================
 REM VERSION 1.0.6 - 26.11.2022
