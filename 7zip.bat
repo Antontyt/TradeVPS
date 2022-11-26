@@ -443,11 +443,6 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnec
 REM Remove Programs from Startup
 reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v SecurityHealth /F
 
-REM Install Aditional Programs
-"C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o 7z2201-x64.msi "https://www.7-zip.org/a/7z2201-x64.msi"
-timeout 5
-MsiExec.exe /i "C:\Service\TEMP\app\7z2201-x64.msi" /qn
-
 CLS
 ECHO PROGRAM END
 ECHO NEEDED REBOOT SERVER - OR PRESS BUTTON FOR REBOOT AUTOMATICALY
