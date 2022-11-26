@@ -434,6 +434,7 @@ ECHO Включение возможности RDP подключений
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
 
 REM Remove Programs from Startup
+reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v SecurityHealth /F
 
 CLS
 ECHO PROGRAM END
