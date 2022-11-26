@@ -4,6 +4,7 @@ REM https://github.com/W4RH4WK/Debloat-Windows-10/tree/master/utils
 REM ======================================================================================================================
 REM VERSION 1.0.7 - 26.11.2022
 REM ======================================================================================================================
+reg.exe delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /f
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
 reg add "HKCU\Console" /v "InsertMode" /t REG_DWORD /d 0 /f
 REM -----------------------------------------------------------------------------------------------------
@@ -41,7 +42,7 @@ ECHO PRESS BUTTON FOR REBOOT
 IF NOT EXIST "C:\Windows\TEMP\FLG\" MD C:\Windows\TEMP\FLG\
 ECHO 1 > "C:\Windows\TEMP\FLG\WindowsServer2019Standard_ID1.FLG"
 PAUSE
-REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce" /v RunScript /t REG_SZ /d "\"C:\\Service\\TEMP\\install.bat\"" /f
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /d C:\Service\temp\install.bat /f
 shutdown /r /t 5 /c "The server will be shutdown in 5 seconds"
 EXIT
 )
@@ -353,7 +354,7 @@ ECHO PRESS BUTTON FOR REBOOT
 IF NOT EXIST "C:\Windows\TEMP\FLG\" MD C:\Windows\TEMP\FLG\
 ECHO 1 > "C:\Windows\TEMP\FLG\WindowsServer2019Standard_ID2.FLG"
 PAUSE
-REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce" /v RunScript /t REG_SZ /d "\"C:\\Service\\TEMP\\install.bat\"" /f
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /d C:\Service\temp\install.bat /f
 shutdown /r /t 5 /c "The server will be shutdown in 5 seconds"
 EXIT
 REM ------------------------------------------------------------------------------------------------
