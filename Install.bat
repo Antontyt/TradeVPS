@@ -339,6 +339,9 @@ ECHO NET 4.8
 REM ECHO NETVersion
 For /F tokens^=^3 %%i in ('reg query "HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\full" /v version')DO SET "NETVersion=%%i"
 ECHO NETVersion: "%NETVersion%"
+REM 2019 Server NET Version
+IF "%NETVersion%"=="4.8.03761" GOTO NET48_OK
+REM 2020 Server NET Version
 IF "%NETVersion%"=="4.8.04161" GOTO NET48_OK
 "C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o ndp48-x86-x64-allos-enu.exe "https://go.microsoft.com/fwlink/?linkid=2088631"
 timeout 5
