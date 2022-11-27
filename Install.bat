@@ -111,7 +111,6 @@ REM ============================================================================
 set/a lTime=%RDPPortNumber%*1
 if "%lTime%"=="%RDPPortNumber%" (
 ÿecho –¥«®¥ ç¨á«®. "%RDPPortNumber%"
- PAUSE
 ) else (
 ÿecho —â®-â® ¤àã£®¥. "%RDPPortNumber%"
  PAUSE
@@ -424,6 +423,7 @@ IF NOT EXIST "C:\Service\TEMP\lnk\" MD "C:\Service\TEMP\lnk\"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/System/wp/WindowsUpdateInstall_Manual.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/System/wp/WindowsUpdateInstall_Auto.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/System/wp/MyHelper.bat"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/System/wp/MyHelperUpdate.bat"
 cscript /Nologo "C:\Service\TEMP\lnk\CreateHelperLnk.vbs"
 
 REM Get Windows Updates
