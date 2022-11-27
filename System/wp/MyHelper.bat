@@ -1,6 +1,7 @@
 @echo off
 chcp 866> nul
 :STARTER
+TITLE MyHelper Service
 REM =====================================================================================
 ECHO 0. Get and install Windows Updates
 ECHO.
