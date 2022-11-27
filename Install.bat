@@ -2,7 +2,7 @@
 chcp 866> nul
 REM https://github.com/W4RH4WK/Debloat-Windows-10/tree/master/utils
 REM ======================================================================================================================
-REM VERSION 1.0.9 - 26.11.2022
+REM VERSION 1.1.0 - 27.11.2022
 REM ======================================================================================================================
 reg.exe delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /f
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
@@ -18,7 +18,7 @@ reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.
 reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe" /v "InsertMode" /t REG_DWORD /d 0 /f
 REM ======================================================================================================================
 ECHO =====================================
-ECHO VERSION 1.0.9 - 27.11.2022
+ECHO VERSION 1.1.0 - 27.11.2022
 ECHO =====================================
 ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
@@ -56,7 +56,7 @@ REM ============================================================================
 :RENAME_USERNAME
 CLS
 ECHO =====================================
-ECHO VERSION 1.0.9 - 27.11.2022
+ECHO VERSION 1.1.0 - 27.11.2022
 ECHO =====================================
 ECHO.
 TITLE Переименование имени пользователя Administrator
@@ -436,6 +436,17 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnec
 
 REM Remove Programs from Startup
 reg delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v SecurityHealth /F
+
+REM Service defragsvc 
+ECHO Service defragsvc
+sc.exe stop defragsvc
+sc.exe config defragsvc start= disabled
+
+REM Interactive Services
+ECHO Interactive Services
+reg.exe ADD "HKLM\SYSTEM\CurrentControlSet\Control\Windows" /v NoInteractiveServices /t REG_DWORD /d 0 /f
+sc.exe stop ui0detect
+sc.exe config ui0detect start= disabled
 
 REM Install Aditional Programs
 "C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o 7z2201-x64.msi "https://www.7-zip.org/a/7z2201-x64.msi"
