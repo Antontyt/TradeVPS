@@ -5,7 +5,7 @@ strUserProfile = objShell.ExpandEnvironmentStrings("%USERPROFILE%")
 Set lnk = objShell.CreateShortcut("C:\Users\Public\Desktop\MyHelper.LNK")
 
 
-lnk.TargetPath = "C:\Service\UpdateSecurity.bat"
+lnk.TargetPath = "C:\Service\MyHelper.bat"
 lnk.Arguments = ""
 lnk.Description = "Firefox"
 'lnk.HotKey = "ALT+CTRL+F"

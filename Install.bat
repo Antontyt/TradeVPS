@@ -2,7 +2,7 @@
 chcp 866> nul
 REM https://github.com/W4RH4WK/Debloat-Windows-10/tree/master/utils
 REM ======================================================================================================================
-REM VERSION 1.1.0 - 27.11.2022
+REM VERSION 1.1.2 - 27.11.2022
 REM ======================================================================================================================
 reg.exe delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /f
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
@@ -18,7 +18,7 @@ reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.
 reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe" /v "InsertMode" /t REG_DWORD /d 0 /f
 REM ======================================================================================================================
 ECHO =====================================
-ECHO VERSION 1.1.0 - 27.11.2022
+ECHO VERSION 1.1.2 - 27.11.2022
 ECHO =====================================
 ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
@@ -56,7 +56,7 @@ REM ============================================================================
 :RENAME_USERNAME
 CLS
 ECHO =====================================
-ECHO VERSION 1.1.0 - 27.11.2022
+ECHO VERSION 1.1.2 - 27.11.2022
 ECHO =====================================
 ECHO.
 TITLE Переименование имени пользователя Administrator
@@ -423,12 +423,12 @@ IF NOT EXIST "C:\Service\TEMP\lnk\" MD "C:\Service\TEMP\lnk\"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/lnk/CreateHelperLnk.vbs
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/System/wp/WindowsUpdateInstall_Manual.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/System/wp/WindowsUpdateInstall_Auto.vbs"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/System/wp/UpdateSecurity.bat"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/System/wp/MyHelper.bat"
 cscript /Nologo "C:\Service\TEMP\lnk\CreateHelperLnk.vbs"
 
 REM Get Windows Updates
 ECHO Get Windows Updates
-cscript /Nologo "C:\Service\WindowsUpdateInstall_Auto.vbs"
+REM cscript /Nologo "C:\Service\WindowsUpdateInstall_Auto.vbs"
 
 REM Global Windows Settings
 ECHO Включение возможности RDP подключений
