@@ -2,7 +2,7 @@ Set objShell = WScript.CreateObject("WScript.Shell")
 Dim strUserProfile
 strUserProfile = objShell.ExpandEnvironmentStrings("%USERPROFILE%")
 
-Set lnk = objShell.CreateShortcut("C:\Users\Public\Desktop\UpdateSecurity.LNK")
+Set lnk = objShell.CreateShortcut("C:\Users\Public\Desktop\MyHelper.LNK")
 
 
 lnk.TargetPath = "C:\Service\UpdateSecurity.bat"
