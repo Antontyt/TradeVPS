@@ -18,7 +18,7 @@ reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.
 reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe" /v "InsertMode" /t REG_DWORD /d 0 /f
 REM ======================================================================================================================
 ECHO =====================================
-ECHO VERSION 1.1.3 - 27.11.2022
+ECHO VERSION 1.1.4 - 27.11.2022
 ECHO =====================================
 ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
@@ -56,7 +56,7 @@ REM ============================================================================
 :RENAME_USERNAME
 CLS
 ECHO =====================================
-ECHO VERSION 1.1.3 - 27.11.2022
+ECHO VERSION 1.1.4 - 27.11.2022
 ECHO =====================================
 ECHO.
 TITLE Переименование имени пользователя Administrator
@@ -334,6 +334,7 @@ TASKKILL /IM firefox.exe /F /T
 
 REM MS EDGE Remove
 ECHO MS EDGE Remove
+"C:\Program Files (x86)\Microsoft\Edge\Application\107.0.1418.56\Installer\setup.exe" --uninstall --system-level --verbose-logging --force-uninstall
 "C:\Program Files (x86)\Microsoft\Edge\Application\86.0.622.38\Installer\setup.exe" --uninstall --system-level --verbose-logging --force-uninstall
 schtasks /Delete /TN "MicrosoftEdgeUpdateTaskMachineCore{B95B19F5-FCC1-4E69-93F1-4E645586C4DC}" /F
 schtasks /Delete /TN "MicrosoftEdgeUpdateTaskMachineUA{46DB8337-FB73-4FC6-864D-7462C85416B9}" /F																					
