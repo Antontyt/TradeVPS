@@ -11,6 +11,10 @@ ECHO CRITICAL ERROR: Не найден файл "C:\Service\System\curl\curl.exe"
 PAUSE
 EXIT
 )
+REM ===================================================================================================================================================================================
+IF NOT EXIST "C:\Service\Test\" MD C:\Service\Test\
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/TSLab22BetaSetup_silentInstall.bat"
+REM ===================================================================================================================================================================================
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\reg\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/reg/RussiaLocale_ForNonUnicode.reg"
 regedit /s "C:\Service\TEMP\reg\RussiaLocale_ForNonUnicode.reg"
 REM ----------------------------------------------------------------------------------------------------
