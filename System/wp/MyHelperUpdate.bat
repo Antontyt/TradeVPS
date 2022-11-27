@@ -7,7 +7,7 @@ IF NOT EXIST "C:\Service\TEMP\reg\" MD C:\Service\TEMP\reg\
 IF EXIST "C:\Service\System\curl\curl.exe" (
 ECHO CURL OK
 ) ELSE (
-ECHO CRITICAL ERROR: –ù–µ –Ω–∞–π–¥–µ–Ω —Ñ–∞–π–ª "C:\Service\System\curl\curl.exe"
+ECHO CRITICAL ERROR: ç• ≠†©§•≠ ‰†©´ "C:\Service\System\curl\curl.exe"
 PAUSE
 EXIT
 )
@@ -18,7 +18,7 @@ REM ----------------------------------------------------------------------------
 IF EXIST "C:\Service\MyHelper.bat" (
 Start "" C:\Service\MyHelper.bat
 ) ELSE (
-ECHO CRITICAL ERROR: –ù–µ –Ω–∞–π–¥–µ–Ω —Ñ–∞–π–ª MyHelper.bat
+ECHO CRITICAL ERROR: ç• ≠†©§•≠ ‰†©´ MyHelper.bat
 PAUSE
 EXIT
 )
