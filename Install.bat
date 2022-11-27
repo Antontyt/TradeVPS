@@ -449,13 +449,15 @@ sc.exe stop ui0detect
 sc.exe config ui0detect start= disabled
 
 REM Install Aditional Programs
+IF EXIST "C:\Program Files\7-Zip" GOTO AFTER_INSTALL7z
 "C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o 7z2201-x64.msi "https://www.7-zip.org/a/7z2201-x64.msi"
 timeout 5
 MsiExec.exe /i "C:\Service\TEMP\app\7z2201-x64.msi" /qn
+:AFTER_INSTALL7z
 
 CLS
 ECHO PROGRAM END
-ECHO NEEDED REBOOT SERVER - OR PRESS BUTTON FOR REBOOT AUTOMATICALY
+ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
 PAUSE
 shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
 EXIT
