@@ -2,6 +2,7 @@
 chcp 866> nul
 :STARTER
 TITLE MyHelper Service
+CLS
 REM =====================================================================================
 ECHO VERSION 1.0.1 - 27.11.2022
 ECHO.
