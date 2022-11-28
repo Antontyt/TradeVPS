@@ -9,6 +9,10 @@ ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Disable SMB2 and SMB3 Protocol
 ECHO 2. Enable SMB2 and SMB3 Protocol
+ECHO 3. Disable SMB1 Protocol
+ECHO 4. Enable SMB1 Protocol
+ECHO 5. Disable ping to server
+ECHO 6. Enable ping to server
 ECHO.
 ECHO Ñ´Ô ØÆ§‚¢‡¶§•≠®Ô ≠†¶¨®‚• ENTER
 ECHO.
@@ -25,10 +29,18 @@ GOTO Disable_SMB2_SMB3
 IF /I '%INPUT%'=='2' (
 GOTO Enable_SMB2_SMB3
 )
-REM IF /I '%INPUT%'=='4' (
-REM ECHO –î–µ–π—Å—Ç–≤–∏—è —Å–æ –≤—Ä–µ–º–µ–Ω–µ–º –≤ —Ä–µ—Å—Ç–æ—Ä–∞–Ω–µ
-REM GOTO CONF04_Level4
-REM )
+IF /I '%INPUT%'=='3' (
+GOTO Disable_SMB1
+)
+IF /I '%INPUT%'=='4' (
+GOTO Enable_SMB1
+)
+IF /I '%INPUT%'=='5' (
+GOTO Disable_PING
+)
+IF /I '%INPUT%'=='6' (
+GOTO Enable_PING
+)
 IF /I '%INPUT%'=='Q' GOTO Quit
 CLS
 ECHO ================ é‚·„‚·‚¢„•‚ ¢Î°‡†≠≠Î© Ø†‡†¨•‚‡ =================
@@ -65,6 +77,36 @@ GOTO STARTER
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $true"
 cls
 ECHO Enable_SMB2_SMB3 DONE - PRESS ANY BUTTON FOR NEXT
+PAUSE
+GOTO STARTER
+
+:Disable_SMB1
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $false"
+cls
+ECHO Disable_SMB1 DONE - PRESS ANY BUTTON FOR NEXT
+PAUSE
+GOTO STARTER
+
+:Enable_SMB1
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $true"
+cls
+ECHO Enable_SMB1 DONE - PRESS ANY BUTTON FOR NEXT
+PAUSE
+GOTO STARTER
+
+:Disable_PING
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "Allow inbound ICMPv4" -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -Action Block"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "Allow inbound ICMPv6" -Direction Inbound -Protocol ICMPv6 -IcmpType 8 -Action Block"
+cls
+ECHO Disable_PING - PRESS ANY BUTTON FOR NEXT
+PAUSE
+GOTO STARTER
+
+:Enable_PING
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "Allow inbound ICMPv4" -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -Action Allow"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "Allow inbound ICMPv6" -Direction Inbound -Protocol ICMPv6 -IcmpType 8 -Action Allow"
+cls
+ECHO Enable_PING - PRESS ANY BUTTON FOR NEXT
 PAUSE
 GOTO STARTER
 
