@@ -16,7 +16,7 @@ ECHO 6. Enable ping to server
 ECHO.
 ECHO Для подтврждения нажмите ENTER
 ECHO.
-
+ 
 SET INPUT=
 SET /P INPUT=Числа от 0 до 3 для выбора или Q для выхода из программы:
 
