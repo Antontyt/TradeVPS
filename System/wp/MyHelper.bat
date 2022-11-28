@@ -4,7 +4,7 @@ chcp 866> nul
 TITLE MyHelper Service
 CLS
 REM =====================================================================================
-ECHO VERSION 1.0.2 - 27.11.2022
+ECHO VERSION 1.0.3 - 28.11.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Disable SMB2 and SMB3 Protocol
