@@ -61,7 +61,7 @@ CALL "%ProgramFiles%\Windows Defender\MpCmdRun.exe" -removedefinitions -dynamics
 CALL "%ProgramFiles%\Windows Defender\MpCmdRun.exe" -SignatureUpdate
 
 REM Get Windows Updates
-cscript /Nologo "C:\Security\WindowsUpdateInstall_Auto.vbs"
+cscript /Nologo "C:\Service\WindowsUpdateInstall_Auto.vbs"
 ECHO WindowsUpdates END - PRESS ANY BUTTON FOR NEXT
 PAUSE
 GOTO STARTER
