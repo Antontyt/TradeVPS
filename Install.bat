@@ -302,6 +302,14 @@ REM Shutdown Event Tracker
 ECHO Shutdown Event Tracker
 REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability" /v ShutdownReasonUI /t REG_DWORD /d 0 /F
 
+REM WindowsMenuLayout
+ECHO WindowsMenuLayout
+IF NOT EXIST "C:\Windows\Temp\Service\windows\" MD "C:\Windows\Temp\Service\windows\"
+REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Service\windows\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/WindowsLayouts/ImportLayout.ps1"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Service\windows\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/WindowsLayouts/StartLayout.xml"
+powershell.exe -file "C:\Windows\Temp\Service\windows\ImportLayout.ps1"
+
 REM =============================================================================================================
 REM Firefox ESR
 ECHO Firefox ESR
