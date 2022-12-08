@@ -1,8 +1,7 @@
 @echo off
 chcp 866> nul
-REM https://github.com/W4RH4WK/Debloat-Windows-10/tree/master/utils
 REM ======================================================================================================================
-REM VERSION 1.1.5 - 28.11.2022
+REM VERSION 1.1.6 - 08.12.2022
 REM ======================================================================================================================
 reg.exe delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /f
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
@@ -507,6 +506,18 @@ echo Wait 10 seconds before restart ...
 ping -n 10 127.0.0.1 > NUL
 echo Trying to restart NTP service:
 net start ntp
+REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+REM RestartOnCrash
+IF EXIST "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" GOTO END
+IF NOT EXIST "C:\Windows\Temp\Service\RestartOnCrash\" MD C:\Windows\Temp\Service\RestartOnCrash\
+TASKKILL /IM RestartOnCrash.exe /F /T
+RMDIR /S /Q "C:\Service\Software\RestartOnCrash\"
+REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\Temp\Service\RestartOnCrash\ -o RestartOnCrash.zip "https://w-shadow.com/files/RestartOnCrash-v1.6.4.zip"
+timeout 5
+"C:\Program Files\7-Zip\7z.exe" x C:\Windows\Temp\Service\RestartOnCrash\RestartOnCrash.zip -oC:\Service\Software\RestartOnCrash\
+"C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\Software\RestartOnCrash\ -o settings.ini "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/RestartOnCrash/settings.ini"
+START "" "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe"
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 CLS
