@@ -471,7 +471,7 @@ ECHO Install NTP Service
 REM NTP
 REM https://www.meinbergglobal.com/english/sw/ntp.htm
 ECHO NTP
-IF EXIST "C:\Program Files (x86)\NTP\ntpd.exe" GOTO RestartOnCrash
+IF EXIST "C:\Program Files (x86)\NTP\bin\ntpd.exe" GOTO RestartOnCrash
 IF EXIST "C:\Windows\Temp\Service\ntp\" RMDIR /S /Q "C:\Windows\Temp\Service\ntp\"
 IF NOT EXIST "C:\Windows\Temp\Service\ntp\" MD C:\Windows\Temp\Service\ntp\
 REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
