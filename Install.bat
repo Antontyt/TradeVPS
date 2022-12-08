@@ -471,7 +471,7 @@ ECHO Install NTP Service
 REM NTP
 REM https://www.meinbergglobal.com/english/sw/ntp.htm
 ECHO NTP
-IF EXIST "C:\Program Files (x86)\NTP\ntpd.exe" GOTO END
+IF EXIST "C:\Program Files (x86)\NTP\ntpd.exe" GOTO RestartOnCrash
 IF EXIST "C:\Windows\Temp\Service\ntp\" RMDIR /S /Q "C:\Windows\Temp\Service\ntp\"
 IF NOT EXIST "C:\Windows\Temp\Service\ntp\" MD C:\Windows\Temp\Service\ntp\
 REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -507,8 +507,9 @@ ping -n 10 127.0.0.1 > NUL
 echo Trying to restart NTP service:
 net start ntp
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+:RestartOnCrash
 REM RestartOnCrash
-IF EXIST "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" GOTO END
+IF EXIST "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" GOTO PROGRAM_END
 IF NOT EXIST "C:\Windows\Temp\Service\RestartOnCrash\" MD C:\Windows\Temp\Service\RestartOnCrash\
 TASKKILL /IM RestartOnCrash.exe /F /T
 RMDIR /S /Q "C:\Service\Software\RestartOnCrash\"
@@ -521,6 +522,7 @@ START "" "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe"
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 CLS
+:PROGRAM_END
 ECHO PROGRAM END
 ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
 PAUSE
