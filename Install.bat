@@ -483,9 +483,9 @@ IF EXIST "C:\Program Files (x86)\D4\D4.exe" GOTO D4CONFIG
 IF NOT EXIST "C:\Windows\Temp\Service\D4\" MD C:\Windows\Temp\Service\D4\
 REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 "C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\Temp\Service\D4\ -o d4time531.msi "http://www.thinkman.com/dimension4/d4time531.msi"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Service\D4\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/MyHelperUpdate.bat"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Service\D4\ "https://github.com/Antontyt/WindowsServerSecurity/raw/main/Settings/Programs/D4/server.dat"
 timeout 5
-msiexec /i "C:\Service\TEMP\D4\d4time531.msi" /QN /L*V "C:\Service\TEMP\d4time531.log"
+msiexec /i "C:\Windows\Temp\Service\D4\d4time531.msi" /QN /L*V "C:\Service\TEMP\d4time531.log"
 
 :D4CONFIG
 REM Dimension4
