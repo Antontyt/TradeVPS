@@ -1,7 +1,7 @@
 @echo off
 chcp 866> nul
 REM ======================================================================================================================
-REM VERSION 1.1.8 - 10.12.2022
+REM VERSION 1.1.9 - 10.12.2022
 REM ======================================================================================================================
 reg.exe delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /f
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
@@ -17,7 +17,7 @@ reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.
 reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe" /v "InsertMode" /t REG_DWORD /d 0 /f
 REM ======================================================================================================================
 ECHO =====================================
-ECHO VERSION 1.1.8 - 10.12.2022
+ECHO VERSION 1.1.9 - 10.12.2022
 ECHO =====================================
 ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
@@ -55,7 +55,7 @@ REM ============================================================================
 :RENAME_USERNAME
 CLS
 ECHO =====================================
-ECHO VERSION 1.1.8 - 10.12.2022
+ECHO VERSION 1.1.9 - 10.12.2022
 ECHO =====================================
 ECHO.
 TITLE Переименование имени пользователя Administrator
@@ -489,6 +489,7 @@ IF EXIST "C:\Program Files (x86)\D4\D4.exe" GOTO D4CONFIG
 IF NOT EXIST "C:\Windows\Temp\Service\D4\" MD C:\Windows\Temp\Service\D4\
 REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 "C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\Temp\Service\D4\ -o d4time531.msi "http://www.thinkman.com/dimension4/d4time531.msi"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Service\D4\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/D4/defaults.ini"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Service\D4\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/D4/server.dat"
 timeout 5
 msiexec /i "C:\Windows\Temp\Service\D4\d4time531.msi" /QN /L*V "C:\Service\TEMP\d4time531.log"
@@ -499,6 +500,7 @@ net stop Dimension4
 REM Insert a delay ...
 echo Wait 10 seconds before restart ...
 ping -n 10 127.0.0.1 > NUL
+XCOPY /I /Z /Y "C:\Windows\Temp\Service\D4\defaults.ini" "C:\Program Files (x86)\D4\"
 XCOPY /I /Z /Y "C:\Windows\Temp\Service\D4\server.dat" "C:\Program Files (x86)\D4\"
 net start Dimension4
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
