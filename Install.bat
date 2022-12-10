@@ -476,6 +476,9 @@ ECHO Change Windows Settings
 w32tm /unregister
 net stop w32tm
 sc config w32time start= disabled
+ECHO Hyper-V Time Synchronization Service
+sc stop vmictimesync
+sc config "vmictimesync" start= disabled
 net stop tzautoupdate
 sc config tzautoupdate start= disabled
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\W32Time\Parameters" /v Type /d "NoSync" /F
