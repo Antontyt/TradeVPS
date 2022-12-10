@@ -98,10 +98,9 @@ ECHO Для переименования пользователя "%newusername%"
 ECHO Нажмите любую кнопку для подтверждения
 PAUSE
 wmic useraccount where name='%userp%' rename %newusername%
-ECHO PROGRAM END
-ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
-PAUSE
-shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /d C:\Service\temp\install.bat /f
+shutdown /r /t 5 /c "The server will be shutdown in 5 seconds"
+EXIT
 :USERNAME_OK
 ECHO USERNAME_OK
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
