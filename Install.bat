@@ -514,7 +514,8 @@ timeout 5
 "C:\Program Files\7-Zip\7z.exe" x C:\Windows\Temp\Service\RestartOnCrash\RestartOnCrash.zip -oC:\Service\Software\RestartOnCrash\
 "C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\Software\RestartOnCrash\ -o settings.ini "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/RestartOnCrash/settings.ini"
 IF EXIST "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" (
-REG ADD "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "RestartOnCrash" /t REG_SZ /d "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" /f
+REG DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "wsRestartOnCrash" /F
+REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "wsRestartOnCrash" /t REG_SZ /d "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" /F
 START "" "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe"
 )
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -523,7 +524,7 @@ IF NOT EXIST "C:\Service\Software\StartWindows\" MD "C:\Service\Software\StartWi
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Software\StartWindows\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/Starter.bat"
 timeout 5
 IF EXIST "C:\Service\Software\StartWindows\Starter.bat" (
-REG ADD "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "RestartOnCrash" /t REG_SZ /d "C:\Service\Software\StartWindows\Starter.bat" /f
+REG ADD "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "Starter" /t REG_SZ /d "C:\Service\Software\StartWindows\Starter.bat" /F
 "C:\Service\Software\StartWindows\Starter.bat"
 )
 
