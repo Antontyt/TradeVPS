@@ -13,11 +13,14 @@ EXIT
 )
 REM ===================================================================================================================================================================================
 IF NOT EXIST "C:\Service\TEMP\lnk\" MD "C:\Service\TEMP\lnk\"
+IF NOT EXIST "C:\Service\Software\PowershellScripts\" MD "C:\Service\Software\PowershellScripts\"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateHelperLnk.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/WindowsUpdateInstall_Manual.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/WindowsUpdateInstall_Auto.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/MyHelper.bat"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/MyHelperUpdate.bat"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Software\PowershellScripts\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/PowershellScripts/Get-Badname.ps1"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Software\PowershellScripts\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/PowershellScripts/Get-Bruteforce.ps1"
 cscript /Nologo "C:\Service\TEMP\lnk\CreateHelperLnk.vbs"
 IF NOT EXIST "C:\Service\Test\" MD C:\Service\Test\
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/TSLab22BetaSetup_silentInstall.bat"
