@@ -405,6 +405,14 @@ regedit /s "C:\Windows\Temp\Registry\RussiaLocale_ForNonUnicode.reg"
 REM DISABLE SMB1 Protocol
 ECHO DISABLE SMB1 Protocol
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v SMB1 /t REG_DWORD /d 0 /F
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $false -Force"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB1 -Type DWORD -Value 0 -Force"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 0 -Force"
+sc.exe config mrxsmb20 start= disabled
+
+REM Remove WoW64-Support, FS-SMB1 Protocols
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-WindowsFeature WoW64-Support, FS-SMB1 -Force"
 
 REM Update Windows Defender
 ECHO Update Windows Defender
