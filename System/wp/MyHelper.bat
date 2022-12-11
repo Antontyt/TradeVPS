@@ -4,42 +4,39 @@ chcp 866> nul
 TITLE MyHelper Service
 CLS
 REM =====================================================================================
-ECHO VERSION 1.0.4 - 28.11.2022
+ECHO VERSION 1.0.5 - 11.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
-ECHO 1. Disable SMB2 and SMB3 Protocol
-ECHO 2. Enable SMB2 and SMB3 Protocol
-ECHO 3. Disable SMB1 Protocol
-ECHO 4. Enable SMB1 Protocol
-ECHO 5. Disable ping to server
-ECHO 6. Enable ping to server
+ECHO 1. Control SMB2 and SMB3 Protocol
+ECHO 2. Control SMB1 Protocol
+ECHO 3. Control ping to server
+ECHO 4. Security Checks
 ECHO.
-ECHO Для подтврждения нажмите ENTER
+ECHO =================================================================
+ECHO Для подтверждения нажмите ENTER
 ECHO.
  
 SET INPUT=
-SET /P INPUT=Числа от 0 до 3 для выбора или Q для выхода из программы:
+SET /P INPUT=Числа от 0 до 4 для выбора или Q для выхода из программы:
 
 IF /I '%INPUT%'=='0' (
 GOTO WindowsUpdates
 )
+
 IF /I '%INPUT%'=='1' (
-GOTO Disable_SMB2_SMB3
+GOTO ControlSMB2SMB3
 )
+
 IF /I '%INPUT%'=='2' (
-GOTO Enable_SMB2_SMB3
+GOTO ControlSMB1
 )
+
 IF /I '%INPUT%'=='3' (
-GOTO Disable_SMB1
+GOTO ControlPING
 )
+
 IF /I '%INPUT%'=='4' (
-GOTO Enable_SMB1
-)
-IF /I '%INPUT%'=='5' (
-GOTO Disable_PING
-)
-IF /I '%INPUT%'=='6' (
-GOTO Enable_PING
+GOTO SecurityChecks
 )
 IF /I '%INPUT%'=='Q' GOTO Quit
 CLS
@@ -51,10 +48,131 @@ ECHO -----------------------------------------------------------------
 ECHO ================ Отсутствует выбранный параметр =================
 PAUSE > NUL
 GOTO STARTER
-PAUSE
+
 REM =====================================================================================
+REM /////////////////////////////////////////////////////////////////////////////////////
+REM =====================================================================================
+:ControlSMB2SMB3
+CLS
+ECHO VERSION 1.0.5 - 11.12.2022
+ECHO.
+ECHO Control SMB2 and SMB3
+ECHO.
+ECHO 0. Disable SMB2 and SMB3
+ECHO 1. Enable SMB2 and SMB3
+ECHO.
+ECHO =================================================================
+ECHO B. Для возврата назад
+ECHO.
+ 
+SET INPUT=
+SET /P INPUT=Числа от 0 до 1 для выбора или B для возврата обратно:
+IF /I '%INPUT%'=='0' GOTO Disable_SMB2_SMB3
+IF /I '%INPUT%'=='1' GOTO Enable_SMB2_SMB3
+IF /I '%INPUT%'=='B' GOTO STARTER
+CLS
+ECHO ================ Отсутствует выбранный параметр =================
+ECHO -----------------------------------------------------------------
+ECHO Пожалуйста выберите параметр из списка
+ECHO Меню [0-1] или нажмите 'B' для возврата назад.
+ECHO -----------------------------------------------------------------
+ECHO ================ Отсутствует выбранный параметр =================
+PAUSE > NUL
+GOTO ControlSMB2SMB3
 
+REM ============================================================================
+REM ////////////////////////////////////////////////////////////////////////////
+:ControlSMB1
+CLS
+ECHO VERSION 1.0.5 - 11.12.2022
+ECHO.
+ECHO Control SMB1
+ECHO.
+ECHO 0. Disable SMB1
+ECHO 1. Enable SMB1
+ECHO.
+ECHO =================================================================
+ECHO B. Для возврата назад
+ECHO.
+ 
+SET INPUT=
+SET /P INPUT=Числа от 0 до 1 для выбора или B для возврата обратно:
+IF /I '%INPUT%'=='0' GOTO Disable_SMB1
+IF /I '%INPUT%'=='1' GOTO Enable_SMB1
+IF /I '%INPUT%'=='B' GOTO STARTER
+CLS
+ECHO ================ Отсутствует выбранный параметр =================
+ECHO -----------------------------------------------------------------
+ECHO Пожалуйста выберите параметр из списка
+ECHO Меню [0-1] или нажмите 'B' для возврата назад.
+ECHO -----------------------------------------------------------------
+ECHO ================ Отсутствует выбранный параметр =================
+PAUSE > NUL
+GOTO ControlSMB1
 
+REM ============================================================================
+REM ////////////////////////////////////////////////////////////////////////////
+:ControlPING
+CLS
+ECHO VERSION 1.0.5 - 11.12.2022
+ECHO.
+ECHO Control PING - Recomened Disable PING
+ECHO.
+ECHO 0. Disable ICMP PING
+ECHO 1. Enable ICMP PING
+ECHO.
+ECHO =================================================================
+ECHO B. Для возврата назад
+ECHO.
+ 
+SET INPUT=
+SET /P INPUT=Числа от 0 до 1 для выбора или B для возврата обратно:
+IF /I '%INPUT%'=='0' GOTO Disable_PING
+IF /I '%INPUT%'=='1' GOTO Enable_PING
+IF /I '%INPUT%'=='B' GOTO STARTER
+CLS
+ECHO ================ Отсутствует выбранный параметр =================
+ECHO -----------------------------------------------------------------
+ECHO Пожалуйста выберите параметр из списка
+ECHO Меню [0-1] или нажмите 'B' для возврата назад.
+ECHO -----------------------------------------------------------------
+ECHO ================ Отсутствует выбранный параметр =================
+PAUSE > NUL
+GOTO ControlPING
+
+REM ============================================================================
+REM ////////////////////////////////////////////////////////////////////////////
+:SecurityChecks
+CLS
+ECHO VERSION 1.0.5 - 11.12.2022
+ECHO.
+ECHO SecurityChecks
+ECHO.
+ECHO 0. Script Get-Badname
+ECHO 1. Script Get-Bruteforce
+ECHO.
+ECHO =================================================================
+ECHO B. Для возврата назад
+ECHO.
+ 
+SET INPUT=
+SET /P INPUT=Числа от 0 до 1 для выбора или B для возврата обратно:
+IF /I '%INPUT%'=='0' GOTO SecurityChecks_Badname
+IF /I '%INPUT%'=='1' GOTO SecurityChecks_Bruteforce
+IF /I '%INPUT%'=='B' GOTO STARTER
+CLS
+ECHO ================ Отсутствует выбранный параметр =================
+ECHO -----------------------------------------------------------------
+ECHO Пожалуйста выберите параметр из списка
+ECHO Меню [0-1] или нажмите 'B' для возврата назад.
+ECHO -----------------------------------------------------------------
+ECHO ================ Отсутствует выбранный параметр =================
+PAUSE > NUL
+GOTO SecurityChecks
+
+REM =====================================================================================
+REM /////////////////////////////////////////////////////////////////////////////////////
+REM =====================================================================================
 :WindowsUpdates
 REM Update Windows Defender
 CALL "%ProgramFiles%\Windows Defender\MpCmdRun.exe" -removedefinitions -dynamicsignatures
@@ -67,28 +185,28 @@ PAUSE
 GOTO STARTER
 
 :Disable_SMB2_SMB3
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $false"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $false -Force"
 cls
 ECHO Disable_SMB2_SMB3 DONE - PRESS ANY BUTTON FOR NEXT
 PAUSE
 GOTO STARTER
 
 :Enable_SMB2_SMB3
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $true"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $true -Force"
 cls
 ECHO Enable_SMB2_SMB3 DONE - PRESS ANY BUTTON FOR NEXT
 PAUSE
 GOTO STARTER
 
 :Disable_SMB1
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $false"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force"
 cls
 ECHO Disable_SMB1 DONE - PRESS ANY BUTTON FOR NEXT
 PAUSE
 GOTO STARTER
 
 :Enable_SMB1
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $true"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $true -Force"
 cls
 ECHO Enable_SMB1 DONE - PRESS ANY BUTTON FOR NEXT
 PAUSE
@@ -109,6 +227,22 @@ PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -Displa
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName 'Allow inbound ICMPv6' -Direction Inbound -Protocol ICMPv6 -IcmpType 8 -Action Allow"
 cls
 ECHO Enable_PING - PRESS ANY BUTTON FOR NEXT
+PAUSE
+GOTO STARTER
+
+:SecurityChecks_Badname
+CLS
+ECHO SecurityChecks_Badname
+ECHO.
+powershell.exe -File "C:\Service\Software\PowershellScripts\Get-Badname.ps1"
+PAUSE
+GOTO STARTER
+
+:SecurityChecks_Bruteforce
+CLS
+ECHO SecurityChecks_Bruteforce
+ECHO.
+powershell.exe -File "C:\Service\Software\PowershellScripts\Get-Bruteforce.ps1"
 PAUSE
 GOTO STARTER
 
