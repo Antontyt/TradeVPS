@@ -470,6 +470,11 @@ MsiExec.exe /i "C:\Windows\Temp\Service\app\7z2201-x64.msi" /qn
 :AFTER_INSTALL7z
 
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+REM Disable WS-Management
+ECHO Disable WS-Management (Windows Remote Management)
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-PSRemoting -Force"
+net stop WinRM
+sc config WinRM start= disabled
 REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ECHO Change Windows Settings
 w32tm /unregister
