@@ -1,7 +1,7 @@
 @echo off
 chcp 866> nul
 REM ======================================================================================================================
-REM VERSION 1.2.0 - 11.12.2022
+REM VERSION 1.2.1 - 11.12.2022
 REM ======================================================================================================================
 reg.exe delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /f
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
@@ -17,7 +17,7 @@ reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.
 reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe" /v "InsertMode" /t REG_DWORD /d 0 /f
 REM ======================================================================================================================
 ECHO =====================================
-ECHO VERSION 1.2.0 - 11.12.2022
+ECHO VERSION 1.2.1 - 11.12.2022
 ECHO =====================================
 ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
@@ -55,7 +55,7 @@ REM ============================================================================
 :RENAME_USERNAME
 CLS
 ECHO =====================================
-ECHO VERSION 1.2.0 - 11.12.2022
+ECHO VERSION 1.2.1 - 11.12.2022
 ECHO =====================================
 ECHO.
 TITLE Переименование имени пользователя Administrator
@@ -385,12 +385,14 @@ IF NOT EXIST "C:\Windows\Temp\Registry\" MD C:\Windows\Temp\Registry\
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_Shutdown_Event_Tracker.reg"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/RussiaLocale_ForNonUnicode.reg"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/USALocale_ForNonUnicode.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/DisableAutoRun.reg"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Hide_search_on_taskbar.bat"																										 
 regedit /s "C:\Windows\Temp\Registry\Disable_DirtyShutdown.reg"
 regedit /s "C:\Windows\Temp\Registry\Disable_Recently_added_apps_list_on_Start_Menu.reg"
 regedit /s "C:\Windows\Temp\Registry\Disable_Search.reg"
 regedit /s "C:\Windows\Temp\Registry\Disable_ShowTaskViewButton.reg"
 regedit /s "C:\Windows\Temp\Registry\Disable_Shutdown_Event_Tracker.reg"
+regedit /s "C:\Windows\Temp\Registry\DisableAutoRun.reg"
 CALL "C:\Service\TEMP\Hide_search_on_taskbar.bat"
 
 REM REGIONAL SETTINGS
