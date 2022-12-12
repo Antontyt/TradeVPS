@@ -556,7 +556,6 @@ IF NOT EXIST "C:\Service\Software\StartWindows\" MD "C:\Service\Software\StartWi
 timeout 5
 IF EXIST "C:\Service\Software\StartWindows\Starter.bat" (
 REG ADD "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "Starter" /t REG_SZ /d "C:\Service\Software\StartWindows\Starter.bat" /F
-"C:\Service\Software\StartWindows\Starter.bat"
 )
 
 CLS
