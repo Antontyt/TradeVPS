@@ -547,7 +547,6 @@ timeout 5
 IF EXIST "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" (
 REG DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "wsRestartOnCrash" /F
 REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "wsRestartOnCrash" /t REG_SZ /d "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" /F
-START "" "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe"
 )
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 REM Starter Windows
