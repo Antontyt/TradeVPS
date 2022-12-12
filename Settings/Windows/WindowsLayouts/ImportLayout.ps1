@@ -1,4 +1,4 @@
-$StartLayoutPath = "C:\Windows\Temp\Service\windows\StartLayout.xml"
+$StartLayoutPath = "C:\Windows\TEMP\WindowsServerSecurity\Windows\StartLayout.xml"
 
 Import-StartLayout -LayoutPath $StartLayoutPath -MountPath 'C:\'
 New-Item -Path HKCU:\SOFTWARE\Policies\Microsoft\Windows -Name Explorer -ErrorAction SilentlyContinue

@@ -34,12 +34,12 @@ GOTO OPERATIONOS_OK
 GOTO NOTSUPPORTOS
 :OPERATIONOS_OK
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-IF "%WindowsProduct%"=="WindowsServer2019Standard" IF NOT EXIST "C:\Windows\TEMP\FLG\WindowsServer2019Standard_ID1.FLG" (
+IF "%WindowsProduct%"=="WindowsServer2019Standard" IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\FLG\WindowsServer2019Standard_ID1.FLG" (
 ECHO PLEASE REBOOT PC AND RESTART
 ECHO.
 ECHO PRESS BUTTON FOR REBOOT
-IF NOT EXIST "C:\Windows\TEMP\FLG\" MD C:\Windows\TEMP\FLG\
-ECHO 1 > "C:\Windows\TEMP\FLG\WindowsServer2019Standard_ID1.FLG"
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\FLG\" MD "C:\Windows\TEMP\WindowsServerSecurity\FLG\"
+ECHO 1 > "C:\Windows\TEMP\WindowsServerSecurity\FLG\WindowsServer2019Standard_ID1.FLG"
 PAUSE
 reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /d C:\Service\temp\install.bat /f
 shutdown /r /t 5 /c "The server will be shutdown in 5 seconds"
@@ -306,22 +306,22 @@ REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability" /v Shutdown
 
 REM WindowsMenuLayout
 ECHO WindowsMenuLayout
-IF NOT EXIST "C:\Windows\Temp\Service\windows\" MD "C:\Windows\Temp\Service\windows\"
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\Windows\" MD "C:\Windows\TEMP\WindowsServerSecurity\Windows\"
 REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Service\windows\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/WindowsLayouts/ImportLayout.ps1"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Service\windows\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/WindowsLayouts/StartLayout.xml"
-powershell.exe -file "C:\Windows\Temp\Service\windows\ImportLayout.ps1"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Windows "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/WindowsLayouts/ImportLayout.ps1"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Windows "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/WindowsLayouts/StartLayout.xml"
+powershell.exe -file "C:\Windows\TEMP\WindowsServerSecurity\Windows\ImportLayout.ps1"
 
 REM =============================================================================================================
 REM Firefox ESR
 ECHO Firefox ESR
 IF NOT EXIST "C:\Service\TEMP\lnk\" MD C:\Service\TEMP\lnk\
-IF NOT EXIST "C:\Windows\Temp\Service\app\" MD C:\Windows\Temp\Service\app\
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\app\" MD "C:\Windows\TEMP\WindowsServerSecurity\app\"
 IF EXIST "C:\Program Files\Mozilla Firefox\firefox.exe" GOTO FFLNK
-"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\Temp\Service\app\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
+"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\TEMP\WindowsServerSecurity\app\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
 timeout 5
 REM "temp\FirefoxESR.exe" -ms -ma
-CALL "C:\Windows\Temp\Service\app\FirefoxESR.exe" -ms
+CALL "C:\Windows\TEMP\WindowsServerSecurity\app\FirefoxESR.exe" -ms
 
 :FFLNK
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateFirefoxLnk.vbs"
@@ -330,9 +330,9 @@ cscript /Nologo "C:\Service\TEMP\lnk\CreateFirefoxLnk.vbs"
 IF EXIST "C:\Program Files (x86)\Notepad++\notepad++.exe" GOTO TASKKILL
 REM Notepad++
 ECHO Notepad++
-"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\Temp\Service\app\ -o NotepadPlusPlus.exe "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.7/npp.8.4.7.Installer.exe"
+"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\TEMP\WindowsServerSecurity\app\ -o NotepadPlusPlus.exe "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.7/npp.8.4.7.Installer.exe"
 timeout 5
-"C:\Windows\Temp\Service\app\NotepadPlusPlus.exe" /S
+"C:\Windows\TEMP\WindowsServerSecurity\app\NotepadPlusPlus.exe" /S
 
 :TASKKILL
 REM TASKKILL PROGRAMS
@@ -358,15 +358,15 @@ REM 2019 Server NET Version
 IF "%NETVersion%"=="4.8.03761" GOTO NET48_OK
 REM 2020 Server NET Version
 IF "%NETVersion%"=="4.8.04161" GOTO NET48_OK
-"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\Temp\Service\app\ -o ndp48-x86-x64-allos-enu.exe "https://go.microsoft.com/fwlink/?linkid=2088631"
+"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\TEMP\WindowsServerSecurity\app\ -o ndp48-x86-x64-allos-enu.exe "https://go.microsoft.com/fwlink/?linkid=2088631"
 timeout 5
-"C:\Windows\Temp\Service\app\ndp48-x86-x64-allos-enu.exe" /passive /norestart
+"C:\Windows\TEMP\WindowsServerSecurity\app\ndp48-x86-x64-allos-enu.exe" /passive /norestart
 REM ------------------------------------------------------------------------------------------------
 ECHO PLEASE REBOOT PC AND RESTART
 ECHO.
 ECHO PRESS BUTTON FOR REBOOT
-IF NOT EXIST "C:\Windows\TEMP\FLG\" MD C:\Windows\TEMP\FLG\
-ECHO 1 > "C:\Windows\TEMP\FLG\WindowsServer2019Standard_ID2.FLG"
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\FLG\" MD "C:\Windows\TEMP\WindowsServerSecurity\FLG\"
+ECHO 1 > "C:\Windows\TEMP\WindowsServerSecurity\FLG\WindowsServer2019Standard_ID2.FLG"
 PAUSE
 reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /d C:\Service\temp\install.bat /f
 shutdown /r /t 5 /c "The server will be shutdown in 5 seconds"
@@ -377,33 +377,33 @@ REM ----------------------------------------------------------------------------
 REM RESENTLY PROGRAMS
 ECHO RESENTLY PROGRAMS
 ECHO Download Registry Settings
-IF NOT EXIST "C:\Windows\Temp\Registry\" MD C:\Windows\Temp\Registry\
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsUpdates/WindowsUpdate.reg"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_DirtyShutdown.reg"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_Recently_added_apps_list_on_Start_Menu.reg"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_Search.reg"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_ShowTaskViewButton.reg"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_Shutdown_Event_Tracker.reg"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/RussiaLocale_ForNonUnicode.reg"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/USALocale_ForNonUnicode.reg"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/DisableAutoRun.reg"
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\Registry\" MD "C:\Windows\TEMP\WindowsServerSecurity\Registry\"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsUpdates/WindowsUpdate.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_DirtyShutdown.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_Recently_added_apps_list_on_Start_Menu.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_Search.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_ShowTaskViewButton.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_Shutdown_Event_Tracker.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/RussiaLocale_ForNonUnicode.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/USALocale_ForNonUnicode.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/DisableAutoRun.reg"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Hide_search_on_taskbar.bat"																										 
-regedit /s "C:\Windows\Temp\Registry\Disable_DirtyShutdown.reg"
-regedit /s "C:\Windows\Temp\Registry\Disable_Recently_added_apps_list_on_Start_Menu.reg"
-regedit /s "C:\Windows\Temp\Registry\Disable_Search.reg"
-regedit /s "C:\Windows\Temp\Registry\Disable_ShowTaskViewButton.reg"
-regedit /s "C:\Windows\Temp\Registry\Disable_Shutdown_Event_Tracker.reg"
-regedit /s "C:\Windows\Temp\Registry\DisableAutoRun.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\Disable_DirtyShutdown.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\Disable_Recently_added_apps_list_on_Start_Menu.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\Disable_Search.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\Disable_ShowTaskViewButton.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\Disable_Shutdown_Event_Tracker.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\DisableAutoRun.reg"
 REM Windows Update Settings
-regedit /s "C:\Windows\Temp\Registry\WindowsUpdate.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsUpdate.reg"
 CALL "C:\Service\TEMP\Hide_search_on_taskbar.bat"
 
 REM REGIONAL SETTINGS
 ECHO REGIONAL SETTINGS
-IF NOT EXIST "C:\Windows\Temp\Registry\RegionalSettings" MD C:\Windows\Temp\Registry\RegionalSettings
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\RegionalSettings\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/RegionalSettings/Settings.xml"
-C:\Windows\System32\control.exe intl.cpl,, /f:"C:\Windows\Temp\Registry\RegionalSettings\Settings.xml"
-regedit /s "C:\Windows\Temp\Registry\RussiaLocale_ForNonUnicode.reg"
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\Registry\RegionalSettings" MD C:\Windows\TEMP\WindowsServerSecurity\Registry\RegionalSettings
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\RegionalSettings\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/RegionalSettings/Settings.xml"
+C:\Windows\System32\control.exe intl.cpl,, /f:"C:\Windows\TEMP\WindowsServerSecurity\Registry\RegionalSettings\Settings.xml"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\RussiaLocale_ForNonUnicode.reg"
 
 REM DISABLE SMB1 Protocol
 ECHO DISABLE SMB1 Protocol
@@ -475,11 +475,16 @@ reg.exe ADD "HKLM\SYSTEM\CurrentControlSet\Control\Windows" /v NoInteractiveServ
 sc.exe stop ui0detect
 sc.exe config ui0detect start= disabled
 
+REM Change System Resolution
+IF NOT EXIST "C:\Service\Software\ChangeRes\" MD "C:\Service\Software\ChangeRes\"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Software\ChangeRes\ "https://github.com/Antontyt/WindowsServerSecurity/raw/main/Settings/Programs/ChangeRes/ChangeRes.exe"
+CALL "C:\Service\Software\ChangeRes\ChangeRes.exe" 1280 1024
+
 REM Install Aditional Programs
 IF EXIST "C:\Program Files\7-Zip" GOTO AFTER_INSTALL7z
-"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\Temp\Service\app\ -o 7z2201-x64.msi "https://www.7-zip.org/a/7z2201-x64.msi"
+"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\TEMP\WindowsServerSecurity\app\ -o 7z2201-x64.msi "https://www.7-zip.org/a/7z2201-x64.msi"
 timeout 5
-MsiExec.exe /i "C:\Windows\Temp\Service\app\7z2201-x64.msi" /qn
+MsiExec.exe /i "C:\Windows\TEMP\WindowsServerSecurity\app\7z2201-x64.msi" /qn
 :AFTER_INSTALL7z
 
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -504,13 +509,13 @@ REM ----------------------------------------------------------------------------
 REM Dimension4 TimeSync
 ECHO Dimension4 TimeSync
 IF EXIST "C:\Program Files (x86)\D4\D4.exe" GOTO D4CONFIG
-IF NOT EXIST "C:\Windows\Temp\Service\D4\" MD C:\Windows\Temp\Service\D4\
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\D4\" MD "C:\Windows\TEMP\WindowsServerSecurity\D4\"
 REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\Temp\Service\D4\ -o d4time531.msi "http://www.thinkman.com/dimension4/d4time531.msi"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Service\D4\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/D4/defaults.ini"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Service\D4\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/D4/server.dat"
+"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\TEMP\WindowsServerSecurity\D4\ -o d4time531.msi "http://www.thinkman.com/dimension4/d4time531.msi"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\D4\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/D4/defaults.ini"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\D4\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/D4/server.dat"
 timeout 5
-msiexec /i "C:\Windows\Temp\Service\D4\d4time531.msi" /QN /L*V "C:\Service\TEMP\d4time531.log"
+msiexec /i "C:\Windows\TEMP\WindowsServerSecurity\D4\d4time531.msi" /QN /L*V "C:\Windows\TEMP\WindowsServerSecurity\D4\d4time531.log"
 
 :D4CONFIG
 REM Dimension4
@@ -518,20 +523,20 @@ net stop Dimension4
 REM Insert a delay ...
 echo Wait 10 seconds before restart ...
 ping -n 10 127.0.0.1 > NUL
-XCOPY /I /Z /Y "C:\Windows\Temp\Service\D4\defaults.ini" "C:\Program Files (x86)\D4\"
-XCOPY /I /Z /Y "C:\Windows\Temp\Service\D4\server.dat" "C:\Program Files (x86)\D4\"
+XCOPY /I /Z /Y "C:\Windows\TEMP\WindowsServerSecurity\D4\defaults.ini" "C:\Program Files (x86)\D4\"
+XCOPY /I /Z /Y "C:\Windows\TEMP\WindowsServerSecurity\D4\server.dat" "C:\Program Files (x86)\D4\"
 net start Dimension4
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 :RestartOnCrash
 REM RestartOnCrash
 IF EXIST "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" GOTO PROGRAM_END
-IF NOT EXIST "C:\Windows\Temp\Service\RestartOnCrash\" MD C:\Windows\Temp\Service\RestartOnCrash\
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\RestartOnCrash\" MD "C:\Windows\TEMP\WindowsServerSecurity\RestartOnCrash\"
 TASKKILL /IM RestartOnCrash.exe /F /T
 RMDIR /S /Q "C:\Service\Software\RestartOnCrash\"
 REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\Temp\Service\RestartOnCrash\ -o RestartOnCrash.zip "https://w-shadow.com/files/RestartOnCrash-v1.6.4.zip"
+"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\TEMP\WindowsServerSecurity\RestartOnCrash\ -o RestartOnCrash.zip "https://w-shadow.com/files/RestartOnCrash-v1.6.4.zip"
 timeout 5
-"C:\Program Files\7-Zip\7z.exe" x C:\Windows\Temp\Service\RestartOnCrash\RestartOnCrash.zip -oC:\Service\Software\RestartOnCrash\
+"C:\Program Files\7-Zip\7z.exe" x C:\Windows\TEMP\WindowsServerSecurity\RestartOnCrash\RestartOnCrash.zip -oC:\Service\Software\RestartOnCrash\
 "C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\Software\RestartOnCrash\ -o settings.ini "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/RestartOnCrash/settings.ini"
 IF EXIST "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" (
 REG DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "wsRestartOnCrash" /F
