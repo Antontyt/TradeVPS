@@ -526,6 +526,12 @@ ping -n 10 127.0.0.1 > NUL
 XCOPY /I /Z /Y "C:\Windows\TEMP\WindowsServerSecurity\D4\defaults.ini" "C:\Program Files (x86)\D4\"
 XCOPY /I /Z /Y "C:\Windows\TEMP\WindowsServerSecurity\D4\server.dat" "C:\Program Files (x86)\D4\"
 net start Dimension4
+timeout 5
+for /F "tokens=3 delims=: " %%H in ('sc query "Dimension4" ^| findstr "        STATE"') do (
+  if /I "%%H" NEQ "RUNNING" (
+	CALL "C:\Program Files (x86)\D4\D4.exe"
+  )
+)
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 :RestartOnCrash
 REM RestartOnCrash
