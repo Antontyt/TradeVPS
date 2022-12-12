@@ -4,7 +4,7 @@ chcp 866> nul
 TITLE MyHelper Service
 CLS
 REM =====================================================================================
-ECHO VERSION 1.0.5 - 11.12.2022
+ECHO VERSION 1.0.6 - 12.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -54,7 +54,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.0.5 - 11.12.2022
+ECHO VERSION 1.0.6 - 12.12.2022
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -84,7 +84,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlSMB1
 CLS
-ECHO VERSION 1.0.5 - 11.12.2022
+ECHO VERSION 1.0.6 - 12.12.2022
 ECHO.
 ECHO Control SMB1
 ECHO.
@@ -114,7 +114,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.0.5 - 11.12.2022
+ECHO VERSION 1.0.6 - 12.12.2022
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -144,7 +144,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.0.5 - 11.12.2022
+ECHO VERSION 1.0.6 - 12.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -186,6 +186,9 @@ GOTO STARTER
 
 :Disable_SMB2_SMB3
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $false -Force"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 0 -Force"
+sc.exe config mrxsmb20 start= disabled
+net stop mrxsmb20
 cls
 ECHO Disable_SMB2_SMB3 DONE - PRESS ANY BUTTON FOR NEXT
 PAUSE
@@ -193,6 +196,10 @@ GOTO STARTER
 
 :Enable_SMB2_SMB3
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $true -Force"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 1 -Force"
+sc.exe config mrxsmb20 start= auto
+ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
+net start mrxsmb20
 cls
 ECHO Enable_SMB2_SMB3 DONE - PRESS ANY BUTTON FOR NEXT
 PAUSE
