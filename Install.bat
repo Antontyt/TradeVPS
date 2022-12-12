@@ -477,7 +477,7 @@ sc.exe config ui0detect start= disabled
 
 REM Change System Resolution
 IF NOT EXIST "C:\Service\Software\ChangeRes\" MD "C:\Service\Software\ChangeRes\"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Software\ChangeRes\ "https://github.com/Antontyt/WindowsServerSecurity/raw/main/Settings/Programs/ChangeRes/ChangeRes.exe"
+"C:\Service\System\curl\curl.exe" -L --output C:\Service\Software\ChangeRes\ChangeRes.exe "https://github.com/Antontyt/WindowsServerSecurity/blob/main/Settings/Programs/ChangeRes/ChangeRes.exe?raw=true"
 CALL "C:\Service\Software\ChangeRes\ChangeRes.exe" 1280 1024
 
 REM Install Aditional Programs
