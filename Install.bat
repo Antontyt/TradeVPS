@@ -378,6 +378,7 @@ REM RESENTLY PROGRAMS
 ECHO RESENTLY PROGRAMS
 ECHO Download Registry Settings
 IF NOT EXIST "C:\Windows\Temp\Registry\" MD C:\Windows\Temp\Registry\
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsUpdates/WindowsUpdate.reg"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_DirtyShutdown.reg"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_Recently_added_apps_list_on_Start_Menu.reg"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/Disable_Search.reg"
@@ -393,6 +394,8 @@ regedit /s "C:\Windows\Temp\Registry\Disable_Search.reg"
 regedit /s "C:\Windows\Temp\Registry\Disable_ShowTaskViewButton.reg"
 regedit /s "C:\Windows\Temp\Registry\Disable_Shutdown_Event_Tracker.reg"
 regedit /s "C:\Windows\Temp\Registry\DisableAutoRun.reg"
+REM Windows Update Settings
+regedit /s "C:\Windows\Temp\Registry\WindowsUpdate.reg"
 CALL "C:\Service\TEMP\Hide_search_on_taskbar.bat"
 
 REM REGIONAL SETTINGS
