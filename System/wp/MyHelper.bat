@@ -4,11 +4,11 @@ chcp 866> nul
 TITLE MyHelper Service
 CLS
 REM =====================================================================================
-ECHO VERSION 1.0.6 - 12.12.2022
+ECHO VERSION 1.0.7 - 13.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
-ECHO 2. Control SMB1 Protocol
+ECHO 2. Check and change RDP Port
 ECHO 3. Control ping to server
 ECHO 4. Security Checks
 ECHO.
@@ -28,7 +28,7 @@ GOTO ControlSMB2SMB3
 )
 
 IF /I '%INPUT%'=='2' (
-GOTO ControlSMB1
+GOTO ControlRDPPort
 )
 
 IF /I '%INPUT%'=='3' (
@@ -54,7 +54,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.0.6 - 12.12.2022
+ECHO VERSION 1.0.7 - 13.12.2022
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -67,8 +67,8 @@ ECHO.
  
 SET INPUT=
 SET /P INPUT=Числа от 0 до 1 для выбора или B для возврата обратно:
-IF /I '%INPUT%'=='0' GOTO Disable_SMB2_SMB3
-IF /I '%INPUT%'=='1' GOTO Enable_SMB2_SMB3
+IF /I '%INPUT%'=='0' GOTO ControlSMB2SMB3_Disable
+IF /I '%INPUT%'=='1' GOTO ControlSMB2SMB3_Enable
 IF /I '%INPUT%'=='B' GOTO STARTER
 CLS
 ECHO ================ Отсутствует выбранный параметр =================
@@ -82,39 +82,83 @@ GOTO ControlSMB2SMB3
 
 REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
-:ControlSMB1
+:ControlRDPPort
+:ControlRDPPort
+REM ECHO RDP Port
+For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
+set /a RDPPortNumber=%RDPPortNumber%
+ECHO RDPPortNumber: "%RDPPortNumber%"
+REM ====================================================================================
+:ControlRDPPort_Change
 CLS
-ECHO VERSION 1.0.6 - 12.12.2022
+TITLE Смена порта RDP
+CLS
+ECHO VERSION 1.0.7 - 13.12.2022
 ECHO.
-ECHO Control SMB1
+ECHO Для безопасности советую изменить номер порта RDP
+ECHO Стандартный порт:3389
+ECHO Текущий порт:"%RDPPortNumber%"
 ECHO.
-ECHO 0. Disable SMB1
-ECHO 1. Enable SMB1
+ECHO Подключаться нужно IP_ADDRESS:PORT
+ECHO Используйте только цифры
+ECHO.
+ECHO Выберите требуемое действие
+ECHO ===============================================================================
+ECHO.
+ECHO 0. Поменять RDP Port
+ECHO 1. Продолжить без изменения
 ECHO.
 ECHO =================================================================
 ECHO B. Для возврата назад
 ECHO.
- 
-SET INPUT=
-SET /P INPUT=Числа от 0 до 1 для выбора или B для возврата обратно:
-IF /I '%INPUT%'=='0' GOTO Disable_SMB1
-IF /I '%INPUT%'=='1' GOTO Enable_SMB1
+SET choice=
+SET /p choice="Для подтверждения после ввода нажмите Enter :"
+ECHO.
+
+IF /I '%choice%'=='0' (
+GOTO ControlRDPPort_RUN
+)
+IF /I '%choice%'=='1' (
+GOTO ControlRDPPort_OK
+)
 IF /I '%INPUT%'=='B' GOTO STARTER
 CLS
 ECHO ================ Отсутствует выбранный параметр =================
 ECHO -----------------------------------------------------------------
-ECHO Пожалуйста выберите параметр из списка
-ECHO Меню [0-1] или нажмите 'B' для возврата назад.
+ECHO Доступные варианты 0 или 1
+ECHO Нажмите любую кнопку для повторного ввода
 ECHO -----------------------------------------------------------------
 ECHO ================ Отсутствует выбранный параметр =================
+PAUSE
+GOTO ControlRDPPort_Change
+:ControlRDPPort_RUN
+CLS
+ECHO Только цифры
+SET /P newrdpport=Введите номер порта - любой четырехзначный порт:
+ECHO Текущий порт:"%RDPPortNumber%" \ Выберите любой от 3000
+ECHO.
+REM ====================================================================================
+ECHO Введённый новый порт: "%newrdpport%"
+ECHO Нажмите любую кнопку для подтверждения
+PAUSE
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d %newrdpport% /F
+For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
+set /a RDPPortNumber=%RDPPortNumber%
+ECHO RDPPortNumber: "%RDPPortNumber%"
+REM -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'AllowRDP'"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'AllowRDP'"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName 'AllowRDP' -Direction Inbound -Protocol TCP -LocalPort %RDPPortNumber% -Action Allow"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName 'AllowRDP' -Direction Inbound -Protocol UDP -LocalPort %RDPPortNumber% -Action Allow"
+:ControlRDPPort_OK
 PAUSE > NUL
-GOTO ControlSMB1
+GOTO STARTER
 
 REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.0.6 - 12.12.2022
+ECHO VERSION 1.0.7 - 13.12.2022
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -144,7 +188,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.0.6 - 12.12.2022
+ECHO VERSION 1.0.7 - 13.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -184,26 +228,25 @@ ECHO WindowsUpdates END - PRESS ANY BUTTON FOR NEXT
 PAUSE
 GOTO STARTER
 
-:Disable_SMB2_SMB3
+:ControlSMB2SMB3_Disable
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $false -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 0 -Force"
 sc.exe config mrxsmb20 start= disabled
 net stop mrxsmb20
-cls
-ECHO Disable_SMB2_SMB3 DONE - PRESS ANY BUTTON FOR NEXT
-PAUSE
-GOTO STARTER
+ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
+TIMEOUT 5
+shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
+EXIT
 
-:Enable_SMB2_SMB3
+:ControlSMB2SMB3_Enable
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $true -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 1 -Force"
 sc.exe config mrxsmb20 start= auto
-ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
 net start mrxsmb20
-cls
-ECHO Enable_SMB2_SMB3 DONE - PRESS ANY BUTTON FOR NEXT
-PAUSE
-GOTO STARTER
+ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
+TIMEOUT 5
+shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
+EXIT
 
 :Disable_SMB1
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force"
