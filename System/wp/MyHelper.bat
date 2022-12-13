@@ -83,7 +83,6 @@ GOTO ControlSMB2SMB3
 REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlRDPPort
-:ControlRDPPort
 REM ECHO RDP Port
 For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
 set /a RDPPortNumber=%RDPPortNumber%
@@ -111,14 +110,12 @@ ECHO.
 ECHO =================================================================
 ECHO B. Для возврата назад
 ECHO.
-SET choice=
-SET /p choice="Для подтверждения после ввода нажмите Enter :"
-ECHO.
-
-IF /I '%choice%'=='0' (
+SET INPUT=
+SET /p INPUT="Для подтверждения после ввода нажмите Enter :"
+IF /I '%INPUT%'=='0' (
 GOTO ControlRDPPort_RUN
 )
-IF /I '%choice%'=='1' (
+IF /I '%INPUT%'=='1' (
 GOTO ControlRDPPort_OK
 )
 IF /I '%INPUT%'=='B' GOTO STARTER
