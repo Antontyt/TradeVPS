@@ -4,7 +4,7 @@ chcp 866> nul
 TITLE MyHelper Service
 CLS
 REM =====================================================================================
-ECHO VERSION 1.0.8 - 13.12.2022
+ECHO VERSION 1.0.9 - 13.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -54,7 +54,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.0.8 - 13.12.2022
+ECHO VERSION 1.0.9 - 13.12.2022
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -92,7 +92,7 @@ REM ============================================================================
 CLS
 TITLE Смена порта RDP
 CLS
-ECHO VERSION 1.0.8 - 13.12.2022
+ECHO VERSION 1.0.9 - 13.12.2022
 ECHO.
 ECHO Для безопасности советую изменить номер порта RDP
 ECHO Стандартный порт:3389
@@ -143,6 +143,8 @@ For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Term
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO RDPPortNumber: "%RDPPortNumber%"
 REM -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+net stop termservice
+net start termservice
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'AllowRDP'"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'AllowRDP'"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName 'AllowRDP' -Direction Inbound -Protocol TCP -LocalPort %RDPPortNumber% -Action Allow"
@@ -154,7 +156,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.0.8 - 13.12.2022
+ECHO VERSION 1.0.9 - 13.12.2022
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -184,7 +186,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.0.8 - 13.12.2022
+ECHO VERSION 1.0.9 - 13.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
