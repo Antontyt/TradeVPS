@@ -399,6 +399,7 @@ regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsUpdate.reg"
 CALL "C:\Service\TEMP\Hide_search_on_taskbar.bat"
 
 REM Windows Privacy Settings
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\" MD "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Clear_location_last_accessed_history_for_current_user.bat"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Activity_history.reg"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_app_launch_tracking.reg"
