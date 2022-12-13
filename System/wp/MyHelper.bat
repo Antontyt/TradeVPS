@@ -4,7 +4,7 @@ chcp 866> nul
 TITLE MyHelper Service
 CLS
 REM =====================================================================================
-ECHO VERSION 1.0.7 - 13.12.2022
+ECHO VERSION 1.0.8 - 13.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -54,7 +54,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.0.7 - 13.12.2022
+ECHO VERSION 1.0.8 - 13.12.2022
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -92,7 +92,7 @@ REM ============================================================================
 CLS
 TITLE Смена порта RDP
 CLS
-ECHO VERSION 1.0.7 - 13.12.2022
+ECHO VERSION 1.0.8 - 13.12.2022
 ECHO.
 ECHO Для безопасности советую изменить номер порта RDP
 ECHO Стандартный порт:3389
@@ -148,14 +148,13 @@ PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -Dis
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName 'AllowRDP' -Direction Inbound -Protocol TCP -LocalPort %RDPPortNumber% -Action Allow"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName 'AllowRDP' -Direction Inbound -Protocol UDP -LocalPort %RDPPortNumber% -Action Allow"
 :ControlRDPPort_OK
-PAUSE > NUL
 GOTO STARTER
 
 REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.0.7 - 13.12.2022
+ECHO VERSION 1.0.8 - 13.12.2022
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -185,7 +184,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.0.7 - 13.12.2022
+ECHO VERSION 1.0.8 - 13.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
