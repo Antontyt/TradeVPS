@@ -1,7 +1,7 @@
 @echo off
 chcp 866> nul
 REM ======================================================================================================================
-REM VERSION 1.2.1 - 11.12.2022
+REM VERSION 1.2.2 - 13.12.2022
 REM ======================================================================================================================
 reg.exe delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /f
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
@@ -17,7 +17,7 @@ reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.
 reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe" /v "InsertMode" /t REG_DWORD /d 0 /f
 REM ======================================================================================================================
 ECHO =====================================
-ECHO VERSION 1.2.1 - 11.12.2022
+ECHO VERSION 1.2.2 - 13.12.2022
 ECHO =====================================
 ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
@@ -55,7 +55,7 @@ REM ============================================================================
 :RENAME_USERNAME
 CLS
 ECHO =====================================
-ECHO VERSION 1.2.1 - 11.12.2022
+ECHO VERSION 1.2.2 - 13.12.2022
 ECHO =====================================
 ECHO.
 TITLE Переименование имени пользователя Administrator
@@ -397,6 +397,72 @@ regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\DisableAutoRun.reg"
 REM Windows Update Settings
 regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsUpdate.reg"
 CALL "C:\Service\TEMP\Hide_search_on_taskbar.bat"
+
+REM Windows Privacy Settings
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Clear_location_last_accessed_history_for_current_user.bat"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Activity_history.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_app_launch_tracking.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Background_Apps.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Background_Apps_for_all_users.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Cloud_content_search_for_Microsoft_account.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Cloud_Search_for_all_users.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Getting_to_know_you_for_inking_and_typing_personalization.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Let_apps_access_account_info.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Let_apps_access_calendar.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Let_apps_access_call_history.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Let_apps_access_contacts.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Let_apps_access_email.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Let_apps_access_messaging.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Let_apps_access_microphone.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Let_apps_access_my_camera.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Let_apps_communicate_with_unpaired_devices_for_all_users.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Location_services.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Location_services_2.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Phone-PC_linking_with_Your_Phone_app_for_all_users.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Phone_calls.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Radios_calls.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_website_access_of_language_list.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Windows_and_apps_access_to_call_history_for_device.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Windows_and_apps_access_to_messaging_for_device.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Windows_and_apps_access_to_microphone_for_device.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Windows_and_apps_acecss_to_account_info_for_device.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Windows_and_apps_acecss_to_camera_for_device.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Windows_and_apps_acecss_to_Documents_library_for_device.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Windows_and_apps_acecss_to_email_for_device.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Windows_and_apps_acecss_to_Pictures_library_for_device.reg"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsPrivacy/Turn_OFF_Windows_and_apps_acecss_to_Videos_library_for_device.reg"
+CALL "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Clear_location_last_accessed_history_for_current_user.bat"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Activity_history.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_app_launch_tracking.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Background_Apps.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Background_Apps_for_all_users.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Cloud_content_search_for_Microsoft_account.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Cloud_Search_for_all_users.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Getting_to_know_you_for_inking_and_typing_personalization.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Let_apps_access_account_info.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Let_apps_access_calendar.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Let_apps_access_call_history.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Let_apps_access_contacts.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Let_apps_access_email.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Let_apps_access_messaging.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Let_apps_access_microphone.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Let_apps_access_my_camera.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Let_apps_communicate_with_unpaired_devices_for_all_users.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Location_services.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Location_services_2.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Phone-PC_linking_with_Your_Phone_app_for_all_users.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Phone_calls.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Radios_calls.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_website_access_of_language_list.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_access_to_call_history_for_device.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_access_to_messaging_for_device.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_access_to_microphone_for_device.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_account_info_for_device.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_camera_for_device.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_Documents_library_for_device.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_email_for_device.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_Pictures_library_for_device.reg"
+regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_Videos_library_for_device.reg"
 
 REM REGIONAL SETTINGS
 ECHO REGIONAL SETTINGS
