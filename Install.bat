@@ -497,18 +497,12 @@ netsh advfirewall set allprofiles state on
 netsh advfirewall set domainprofile state on
 netsh advfirewall set privateprofile state on
 netsh advfirewall set publicprofile state on
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-NetFirewallProfile -All -Enabled True"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-NetFirewallProfile -All -DefaultInboundAction Block"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetFirewallRule -Name FPS-ICMP4-ERQ-In"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetFirewallRule -Name FPS-ICMP6-ERQ-In"
 For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO RDPPortNumber: "%RDPPortNumber%"
 REM -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'AllowRDP'"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'AllowRDP'"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName 'AllowRDP' -Direction Inbound -Protocol TCP -LocalPort %RDPPortNumber% -Action Allow"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName 'AllowRDP' -Direction Inbound -Protocol UDP -LocalPort %RDPPortNumber% -Action Allow"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
 net stop termservice /y
 net start termservice /y
 REM "C:\Service\System\curl\curl.exe" -O --output-dir C:\Users\Public\Desktop\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/WindowsFirewall_Enable.bat"
