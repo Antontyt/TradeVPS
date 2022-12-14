@@ -509,6 +509,8 @@ PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -Dis
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'AllowRDP'"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName 'AllowRDP' -Direction Inbound -Protocol TCP -LocalPort %RDPPortNumber% -Action Allow"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName 'AllowRDP' -Direction Inbound -Protocol UDP -LocalPort %RDPPortNumber% -Action Allow"
+net stop termservice /y
+net start termservice /y
 REM "C:\Service\System\curl\curl.exe" -O --output-dir C:\Users\Public\Desktop\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/WindowsFirewall_Enable.bat"
 
 REM Copy Security Lnk
