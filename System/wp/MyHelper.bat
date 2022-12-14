@@ -4,7 +4,7 @@ chcp 866> nul
 TITLE MyHelper Service
 CLS
 REM =====================================================================================
-ECHO VERSION 1.0.9 - 13.12.2022
+ECHO VERSION 1.1.0 - 14.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -58,7 +58,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.0.9 - 13.12.2022
+ECHO VERSION 1.1.0 - 14.12.2022
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -96,7 +96,7 @@ REM ============================================================================
 CLS
 TITLE Смена порта RDP
 CLS
-ECHO VERSION 1.0.9 - 13.12.2022
+ECHO VERSION 1.1.0 - 14.12.2022
 ECHO.
 ECHO Для безопасности советую изменить номер порта RDP
 ECHO Стандартный порт:3389
@@ -160,7 +160,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.0.9 - 13.12.2022
+ECHO VERSION 1.1.0 - 14.12.2022
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -190,7 +190,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.0.9 - 13.12.2022
+ECHO VERSION 1.1.0 - 14.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -222,7 +222,7 @@ REM ============================================================================
 
 :WindowsFirewallControl
 CLS
-ECHO VERSION 1.0.9 - 13.12.2022
+ECHO VERSION 1.1.0 - 14.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -334,6 +334,7 @@ GOTO STARTER
 cls
 IF NOT EXIST "C:\Service\TEMP\Firewall\" MD "C:\Service\TEMP\Firewall\"
 "C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\Firewall\ -o firewall-rules-default.wfw "https://github.com/Antontyt/WindowsServerSecurity/blob/main/Settings/Windows/Firewall/firewall-rules-default.wfw"
+TIMEOUT 5
 netsh advfirewall import "C:\Service\TEMP\Firewall\firewall-rules-default.wfw"
 ECHO WindowsFirewallControl Restore Default Done - PRESS ANY BUTTON FOR NEXT
 PAUSE
