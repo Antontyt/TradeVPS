@@ -11,6 +11,7 @@ ECHO 1. Control SMB2 and SMB3 Protocol
 ECHO 2. Check and change RDP Port
 ECHO 3. Control ping to server
 ECHO 4. Security Checks
+ECHO 5. Windows Firewall Control
 ECHO.
 ECHO =================================================================
 ECHO Для подтверждения нажмите ENTER
@@ -37,6 +38,9 @@ GOTO ControlPING
 
 IF /I '%INPUT%'=='4' (
 GOTO SecurityChecks
+)
+IF /I '%INPUT%'=='5' (
+GOTO WindowsFirewallControl
 )
 IF /I '%INPUT%'=='Q' GOTO Quit
 CLS
@@ -215,6 +219,38 @@ GOTO SecurityChecks
 REM =====================================================================================
 REM /////////////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
+
+:WindowsFirewallControl
+CLS
+ECHO VERSION 1.0.9 - 13.12.2022
+ECHO.
+ECHO SecurityChecks
+ECHO.
+ECHO 0. Restore Default Windows Firewall Setting
+ECHO 1. Windows Firewall Mini Setup
+ECHO.
+ECHO =================================================================
+ECHO B. Для возврата назад
+ECHO.
+ 
+SET INPUT=
+SET /P INPUT=Числа от 0 до 1 для выбора или B для возврата обратно:
+IF /I '%INPUT%'=='0' GOTO WindowsFirewallControl_Default
+IF /I '%INPUT%'=='1' GOTO WindowsFirewallControl_MiniSetup
+IF /I '%INPUT%'=='B' GOTO STARTER
+CLS
+ECHO ================ Отсутствует выбранный параметр =================
+ECHO -----------------------------------------------------------------
+ECHO Пожалуйста выберите параметр из списка
+ECHO Меню [0-1] или нажмите 'B' для возврата назад.
+ECHO -----------------------------------------------------------------
+ECHO ================ Отсутствует выбранный параметр =================
+PAUSE > NUL
+GOTO SecurityChecks
+
+REM =====================================================================================
+REM /////////////////////////////////////////////////////////////////////////////////////
+REM =====================================================================================
 :WindowsUpdates
 REM Update Windows Defender
 CALL "%ProgramFiles%\Windows Defender\MpCmdRun.exe" -removedefinitions -dynamicsignatures
@@ -291,6 +327,21 @@ CLS
 ECHO SecurityChecks_Bruteforce
 ECHO.
 powershell.exe -File "C:\Service\Software\PowershellScripts\Get-Bruteforce.ps1"
+PAUSE
+GOTO STARTER
+
+:WindowsFirewallControl_Default
+cls
+IF NOT EXIST "C:\Service\TEMP\Firewall\" MD "C:\Service\TEMP\Firewall\"
+"C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\Firewall\ -o firewall-rules-default.wfw "https://github.com/Antontyt/WindowsServerSecurity/blob/main/Settings/Windows/Firewall/firewall-rules-default.wfw"
+netsh advfirewall import "C:\Service\TEMP\Firewall\firewall-rules-default.wfw"
+ECHO WindowsFirewallControl Restore Default Done - PRESS ANY BUTTON FOR NEXT
+PAUSE
+GOTO STARTER
+
+:WindowsFirewallControl_MiniSetup
+cls
+ECHO WindowsFirewallControl Restore MiniSetup Done - PRESS ANY BUTTON FOR NEXT
 PAUSE
 GOTO STARTER
 
