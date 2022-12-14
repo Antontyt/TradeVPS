@@ -333,7 +333,7 @@ GOTO STARTER
 :WindowsFirewallControl_Default
 cls
 IF NOT EXIST "C:\Service\TEMP\Firewall\" MD "C:\Service\TEMP\Firewall\"
-"C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\Firewall\ -o firewall-rules-default.wfw "https://github.com/Antontyt/WindowsServerSecurity/blob/main/Settings/Windows/Firewall/firewall-rules-default.wfw"
+"C:\Service\System\curl\curl.exe" -L --output C:\Service\TEMP\Firewall\firewall-rules-default.wfw "https://github.com/Antontyt/WindowsServerSecurity/raw/main/Settings/Windows/Firewall/firewall-rules-default.wfw"
 TIMEOUT 5
 netsh advfirewall import "C:\Service\TEMP\Firewall\firewall-rules-default.wfw"
 ECHO WindowsFirewallControl Restore Default Done - PRESS ANY BUTTON FOR NEXT
