@@ -1,7 +1,7 @@
 @echo off
 chcp 866> nul
 REM ======================================================================================================================
-REM VERSION 1.2.2 - 13.12.2022
+REM VERSION 1.2.3 - 16.12.2022
 REM ======================================================================================================================
 reg.exe delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /f
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
@@ -621,7 +621,13 @@ IF EXIST "C:\Service\Software\StartWindows\Starter.bat" (
 REG ADD "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "Starter" /t REG_SZ /d "C:\Service\Software\StartWindows\Starter.bat" /F
 )
 
-CLS
+IF EXIST "C:\Program Files\simplewall\" GOTO PROGRAM_END
+REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+REM Simplewall
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\simplewall\" MD C:\Windows\TEMP\WindowsServerSecurity\simplewall\
+"C:\Service\System\curl\curl.exe" -L --output C:\Windows\TEMP\WindowsServerSecurity\simplewall\simplewall-setup.exe "https://github.com/henrypp/simplewall/releases/download/v.3.6.7/simplewall-3.6.7-setup.exe"
+CALL C:\Windows\TEMP\WindowsServerSecurity\simplewall\simplewall-setup.exe /S /D=C:\Program Files\simplewall
+
 :PROGRAM_END
 ECHO PROGRAM END
 ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
