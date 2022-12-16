@@ -275,7 +275,7 @@ PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration 
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $false -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 0 -Force"
 sc.exe config mrxsmb20 start= disabled
-net stop mrxsmb20
+net stop mrxsmb20 /y
 ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
 TIMEOUT 5
 shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
@@ -288,7 +288,7 @@ PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration 
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $true -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 1 -Force"
 sc.exe config mrxsmb20 start= auto
-net start mrxsmb20
+net start mrxsmb20 /y
 ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
 TIMEOUT 5
 shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
