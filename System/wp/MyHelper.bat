@@ -256,6 +256,7 @@ REM ============================================================================
 REM /////////////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :WindowsUpdates
+CLS
 REM Update Windows Defender
 CALL "%ProgramFiles%\Windows Defender\MpCmdRun.exe" -removedefinitions -dynamicsignatures
 CALL "%ProgramFiles%\Windows Defender\MpCmdRun.exe" -SignatureUpdate
@@ -267,7 +268,9 @@ PAUSE
 GOTO STARTER
 
 :SMB_Disable
+CLS
 ECHO SMB_Disable
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $false -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 0 -Force"
 sc.exe config mrxsmb20 start= disabled
@@ -278,7 +281,9 @@ shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
 EXIT
 
 :SMB_Enable
+CLS
 ECHO SMB_Enable
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $true -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 1 -Force"
 sc.exe config mrxsmb20 start= auto
@@ -287,20 +292,6 @@ ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
 TIMEOUT 5
 shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
 EXIT
-
-:Disable_SMB1
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force"
-cls
-ECHO Disable_SMB1 DONE - PRESS ANY BUTTON FOR NEXT
-PAUSE
-GOTO STARTER
-
-:Enable_SMB1
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $true -Force"
-cls
-ECHO Enable_SMB1 DONE - PRESS ANY BUTTON FOR NEXT
-PAUSE
-GOTO STARTER
 
 :Disable_PING
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'Allow inbound ICMPv4'"
