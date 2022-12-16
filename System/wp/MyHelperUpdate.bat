@@ -29,7 +29,7 @@ REM ============================================================================
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/RussiaLocale_ForNonUnicode.reg"
 regedit /s "C:\Windows\Temp\Registry\RussiaLocale_ForNonUnicode.reg"
 REM ----------------------------------------------------------------------------------------------------
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/MyHelper.bat"
+"C:\Service\System\curl\curl.exe" -L --output C:\Service\MyHelper.bat "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/MyHelper.bat"
 IF EXIST "C:\Service\MyHelper.bat" (
 Start "" C:\Service\MyHelper.bat
 ) ELSE (
