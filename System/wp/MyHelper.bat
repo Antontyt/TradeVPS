@@ -8,7 +8,7 @@ For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Term
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO Current RDP Port: "%RDPPortNumber%"
 ECHO =================================================================
-ECHO VERSION 1.1.5 - 17.12.2022
+ECHO VERSION 1.1.6 - 17.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -62,7 +62,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.1.5 - 17.12.2022
+ECHO VERSION 1.1.6 - 17.12.2022
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -75,9 +75,15 @@ ECHO.
  
 SET INPUT=
 SET /P INPUT=Числа от 0 до 1 для выбора или B для возврата обратно:
-IF /I '%INPUT%'=='0' GOTO SMB_Disable
-IF /I '%INPUT%'=='1' GOTO SMB_Enable
-IF /I '%INPUT%'=='B' GOTO STARTER
+IF /I '%INPUT%'=='0' (
+GOTO SMB_Disable
+)
+IF /I '%INPUT%'=='1' (
+GOTO SMB_Enable
+)
+IF /I '%INPUT%'=='B' (
+GOTO STARTER
+)
 CLS
 ECHO ================ Отсутствует выбранный параметр =================
 ECHO -----------------------------------------------------------------
@@ -100,7 +106,7 @@ REM ============================================================================
 CLS
 TITLE Смена порта RDP
 CLS
-ECHO VERSION 1.1.5 - 17.12.2022
+ECHO VERSION 1.1.6 - 17.12.2022
 ECHO.
 ECHO Для безопасности советую изменить номер порта RDP
 ECHO Стандартный порт:3389
@@ -164,7 +170,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.1.5 - 17.12.2022
+ECHO VERSION 1.1.6 - 17.12.2022
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -194,7 +200,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.1.5 - 17.12.2022
+ECHO VERSION 1.1.6 - 17.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -226,7 +232,7 @@ REM ============================================================================
 
 :WindowsFirewallControl
 CLS
-ECHO VERSION 1.1.5 - 17.12.2022
+ECHO VERSION 1.1.6 - 17.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
