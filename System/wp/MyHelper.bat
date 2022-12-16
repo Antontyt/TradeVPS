@@ -8,7 +8,7 @@ For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Term
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO Current RDP Port: "%RDPPortNumber%"
 ECHO =================================================================
-ECHO VERSION 1.1.2 - 16.12.2022
+ECHO VERSION 1.1.3 - 17.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -62,7 +62,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.1.2 - 16.12.2022
+ECHO VERSION 1.1.3 - 17.12.2022
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -75,8 +75,8 @@ ECHO.
  
 SET INPUT=
 SET /P INPUT=Числа от 0 до 1 для выбора или B для возврата обратно:
-IF /I '%INPUT%'=='0' GOTO ControlSMB2SMB3_Disable
-IF /I '%INPUT%'=='1' GOTO ControlSMB2SMB3_Enable
+IF /I '%INPUT%'=='0' GOTO SMB_Disable
+IF /I '%INPUT%'=='1' GOTO SMB_Enable
 IF /I '%INPUT%'=='B' GOTO STARTER
 CLS
 ECHO ================ Отсутствует выбранный параметр =================
@@ -100,7 +100,7 @@ REM ============================================================================
 CLS
 TITLE Смена порта RDP
 CLS
-ECHO VERSION 1.1.2 - 16.12.2022
+ECHO VERSION 1.1.3 - 17.12.2022
 ECHO.
 ECHO Для безопасности советую изменить номер порта RDP
 ECHO Стандартный порт:3389
@@ -164,7 +164,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.1.2 - 16.12.2022
+ECHO VERSION 1.1.3 - 17.12.2022
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -194,7 +194,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.1.2 - 16.12.2022
+ECHO VERSION 1.1.3 - 17.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -226,7 +226,7 @@ REM ============================================================================
 
 :WindowsFirewallControl
 CLS
-ECHO VERSION 1.1.2 - 16.12.2022
+ECHO VERSION 1.1.3 - 17.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -266,7 +266,8 @@ ECHO WindowsUpdates END - PRESS ANY BUTTON FOR NEXT
 PAUSE
 GOTO STARTER
 
-:ControlSMB2SMB3_Disable
+:SMB_Disable
+ECHO SMB_Disable
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $false -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 0 -Force"
 sc.exe config mrxsmb20 start= disabled
@@ -276,7 +277,8 @@ TIMEOUT 5
 shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
 EXIT
 
-:ControlSMB2SMB3_Enable
+:SMB_Enable
+ECHO SMB_Enable
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $true -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 1 -Force"
 sc.exe config mrxsmb20 start= auto
