@@ -8,7 +8,7 @@ For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Term
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO Current RDP Port: "%RDPPortNumber%"
 ECHO =================================================================
-ECHO VERSION 1.1.3 - 17.12.2022
+ECHO VERSION 1.1.4 - 17.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -62,7 +62,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.1.3 - 17.12.2022
+ECHO VERSION 1.1.4 - 17.12.2022
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -100,7 +100,7 @@ REM ============================================================================
 CLS
 TITLE Смена порта RDP
 CLS
-ECHO VERSION 1.1.3 - 17.12.2022
+ECHO VERSION 1.1.4 - 17.12.2022
 ECHO.
 ECHO Для безопасности советую изменить номер порта RDP
 ECHO Стандартный порт:3389
@@ -164,7 +164,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.1.3 - 17.12.2022
+ECHO VERSION 1.1.4 - 17.12.2022
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -194,7 +194,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.1.3 - 17.12.2022
+ECHO VERSION 1.1.4 - 17.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -226,7 +226,7 @@ REM ============================================================================
 
 :WindowsFirewallControl
 CLS
-ECHO VERSION 1.1.3 - 17.12.2022
+ECHO VERSION 1.1.4 - 17.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -257,6 +257,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :WindowsUpdates
 CLS
+ECHO WindowsUpdates
 REM Update Windows Defender
 CALL "%ProgramFiles%\Windows Defender\MpCmdRun.exe" -removedefinitions -dynamicsignatures
 CALL "%ProgramFiles%\Windows Defender\MpCmdRun.exe" -SignatureUpdate
@@ -294,6 +295,8 @@ shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
 EXIT
 
 :Disable_PING
+CLS
+ECHO Disable_PING
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'Allow inbound ICMPv4'"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'Allow inbound ICMPv6'"
 cls
@@ -302,6 +305,8 @@ PAUSE
 GOTO STARTER
 
 :Enable_PING
+CLS
+ECHO Enable_PING
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'Allow inbound ICMPv4'"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'Allow inbound ICMPv6'"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName 'Allow inbound ICMPv4' -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -Action Allow"
@@ -314,7 +319,6 @@ GOTO STARTER
 :SecurityChecks_Badname
 CLS
 ECHO SecurityChecks_Badname
-ECHO.
 PowerShell.exe -ExecutionPolicy Bypass -File "C:\Service\Software\PowershellScripts\Get-Badname.ps1"
 PAUSE
 GOTO STARTER
@@ -322,13 +326,13 @@ GOTO STARTER
 :SecurityChecks_Bruteforce
 CLS
 ECHO SecurityChecks_Bruteforce
-ECHO.
 PowerShell.exe -ExecutionPolicy Bypass -File "C:\Service\Software\PowershellScripts\Get-Bruteforce.ps1"
 PAUSE
 GOTO STARTER
 
 :WindowsFirewallControl_Default
 cls
+ECHO WindowsFirewallControl_Default
 IF NOT EXIST "C:\Service\TEMP\Firewall\" MD "C:\Service\TEMP\Firewall\"
 "C:\Service\System\curl\curl.exe" -L --output C:\Service\TEMP\Firewall\firewall-rules-default.wfw "https://github.com/Antontyt/WindowsServerSecurity/raw/main/Settings/Windows/Firewall/firewall-rules-default.wfw"
 TIMEOUT 5
