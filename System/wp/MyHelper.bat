@@ -8,7 +8,7 @@ For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Term
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO Current RDP Port: "%RDPPortNumber%"
 ECHO =================================================================
-ECHO VERSION 1.1.6 - 17.12.2022
+ECHO VERSION 1.1.7 - 21.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -62,7 +62,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.1.6 - 17.12.2022
+ECHO VERSION 1.1.7 - 21.12.2022
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -106,7 +106,7 @@ REM ============================================================================
 CLS
 TITLE Смена порта RDP
 CLS
-ECHO VERSION 1.1.6 - 17.12.2022
+ECHO VERSION 1.1.7 - 21.12.2022
 ECHO.
 ECHO Для безопасности советую изменить номер порта RDP
 ECHO Стандартный порт:3389
@@ -170,7 +170,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.1.6 - 17.12.2022
+ECHO VERSION 1.1.7 - 21.12.2022
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -200,7 +200,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.1.6 - 17.12.2022
+ECHO VERSION 1.1.7 - 21.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -232,7 +232,7 @@ REM ============================================================================
 
 :WindowsFirewallControl
 CLS
-ECHO VERSION 1.1.6 - 17.12.2022
+ECHO VERSION 1.1.7 - 21.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -281,6 +281,7 @@ PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration 
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $false -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 0 -Force"
 sc.exe config mrxsmb20 start= disabled
+netsh advfirewall firewall set rule name="File and Printer Sharing (SMB-Out)" new action=block enable=yes
 net stop mrxsmb20 /y
 ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
 TIMEOUT 5
@@ -295,6 +296,7 @@ PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration 
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 1 -Force"
 sc.exe config mrxsmb20 start= auto
 net start mrxsmb20 /y
+netsh advfirewall firewall set rule name="File and Printer Sharing (SMB-Out)" new action=block enable=no
 ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
 TIMEOUT 5
 shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
@@ -339,16 +341,76 @@ GOTO STARTER
 :WindowsFirewallControl_Default
 cls
 ECHO WindowsFirewallControl_Default
-IF NOT EXIST "C:\Service\TEMP\Firewall\" MD "C:\Service\TEMP\Firewall\"
-"C:\Service\System\curl\curl.exe" -L --output C:\Service\TEMP\Firewall\firewall-rules-default.wfw "https://github.com/Antontyt/WindowsServerSecurity/raw/main/Settings/Windows/Firewall/firewall-rules-default.wfw"
+REM Reset rules for default settings
+netsh advfirewall reset
+TIMEOUT 2
+netsh advfirewall set Domainprofile state on
+netsh advfirewall set Privateprofile state on
+netsh advfirewall set Publicprofile state on
 TIMEOUT 5
-netsh advfirewall import "C:\Service\TEMP\Firewall\firewall-rules-default.wfw"
 ECHO WindowsFirewallControl Restore Default Done - PRESS ANY BUTTON FOR NEXT
 PAUSE
 GOTO STARTER
 
 :WindowsFirewallControl_MiniSetup
 cls
+REM Reset rules for default settings
+netsh advfirewall reset
+TIMEOUT 2
+netsh advfirewall set Domainprofile state on
+netsh advfirewall set Privateprofile state on
+netsh advfirewall set Publicprofile state on
+REM Configure Windows Firewall
+netsh advfirewall set Domainprofile firewallpolicy blockinbound,allowoutbound
+netsh advfirewall set Privateprofile firewallpolicy blockinbound,allowoutbound
+netsh advfirewall set Publicprofile firewallpolicy blockinbound,allowoutbound
+REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+netsh advfirewall firewall set rule group="Windows Remote Management" new enable=No
+netsh advfirewall firewall set rule group="Work or school account" new enable=No
+netsh advfirewall firewall set rule group="Start" new enable=No
+netsh advfirewall firewall set rule group="Your account" new enable=No
+netsh advfirewall firewall set rule group="Cast to Device functionality" new enable=No
+netsh advfirewall firewall set rule group="@{Microsoft.Windows.Search_1.15.0.20348_neutral_neutral_cw5n1h2txyewy?ms-resource://Microsoft.Windows.Search/resources/PackageDisplayName}" new enable=No
+netsh advfirewall firewall set rule group="Desktop App Web Viewer" new enable=No
+netsh advfirewall firewall set rule group="DIAL protocol server" new enable=No
+netsh advfirewall firewall set rule group="Microsoft Media Foundation Network Source" new enable=No
+netsh advfirewall firewall set rule group="DiagTrack" new enable=No
+netsh advfirewall firewall set rule group="Windows Device Management" new enable=No
+For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
+set /a RDPPortNumber=%RDPPortNumber%
+ECHO Current RDP Port: "%RDPPortNumber%"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
+REM TCP порт 135 - предназначенный для выполнения команд;
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=135 name="Block1_TCP-135"
+REM UDP порт 137 - с помощью которого проводится быстрый поиск на ПК.
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=137 name="Block1_TCP-137"
+REM TCP порт 138
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=138 name="Block1_TCP-138"
+REM TCP порт 139 - необходимый для удаленного подключения и управления ПК;
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=139 name="Block_TCP-139"
+REM TCP порт 445 - Позволяющий быстро передавать файлы;
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=445 name="Block_TCP-445"
+sc stop lanmanserver
+sc config lanmanserver start=disabled
+REM TCP порт 5000
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=5000 name="Block_TCP-5000"
+REM =========================================================================
+netsh advfirewall firewall set rule name="Core Networking - Destination Unreachable (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Multicast Listener Done (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Multicast Listener Query (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Multicast Listener Report (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Multicast Listener Report v2 (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Neighbor Discovery Advertisement (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Neighbor Discovery Solicitation (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Packet Too Big (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Parameter Problem (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Router Advertisement (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Router Solicitation (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Time Exceeded (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - IPv6 (IPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Dynamic Host Configuration Protocol for IPv6(DHCPV6-In)" new enable=no
+netsh advfirewall firewall set rule name="File and Printer Sharing (SMB-Out)" new action=block enable=yes
 ECHO WindowsFirewallControl Restore MiniSetup Done - PRESS ANY BUTTON FOR NEXT
 PAUSE
 GOTO STARTER

@@ -512,11 +512,13 @@ REM Copy Security Lnk
 ECHO Copy Security Lnk
 IF NOT EXIST "C:\Service\TEMP\lnk\" MD "C:\Service\TEMP\lnk\"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateHelperLnk.vbs"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateCmdLnk.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/WindowsUpdateInstall_Manual.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/WindowsUpdateInstall_Auto.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/MyHelper.bat"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/MyHelperUpdate.bat"
 cscript /Nologo "C:\Service\TEMP\lnk\CreateHelperLnk.vbs"
+cscript /Nologo "C:\Service\TEMP\lnk\CreateCmdLnk.vbs"
 
 REM Get Windows Updates
 ECHO Get Windows Updates
@@ -657,6 +659,36 @@ set /a RDPPortNumber=%RDPPortNumber%
 ECHO Current RDP Port: "%RDPPortNumber%"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
+REM TCP порт 135 - предназначенный для выполнения команд;
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=135 name="Block1_TCP-135"
+REM UDP порт 137 - с помощью которого проводится быстрый поиск на ПК.
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=137 name="Block1_TCP-137"
+REM TCP порт 138
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=138 name="Block1_TCP-138"
+REM TCP порт 139 - необходимый для удаленного подключения и управления ПК;
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=139 name="Block_TCP-139"
+REM TCP порт 445 - Позволяющий быстро передавать файлы;
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=445 name="Block_TCP-445"
+sc stop lanmanserver
+sc config lanmanserver start=disabled
+REM TCP порт 5000
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=5000 name="Block_TCP-5000"
+REM =========================================================================
+netsh advfirewall firewall set rule name="Core Networking - Destination Unreachable (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Multicast Listener Done (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Multicast Listener Query (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Multicast Listener Report (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Multicast Listener Report v2 (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Neighbor Discovery Advertisement (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Neighbor Discovery Solicitation (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Packet Too Big (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Parameter Problem (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Router Advertisement (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Router Solicitation (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Time Exceeded (ICMPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - IPv6 (IPv6-In)" new enable=no
+netsh advfirewall firewall set rule name="Core Networking - Dynamic Host Configuration Protocol for IPv6(DHCPV6-In)" new enable=no
+netsh advfirewall firewall set rule name="File and Printer Sharing (SMB-Out)" new action=block enable=yes
 ECHO PROGRAM END
 ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
 PAUSE
