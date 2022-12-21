@@ -639,9 +639,23 @@ netsh advfirewall set Domainprofile state on
 netsh advfirewall set Privateprofile state on
 netsh advfirewall set Publicprofile state on
 REM Configure Windows Firewall
-netsh advfirewall set Domainprofile firewallpolicy blockinbound,allowoutbound
-netsh advfirewall set Privateprofile firewallpolicy blockinbound,allowoutbound
-netsh advfirewall set Publicprofile firewallpolicy blockinbound,allowoutbound
+netsh advfirewall set Domainprofile firewallpolicy blockinbound,blockoutbound
+netsh advfirewall set Privateprofile firewallpolicy blockinbound,blockoutbound
+netsh advfirewall set Publicprofile firewallpolicy blockinbound,blockoutbound
+netsh advfirewall firewall add rule name="MozillaFirefox" dir=out action=allow program="C:\Program Files\Mozilla Firefox\firefox.exe" enable=yes
+netsh advfirewall firewall add rule name="TSLab version2.2 - TSLab.exe" dir=out action=allow program="C:\Program Files\TSLab\TSLab 2.2\TSLab.exe" enable=yes
+netsh advfirewall firewall add rule name="TSLab version2.2 - TSLabApp.exe" dir=out action=allow program="C:\Program Files\TSLab\TSLab 2.2\TSLabApp.exe" enable=yes
+netsh advfirewall firewall add rule name="TSLab version2.2 - TSLabAppW.exe" dir=out action=allow program="C:\Program Files\TSLab\TSLab 2.2\TSLabAppW.exe" enable=yes
+netsh advfirewall firewall add rule name="TSLab version2.2 - createdump.exe" dir=out action=allow program="C:\Program Files\TSLab\TSLab 2.2\createdump.exe" enable=yes
+netsh advfirewall firewall add rule name="Curl" dir=out action=allow program="C:\Service\System\curl\curl.exe" enable=yes
+netsh advfirewall firewall add rule name="D4Time" dir=out action=allow program="C:\Program Files (x86)\D4\D4.exe" enable=yes
+netsh advfirewall firewall add rule name="NotepadPlus" dir=out action=allow program="C:\Program Files (x86)\Notepad++\notepad++.exe" enable=yes
+netsh advfirewall firewall add rule name="NotepadPlusUpdater" dir=out action=allow program="C:\Program Files (x86)\Notepad++\updater\updater.exe" enable=yes
+netsh advfirewall firewall add rule name="WindowsDefender" dir=out action=allow program="C:\Program Files (x86)\Windows Defender\MpCmdRun.exe" enable=yes
+netsh advfirewall firewall add rule name="Simplewall" dir=out action=allow program="C:\Program Files\simplewall\simplewall.exe" enable=yes
+netsh advfirewall set currentprofile logging filename %systemroot%\system32\LogFiles\Firewall\pfirewall.log
+netsh advfirewall set currentprofile logging maxfilesize 4096
+netsh advfirewall set currentprofile logging droppedconnections enable
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 netsh advfirewall firewall set rule group="Windows Remote Management" new enable=No
 netsh advfirewall firewall set rule group="Work or school account" new enable=No
