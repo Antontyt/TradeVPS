@@ -389,11 +389,11 @@ ECHO Current RDP Port: "%RDPPortNumber%"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
 REM TCP порт 135 - предназначенный для выполнения команд;
-netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=135 name="Block1_TCP-135"
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=135 name="Block_TCP-135"
 REM UDP порт 137 - с помощью которого проводится быстрый поиск на ПК.
-netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=137 name="Block1_TCP-137"
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=137 name="Block_TCP-137"
 REM TCP порт 138
-netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=138 name="Block1_TCP-138"
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=138 name="Block_TCP-138"
 REM TCP порт 139 - необходимый для удаленного подключения и управления ПК;
 netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=139 name="Block_TCP-139"
 REM TCP порт 445 - Позволяющий быстро передавать файлы;
@@ -475,11 +475,11 @@ ECHO Current RDP Port: "%RDPPortNumber%"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
 REM TCP порт 135 - предназначенный для выполнения команд;
-netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=135 name="Block1_TCP-135"
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=135 name="Block_TCP-135"
 REM UDP порт 137 - с помощью которого проводится быстрый поиск на ПК.
-netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=137 name="Block1_TCP-137"
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=137 name="Block_TCP-137"
 REM TCP порт 138
-netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=138 name="Block1_TCP-138"
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=138 name="Block_TCP-138"
 REM TCP порт 139 - необходимый для удаленного подключения и управления ПК;
 netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=139 name="Block_TCP-139"
 REM TCP порт 445 - Позволяющий быстро передавать файлы;

@@ -654,6 +654,11 @@ netsh advfirewall firewall add rule name="D4Time" dir=out action=allow program="
 netsh advfirewall firewall add rule name="NotepadPlus" dir=out action=allow program="C:\Program Files (x86)\Notepad++\notepad++.exe" enable=yes
 netsh advfirewall firewall add rule name="NotepadPlusUpdater" dir=out action=allow program="C:\Program Files (x86)\Notepad++\updater\updater.exe" enable=yes
 netsh advfirewall firewall add rule name="WindowsDefender" dir=out action=allow program="C:\Program Files (x86)\Windows Defender\MpCmdRun.exe" enable=yes
+netsh advfirewall firewall add rule name="WinGup for Notepad++ (gup.exe)" dir=out action=allow program="C:\program files (x86)\notepad++\updater\gup.exe" protocol=TCP enable=yes
+netsh advfirewall firewall add rule name="Windows Update" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=TCP remoteport=80,443 enable=yes
+netsh advfirewall firewall add rule name="Windows Time Service" dir=out action=block program="C:\Windows\system32\svchost.exe" protocol=UDP remoteport=123 enable=yes
+netsh advfirewall firewall add rule name="Core Networking - DNS (UDP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP remoteport=53 enable=yes
+netsh advfirewall firewall add rule name="Core Networking - Dynamic Host Configuration Protocol (DHCP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP localport=68 remoteport=67 enable=yes
 netsh advfirewall firewall add rule name="Simplewall" dir=out action=allow program="C:\Program Files\simplewall\simplewall.exe" enable=yes
 netsh advfirewall set currentprofile logging filename %systemroot%\system32\LogFiles\Firewall\pfirewall.log
 netsh advfirewall set currentprofile logging maxfilesize 4096
@@ -676,11 +681,11 @@ ECHO Current RDP Port: "%RDPPortNumber%"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
 REM TCP порт 135 - предназначенный для выполнения команд;
-netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=135 name="Block1_TCP-135"
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=135 name="Block_TCP-135"
 REM UDP порт 137 - с помощью которого проводится быстрый поиск на ПК.
-netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=137 name="Block1_TCP-137"
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=137 name="Block_TCP-137"
 REM TCP порт 138
-netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=138 name="Block1_TCP-138"
+netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=138 name="Block_TCP-138"
 REM TCP порт 139 - необходимый для удаленного подключения и управления ПК;
 netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=139 name="Block_TCP-139"
 REM TCP порт 445 - Позволяющий быстро передавать файлы;
