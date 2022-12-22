@@ -8,7 +8,7 @@ For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Term
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO Current RDP Port: "%RDPPortNumber%"
 ECHO =================================================================
-ECHO VERSION 1.1.9 - 22.12.2022
+ECHO VERSION 1.2.0 - 22.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -62,7 +62,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.1.9 - 22.12.2022
+ECHO VERSION 1.2.0 - 22.12.2022
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -106,7 +106,7 @@ REM ============================================================================
 CLS
 TITLE Смена порта RDP
 CLS
-ECHO VERSION 1.1.9 - 22.12.2022
+ECHO VERSION 1.2.0 - 22.12.2022
 ECHO.
 ECHO Для безопасности советую изменить номер порта RDP
 ECHO Стандартный порт:3389
@@ -170,7 +170,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.1.9 - 22.12.2022
+ECHO VERSION 1.2.0 - 22.12.2022
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -200,7 +200,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.1.9 - 22.12.2022
+ECHO VERSION 1.2.0 - 22.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -232,12 +232,12 @@ REM ============================================================================
 
 :WindowsFirewallControl
 CLS
-ECHO VERSION 1.1.9 - 22.12.2022
+ECHO VERSION 1.2.0 - 22.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
-ECHO 0. Block In and Out Only
-ECHO 1. Block In Only
+ECHO 0. Only Allowed programs In and Out
+ECHO 1. Only Allowed programs In and Allow All Out
 ECHO.
 ECHO =================================================================
 ECHO B. Для возврата назад
@@ -364,7 +364,7 @@ netsh advfirewall firewall add rule name="NotepadPlusUpdater" dir=out action=all
 netsh advfirewall firewall add rule name="WindowsDefender" dir=out action=allow program="C:\Program Files (x86)\Windows Defender\MpCmdRun.exe" enable=yes
 netsh advfirewall firewall add rule name="WinGup for Notepad++ (gup.exe)" dir=out action=allow program="C:\program files (x86)\notepad++\updater\gup.exe" protocol=TCP enable=yes
 netsh advfirewall firewall add rule name="Windows Update" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=TCP remoteport=80,443 enable=yes
-netsh advfirewall firewall add rule name="Windows Time Service" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP remoteport=123 enable=yes
+netsh advfirewall firewall add rule name="Windows Time Service" dir=out action=block program="C:\Windows\system32\svchost.exe" protocol=UDP remoteport=123 enable=yes
 netsh advfirewall firewall add rule name="Core Networking - DNS (UDP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP remoteport=53 enable=yes
 netsh advfirewall firewall add rule name="Core Networking - Dynamic Host Configuration Protocol (DHCP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP localport=68 remoteport=67 enable=yes
 netsh advfirewall firewall add rule name="Simplewall" dir=out action=allow program="C:\Program Files\simplewall\simplewall.exe" enable=yes
@@ -450,7 +450,7 @@ netsh advfirewall firewall add rule name="NotepadPlusUpdater" dir=out action=all
 netsh advfirewall firewall add rule name="WindowsDefender" dir=out action=allow program="C:\Program Files (x86)\Windows Defender\MpCmdRun.exe" enable=yes
 netsh advfirewall firewall add rule name="WinGup for Notepad++ (gup.exe)" dir=out action=allow program="C:\program files (x86)\notepad++\updater\gup.exe" protocol=TCP enable=yes
 netsh advfirewall firewall add rule name="Windows Update" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=TCP remoteport=80,443 enable=yes
-netsh advfirewall firewall add rule name="Windows Time Service" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP remoteport=123 enable=yes
+netsh advfirewall firewall add rule name="Windows Time Service" dir=out action=block program="C:\Windows\system32\svchost.exe" protocol=UDP remoteport=123 enable=yes
 netsh advfirewall firewall add rule name="Core Networking - DNS (UDP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP remoteport=53 enable=yes
 netsh advfirewall firewall add rule name="Core Networking - Dynamic Host Configuration Protocol (DHCP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP localport=68 remoteport=67 enable=yes
 netsh advfirewall firewall add rule name="Simplewall" dir=out action=allow program="C:\Program Files\simplewall\simplewall.exe" enable=yes
