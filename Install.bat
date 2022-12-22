@@ -345,9 +345,11 @@ TASKKILL /IM firefox.exe /F /T
 
 REM MS EDGE Remove
 ECHO MS EDGE Remove
-"C:\Program Files (x86)\Microsoft\Edge\Application\108.0.1462.46\Installer\setup.exe" --uninstall --system-level --verbose-logging --force-uninstall
-"C:\Program Files (x86)\Microsoft\Edge\Application\107.0.1418.56\Installer\setup.exe" --uninstall --system-level --verbose-logging --force-uninstall
-"C:\Program Files (x86)\Microsoft\Edge\Application\86.0.622.38\Installer\setup.exe" --uninstall --system-level --verbose-logging --force-uninstall
+for /f "usebackq tokens=2* delims=	 " %%i in (
+	`reg.exe query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge" /v "DisplayVersion"`
+) do set DisplayVersion=%%j
+ECHO DisplayVersion: "%DisplayVersion%"
+"C:\Program Files (x86)\Microsoft\Edge\Application\%DisplayVersion%\Installer\setup.exe" --uninstall --system-level --verbose-logging --force-uninstall
 schtasks /Delete /TN "MicrosoftEdgeUpdateTaskMachineCore{B95B19F5-FCC1-4E69-93F1-4E645586C4DC}" /F
 schtasks /Delete /TN "MicrosoftEdgeUpdateTaskMachineUA{46DB8337-FB73-4FC6-864D-7462C85416B9}" /F																					
 
