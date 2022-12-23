@@ -24,12 +24,12 @@ IF NOT EXIST "C:\Service\Software\PowershellScripts\" MD "C:\Service\Software\Po
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Software\PowershellScripts\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/PowershellScripts/Get-Bruteforce.ps1"
 cscript /Nologo "C:\Service\TEMP\lnk\CreateHelperLnk.vbs"
 IF NOT EXIST "C:\Service\Test\" MD C:\Service\Test\
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/Disable_AgressiveWindowsFirewall.bat"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/Enable_AgressiveWindowsFirewall.bat"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/PowerhsellRDPButforceBlocker.bat"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/RDPDefenderInstall.bat"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/ServiceLogonMultiFactor.bat"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/TSLab22BetaSetup_silentInstall.bat"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/TSLab22Setup_silentInstall.bat"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/WindowsFirewall.bat"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/WindowsFirewall_Enable.bat"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/DisableDefender.bat"
 REM ===================================================================================================================================================================================
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/RussiaLocale_ForNonUnicode.reg"
 regedit /s "C:\Windows\Temp\Registry\RussiaLocale_ForNonUnicode.reg"

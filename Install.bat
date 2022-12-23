@@ -2,7 +2,7 @@
 chcp 866> nul
 TASKKILL /IM ServerManager.exe /F
 REM ======================================================================================================================
-REM VERSION 1.2.6 - 23.12.2022
+REM VERSION 1.2.7 - 23.12.2022
 REM ======================================================================================================================
 reg.exe delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /f
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
@@ -18,7 +18,7 @@ reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.
 reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe" /v "InsertMode" /t REG_DWORD /d 0 /f
 REM ======================================================================================================================
 ECHO =====================================
-ECHO VERSION 1.2.6 - 23.12.2022
+ECHO VERSION 1.2.7 - 23.12.2022
 ECHO =====================================
 ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
@@ -56,7 +56,7 @@ REM ============================================================================
 :RENAME_USERNAME
 CLS
 ECHO =====================================
-ECHO VERSION 1.2.6 - 23.12.2022
+ECHO VERSION 1.2.7 - 23.12.2022
 ECHO =====================================
 ECHO.
 TITLE Переименование имени пользователя Administrator
@@ -514,7 +514,6 @@ REM Copy Security Lnk
 ECHO Copy Security Lnk
 IF NOT EXIST "C:\Service\TEMP\lnk\" MD "C:\Service\TEMP\lnk\"
 IF NOT EXIST "C:\Service\Software\PowershellScripts\" MD "C:\Service\Software\PowershellScripts\"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Software\PowershellScripts\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/PowershellScripts/Block_RDP_Attack.ps1"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateHelperLnk.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateCmdLnk.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/CreateBlock_RDP_Attack_Task.ps1"
@@ -522,7 +521,6 @@ IF NOT EXIST "C:\Service\Software\PowershellScripts\" MD "C:\Service\Software\Po
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/WindowsUpdateInstall_Auto.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/MyHelper.bat"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/MyHelperUpdate.bat"
-powershell.exe -file "C:\Service\CreateBlock_RDP_Attack_Task.ps1"
 cscript /Nologo "C:\Service\TEMP\lnk\CreateHelperLnk.vbs"
 cscript /Nologo "C:\Service\TEMP\lnk\CreateCmdLnk.vbs"
 
@@ -600,10 +598,11 @@ XCOPY /I /Z /Y "C:\Windows\TEMP\WindowsServerSecurity\D4\defaults.ini" "C:\Progr
 XCOPY /I /Z /Y "C:\Windows\TEMP\WindowsServerSecurity\D4\server.dat" "C:\Program Files (x86)\D4\"
 net start Dimension4
 timeout 5
-for /F "tokens=3 delims=: " %%H in ('sc query "Dimension4" ^| findstr "        STATE"') do (
-  if /I "%%H" NEQ "RUNNING" (
-	CALL "C:\Program Files (x86)\D4\D4.exe"
-  )
+tasklist /fi "ImageName eq Dimension4.exe" /fo csv 2>NUL | find /I "myapp.exe">NUL
+if "%ERRORLEVEL%"=="0" (
+echo Program is running
+) else (
+Start "" "C:\Program Files (x86)\D4\D4.exe"
 )
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 :RestartOnCrash
