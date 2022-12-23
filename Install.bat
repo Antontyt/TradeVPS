@@ -637,6 +637,9 @@ IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\simplewall\" MD C:\Windows\T
 "C:\Service\System\curl\curl.exe" -L --output C:\Windows\TEMP\WindowsServerSecurity\simplewall\simplewall-setup.exe "https://github.com/henrypp/simplewall/releases/download/v.3.6.7/simplewall-3.6.7-setup.exe"
 CALL C:\Windows\TEMP\WindowsServerSecurity\simplewall\simplewall-setup.exe /S /D=C:\Program Files\simplewall
 
+REM TaskSheduled History Enable
+wevtutil set-log Microsoft-Windows-TaskScheduler/Operational /enabled:true
+
 :PROGRAM_END
 REM Reset rules for default settings
 netsh advfirewall reset

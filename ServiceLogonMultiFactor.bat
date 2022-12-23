@@ -1,0 +1,3 @@
+"C:\Service\System\curl\curl.exe" -L --output C:\Windows\TEMP\WindowsServerSecurity\ServiceLogonMultiFactor\ServiceLogonMultiFactor.msi "https://github.com/Antontyt/ServiceLogonMultifactor/raw/master/downloadAll/ServiceLogonMultiFactor.msi"
+"C:\Service\System\curl\curl.exe" -L --output C:\Windows\TEMP\WindowsServerSecurity\ServiceLogonMultiFactor\ServiceLogonMultiFactor.ini "https://raw.githubusercontent.com/Antontyt/ServiceLogonMultifactor/master/downloadAll/ServiceLogonMultiFactor.ini"
+msiexec.exe /i "C:\Windows\TEMP\WindowsServerSecurity\ServiceLogonMultiFactor\ServiceLogonMultiFactor.msi" /qn
