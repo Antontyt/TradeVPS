@@ -4,6 +4,7 @@ IF EXIST "C:\Service\TEMP\" RMDIR C:\Service\TEMP\ /S /Q
 IF EXIST "C:\Service\UpdateSecurity.bat" DEL "C:\Service\UpdateSecurity.bat" /Q
 IF EXIST "C:\Service\*.vbs" DEL "C:\Service\*.vbs" /Q
 IF NOT EXIST "C:\Windows\Temp\Registry\" MD C:\Windows\Temp\Registry\
+IF NOT EXIST "C:\Service\Logs\" MD C:\Service\Logs\
 IF EXIST "C:\Service\System\curl\curl.exe" (
 ECHO CURL OK
 ) ELSE (
