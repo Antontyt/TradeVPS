@@ -301,6 +301,11 @@ REM Search on TaskBar
 ECHO Search on TaskBar
 REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /V SearchboxTaskbarMode /T REG_DWORD /D 1 /F
 
+REM Setup Parameters for Network Adapters
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetAdapterBinding -Name * -DisplayName 'File and Printer Sharing for Microsoft Networks'"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetAdapterBinding -Name * -ComponentID 'ms_tcpip6'"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ExecutionPolicy Restricted --Force"
+
 REM Shutdown Event Tracker
 ECHO Shutdown Event Tracker
 REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Reliability" /v ShutdownReasonUI /t REG_DWORD /d 0 /F
@@ -503,6 +508,11 @@ netsh advfirewall set publicprofile state on
 For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO RDPPortNumber: "%RDPPortNumber%"
+REM RDP SSL Settings
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v fEncryptRPCTraffic /t REG_DWORD /d 1 /f
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v SecurityLayer /t REG_DWORD /d 2 /f
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v UserAuthentication /t REG_DWORD /d 1 /f
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v MinEncryptionLevel /t REG_DWORD /d 5 /f
 REM -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"

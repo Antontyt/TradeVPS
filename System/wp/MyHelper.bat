@@ -8,7 +8,7 @@ For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Term
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO Current RDP Port: "%RDPPortNumber%"
 ECHO =================================================================
-ECHO VERSION 1.2.0 - 22.12.2022
+ECHO VERSION 1.2.1 - 24.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -62,7 +62,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.2.0 - 22.12.2022
+ECHO VERSION 1.2.1 - 24.12.2022
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -106,7 +106,7 @@ REM ============================================================================
 CLS
 TITLE Смена порта RDP
 CLS
-ECHO VERSION 1.2.0 - 22.12.2022
+ECHO VERSION 1.2.1 - 24.12.2022
 ECHO.
 ECHO Для безопасности советую изменить номер порта RDP
 ECHO Стандартный порт:3389
@@ -170,7 +170,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.2.0 - 22.12.2022
+ECHO VERSION 1.2.1 - 24.12.2022
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -200,7 +200,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.2.0 - 22.12.2022
+ECHO VERSION 1.2.1 - 24.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -232,7 +232,7 @@ REM ============================================================================
 
 :WindowsFirewallControl
 CLS
-ECHO VERSION 1.2.0 - 22.12.2022
+ECHO VERSION 1.2.1 - 24.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -280,6 +280,7 @@ ECHO SMB_Disable
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $false -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 0 -Force"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetAdapterBinding -Name * -DisplayName 'File and Printer Sharing for Microsoft Networks'"
 sc.exe config mrxsmb20 start= disabled
 netsh advfirewall firewall set rule name="File and Printer Sharing (SMB-Out)" new action=block enable=yes
 net stop mrxsmb20 /y
@@ -294,6 +295,7 @@ ECHO SMB_Enable
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB1Protocol $false -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-SmbServerConfiguration -EnableSMB2Protocol $true -Force"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" SMB2 -Type DWORD -Value 1 -Force"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Enable-NetAdapterBinding -Name * -DisplayName 'File and Printer Sharing for Microsoft Networks'"
 sc.exe config mrxsmb20 start= auto
 net start mrxsmb20 /y
 netsh advfirewall firewall set rule name="File and Printer Sharing (SMB-Out)" new action=block enable=no
@@ -386,6 +388,11 @@ netsh advfirewall firewall set rule group="Windows Device Management" new enable
 For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO Current RDP Port: "%RDPPortNumber%"
+REM RDP SSL Settings
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v fEncryptRPCTraffic /t REG_DWORD /d 1 /f
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v SecurityLayer /t REG_DWORD /d 2 /f
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v UserAuthentication /t REG_DWORD /d 1 /f
+REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v MinEncryptionLevel /t REG_DWORD /d 5 /f
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
 REM TCP порт 135 - предназначенный для выполнения команд;
