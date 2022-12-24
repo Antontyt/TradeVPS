@@ -29,7 +29,7 @@
 > 25. Добавлены скрипты проверки Get-Badname и Get-Bruteforce (Доступны через ярлык MyHelper)
 > 26. Настройка Windows Defender Firewall на OutBlock и InBlock (Возможность отключить OutBlock)
 > 27. Блокировка подбора паролей при подключении по RDP (Powershell + Задание в планировщике)
-> 28. Настройка параметров безопасности GPO: Computer Configuration\Policies\Administrative Templates\Windows Components\Remote Desktop Services\Remote Desktop Session Host\Security
+> 28. Настройка параметров безопасности GPO: Computer Configuration\Policies\Administrative Templates\Windows Components\Remote Desktop Services\Remote Desktop Session Host\Security:
     + Require secure RPC communication = Enabled
     + Require use of specific security layer for remote (RDP) connections = SSL
     + Require user authentication for remote connections by using Network Level Authentication = Enabled
