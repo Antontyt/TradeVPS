@@ -157,10 +157,24 @@ For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Term
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO RDPPortNumber: "%RDPPortNumber%"
 REM -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-REM PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'AllowRDP'"
-REM PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-NetFirewallRule -DisplayName 'AllowRDP'"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
+REM #Check "Remote Desktop - User Mode (TCP-In)"
+netsh advfirewall firewall show rule name="NewRDPPort-TCP-In" > NUL 2>&1
+IF ERRORLEVEL 1 (
+        REM netsh.exe advfirewall firewall add rule name="NewRDPPort-TCP-In" dir=in action=allow program="%%SystemRoot%%\system32\svchost.exe" service="TermService" enable=yes profile=ALL localport=%RDPPortNumber% protocol=tcp
+		PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
+    ) ELSE (
+		PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
+        ECHO Rule already exists
+)
+REM #Check "Remote Desktop - User Mode (UDP-In)"
+netsh advfirewall firewall show rule name="NewRDPPort-UDP-In" > NUL 2>&1
+IF ERRORLEVEL 1 (
+        REM netsh.exe advfirewall firewall add rule name="NewRDPPort-UDP-In" dir=in action=allow program="%%SystemRoot%%\system32\svchost.exe" service="TermService" enable=yes profile=ALL localport=%RDPPortNumber% protocol=udp
+        PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
+    ) ELSE (
+        ECHO Rule already exists
+        PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
+)
 net stop termservice /y
 net start termservice /y
 :ControlRDPPort_OK
@@ -298,7 +312,7 @@ PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ItemProperty -Path "HKL
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Enable-NetAdapterBinding -Name * -DisplayName 'File and Printer Sharing for Microsoft Networks'"
 sc.exe config mrxsmb20 start= auto
 net start mrxsmb20 /y
-netsh advfirewall firewall set rule name="File and Printer Sharing (SMB-Out)" new action=block enable=no
+netsh advfirewall firewall set rule name="File and Printer Sharing (SMB-Out)" new action=allow enable=yes
 ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
 TIMEOUT 5
 shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
@@ -393,8 +407,24 @@ REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v fEncr
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v SecurityLayer /t REG_DWORD /d 2 /f
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v UserAuthentication /t REG_DWORD /d 1 /f
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v MinEncryptionLevel /t REG_DWORD /d 5 /f
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
+REM #Check "Remote Desktop - User Mode (TCP-In)"
+netsh advfirewall firewall show rule name="NewRDPPort-TCP-In" > NUL 2>&1
+IF ERRORLEVEL 1 (
+        REM netsh.exe advfirewall firewall add rule name="NewRDPPort-TCP-In" dir=in action=allow program="%%SystemRoot%%\system32\svchost.exe" service="TermService" enable=yes profile=ALL localport=%RDPPortNumber% protocol=tcp
+		PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
+    ) ELSE (
+		PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
+        ECHO Rule already exists
+)
+REM #Check "Remote Desktop - User Mode (UDP-In)"
+netsh advfirewall firewall show rule name="NewRDPPort-UDP-In" > NUL 2>&1
+IF ERRORLEVEL 1 (
+        REM netsh.exe advfirewall firewall add rule name="NewRDPPort-UDP-In" dir=in action=allow program="%%SystemRoot%%\system32\svchost.exe" service="TermService" enable=yes profile=ALL localport=%RDPPortNumber% protocol=udp
+        PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
+    ) ELSE (
+        ECHO Rule already exists
+        PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
+)
 REM TCP порт 135 - предназначенный для выполнения команд;
 netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=135 name="Block_TCP-135"
 REM UDP порт 137 - с помощью которого проводится быстрый поиск на ПК.
@@ -479,8 +509,24 @@ netsh advfirewall firewall set rule group="Windows Device Management" new enable
 For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO Current RDP Port: "%RDPPortNumber%"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
+REM #Check "Remote Desktop - User Mode (TCP-In)"
+netsh advfirewall firewall show rule name="NewRDPPort-TCP-In" > NUL 2>&1
+IF ERRORLEVEL 1 (
+        REM netsh.exe advfirewall firewall add rule name="NewRDPPort-TCP-In" dir=in action=allow program="%%SystemRoot%%\system32\svchost.exe" service="TermService" enable=yes profile=ALL localport=%RDPPortNumber% protocol=tcp
+		PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
+    ) ELSE (
+		PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
+        ECHO Rule already exists
+)
+REM #Check "Remote Desktop - User Mode (UDP-In)"
+netsh advfirewall firewall show rule name="NewRDPPort-UDP-In" > NUL 2>&1
+IF ERRORLEVEL 1 (
+        REM netsh.exe advfirewall firewall add rule name="NewRDPPort-UDP-In" dir=in action=allow program="%%SystemRoot%%\system32\svchost.exe" service="TermService" enable=yes profile=ALL localport=%RDPPortNumber% protocol=udp
+        PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
+    ) ELSE (
+        ECHO Rule already exists
+        PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
+)
 REM TCP порт 135 - предназначенный для выполнения команд;
 netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=135 name="Block_TCP-135"
 REM UDP порт 137 - с помощью которого проводится быстрый поиск на ПК.
