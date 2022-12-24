@@ -474,6 +474,10 @@ regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_O
 regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_Pictures_library_for_device.reg"
 regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_Videos_library_for_device.reg"
 
+REM Disable NETBIOS for All NetworkAdapters
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Windows "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Settings/NetBiosDisable.ps1"
+PowerShell.exe -ExecutionPolicy Bypass -File "C:\Windows\TEMP\WindowsServerSecurity\Windows\NetBiosDisable.ps1"
+
 REM REGIONAL SETTINGS
 ECHO REGIONAL SETTINGS
 IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\Registry\RegionalSettings" MD C:\Windows\TEMP\WindowsServerSecurity\Registry\RegionalSettings
