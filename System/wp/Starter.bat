@@ -17,14 +17,14 @@ sc config tzautoupdate start= disabled
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\W32Time\Parameters" /v Type /d "NoSync" /F
 REG ADD "HKLM\SYSTEM\CurrentControlSet\Services\tzautoupdate" /v Start /t REG_DWORD /d 3 /F
 REM -----------------------------------------------------------------------------------------
-for /F "tokens=3 delims=: " %%H in ('sc query "Dimension4" ^| findstr "        STATE"') do (
-  if /I "%%H" NEQ "RUNNING" (
-   CLS
+tasklist /fi "ImageName eq Dimension4.exe" /fo csv 2>NUL | find /I "myapp.exe">NUL
+if "%ERRORLEVEL%"=="0" (
+echo Program is running
+) else (
    COLOR 47
    ECHO Внимание! Сервис "Dimension4" не запущен!
    TIMEOUT 15
-   net start "Dimension4"
-  )
+   Start "" "C:\Program Files (x86)\D4\D4.exe"
 )
 REM -----------------------------------------------------------------------------------------
 SETLOCAL EnableExtensions
