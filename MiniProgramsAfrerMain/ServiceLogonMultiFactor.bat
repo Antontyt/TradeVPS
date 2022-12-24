@@ -3,6 +3,7 @@ IF NOT EXIST "C:\Program Files\Servilon\SLMF\ServiceLogonMultifactor.exe" (
 "C:\Service\System\curl\curl.exe" -L --output C:\Windows\TEMP\WindowsServerSecurity\ServiceLogonMultiFactor\ServiceLogonMultiFactor.msi "https://github.com/Antontyt/ServiceLogonMultifactor/raw/master/downloadAll/ServiceLogonMultiFactor.msi"
 "C:\Service\System\curl\curl.exe" -L --output C:\Windows\TEMP\WindowsServerSecurity\ServiceLogonMultiFactor\ServiceLogonMultiFactor.ini "https://raw.githubusercontent.com/Antontyt/ServiceLogonMultifactor/master/downloadAll/ServiceLogonMultiFactor.ini"
 msiexec.exe /i "C:\Windows\TEMP\WindowsServerSecurity\ServiceLogonMultiFactor\ServiceLogonMultiFactor.msi" /qn
+netsh advfirewall firewall add rule name="ServiceLogonMultifactor" dir=out action=allow program="C:\Program Files\Servilon\SLMF\ServiceLogonMultifactor.exe" enable=yes
 )
 FOR /F "tokens=3" %%a IN ('reg query "HKLM\SYSTEM\CONTROLSET001\CONTROL\NLS\language" /v Installlanguage ^| find "Installlanguage"') DO set Installlanguage=%%a
 IF EXIST "C:\Program Files\Servilon\SLMF\Service.Config.xml" GOTO AFTERCONFIG
