@@ -2,7 +2,7 @@
 chcp 866> nul
 TASKKILL /IM ServerManager.exe /F
 REM ======================================================================================================================
-REM VERSION 1.2.7 - 23.12.2022
+REM VERSION 1.2.8 - 23.12.2022
 REM ======================================================================================================================
 reg.exe delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /f
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
@@ -18,7 +18,7 @@ reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.
 reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe" /v "InsertMode" /t REG_DWORD /d 0 /f
 REM ======================================================================================================================
 ECHO =====================================
-ECHO VERSION 1.2.7 - 23.12.2022
+ECHO VERSION 1.2.8 - 23.12.2022
 ECHO =====================================
 ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
@@ -56,7 +56,7 @@ REM ============================================================================
 :RENAME_USERNAME
 CLS
 ECHO =====================================
-ECHO VERSION 1.2.7 - 23.12.2022
+ECHO VERSION 1.2.8 - 23.12.2022
 ECHO =====================================
 ECHO.
 TITLE Переименование имени пользователя Administrator
@@ -286,10 +286,10 @@ REM WindowsSearch Disable
 ECHO WindowsSearch Disable
 sc stop WSearch
 sc config "WSearch" start= disabled
-powershell -command "Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage"
-powershell -command "Get-AppxPackage -allusers Microsoft.Windows.Search | Remove-AppxPackage"
-powershell -command "Get-AppxPackage -allusers Microsoft.Windows.Cortana_cw5n1h2txyewy | Remove-AppxPackage"
-powershell -command "Get-AppxPackage -allusers Microsoft.MicrosoftEdge.Stable | Remove-AppxPackage"
+powershell -command "Get-AppxPackage -allusers Microsoft.549981C3F5F10 | Remove-AppxPackage" -ErrorAction SilentlyContinue
+powershell -command "Get-AppxPackage -allusers Microsoft.Windows.Search | Remove-AppxPackage" -ErrorAction SilentlyContinue
+powershell -command "Get-AppxPackage -allusers Microsoft.Windows.Cortana_cw5n1h2txyewy | Remove-AppxPackage" -ErrorAction SilentlyContinue
+powershell -command "Get-AppxPackage -allusers Microsoft.MicrosoftEdge.Stable | Remove-AppxPackage" -ErrorAction SilentlyContinue
 REM DISABLE CORTANA
 REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v AllowCortana /t REG_DWORD /d 0 /F
 TASKKILL /IM SearchApp.exe /F
@@ -302,9 +302,14 @@ ECHO Search on TaskBar
 REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /V SearchboxTaskbarMode /T REG_DWORD /D 1 /F
 
 REM Setup Parameters for Network Adapters
+ECHO Setup Parameters for Network Adapters
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetAdapterBinding -Name * -DisplayName 'File and Printer Sharing for Microsoft Networks'"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetAdapterBinding -Name * -ComponentID 'ms_tcpip6'"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Set-ExecutionPolicy Restricted --Force"
+
+REM LocalPolicy
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\LocalPolicy\" MD "C:\Windows\TEMP\WindowsServerSecurity\LocalPolicy\"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\LocalPolicy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/LocalPolicy/LocalPolicy.inf"
+secedit /configure /db %temp%\temp.sdb /cfg "C:\Windows\TEMP\WindowsServerSecurity\LocalPolicy\LocalPolicy.inf"
 
 REM Shutdown Event Tracker
 ECHO Shutdown Event Tracker
@@ -385,6 +390,7 @@ REM ----------------------------------------------------------------------------
 :NET48_OK
 REM RESENTLY PROGRAMS
 ECHO RESENTLY PROGRAMS
+PAUSE
 ECHO Download Registry Settings
 IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\Registry\" MD "C:\Windows\TEMP\WindowsServerSecurity\Registry\"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/WindowsUpdates/WindowsUpdate.reg"
@@ -406,6 +412,7 @@ regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\DisableAutoRun.reg"
 REM Windows Update Settings
 regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsUpdate.reg"
 CALL "C:\Service\TEMP\Hide_search_on_taskbar.bat"
+PAUSE
 
 REM Windows Privacy Settings
 IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\" MD "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\"
@@ -473,10 +480,12 @@ regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_O
 regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_email_for_device.reg"
 regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_Pictures_library_for_device.reg"
 regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_Videos_library_for_device.reg"
+PAUSE
 
 REM Disable NETBIOS for All NetworkAdapters
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Windows "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Settings/NetBiosDisable.ps1"
 PowerShell.exe -ExecutionPolicy Bypass -File "C:\Windows\TEMP\WindowsServerSecurity\Windows\NetBiosDisable.ps1"
+PAUSE
 
 REM REGIONAL SETTINGS
 ECHO REGIONAL SETTINGS

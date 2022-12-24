@@ -29,7 +29,7 @@ IF NOT EXIST "C:\Service\Test\" MD C:\Service\Test\
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/ServiceLogonMultiFactor.bat"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/TSLab22BetaSetup_silentInstall.bat"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/TSLab22Setup_silentInstall.bat"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/DisableDefender.bat"
+REM "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/DisableDefender.bat"
 REM ===================================================================================================================================================================================
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/RussiaLocale_ForNonUnicode.reg"
 regedit /s "C:\Windows\Temp\Registry\RussiaLocale_ForNonUnicode.reg"
