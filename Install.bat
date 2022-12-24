@@ -326,7 +326,7 @@ powershell.exe -file "C:\Windows\TEMP\WindowsServerSecurity\Windows\ImportLayout
 REM =============================================================================================================
 REM Firefox ESR
 ECHO Firefox ESR
-IF NOT EXIST "C:\Service\TEMP\lnk\" MD C:\Service\TEMP\lnk\
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\lnk\" MD "C:\Windows\TEMP\WindowsServerSecurity\lnk\"
 IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\app\" MD "C:\Windows\TEMP\WindowsServerSecurity\app\"
 IF EXIST "C:\Program Files\Mozilla Firefox\firefox.exe" GOTO FFLNK
 "C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\TEMP\WindowsServerSecurity\app\ -o FirefoxESR.exe "https://download.mozilla.org/?product=firefox-esr-latest&os=win64&lang=en-US"
@@ -335,8 +335,8 @@ REM "temp\FirefoxESR.exe" -ms -ma
 CALL "C:\Windows\TEMP\WindowsServerSecurity\app\FirefoxESR.exe" -ms
 
 :FFLNK
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateFirefoxLnk.vbs"
-cscript /Nologo "C:\Service\TEMP\lnk\CreateFirefoxLnk.vbs"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateFirefoxLnk.vbs"
+cscript /Nologo "C:\Windows\TEMP\WindowsServerSecurity\lnk\CreateFirefoxLnk.vbs"
 
 IF EXIST "C:\Program Files (x86)\Notepad++\notepad++.exe" GOTO TASKKILL
 REM Notepad++
@@ -535,17 +535,17 @@ REM "C:\Service\System\curl\curl.exe" -O --output-dir C:\Users\Public\Desktop\ "
 
 REM Copy Security Lnk
 ECHO Copy Security Lnk
-IF NOT EXIST "C:\Service\TEMP\lnk\" MD "C:\Service\TEMP\lnk\"
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\lnk\" MD "C:\Windows\TEMP\WindowsServerSecurity\lnk\"
 IF NOT EXIST "C:\Service\Software\PowershellScripts\" MD "C:\Service\Software\PowershellScripts\"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateHelperLnk.vbs"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\TEMP\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateCmdLnk.vbs"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateHelperLnk.vbs"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateCmdLnk.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/CreateBlock_RDP_Attack_Task.ps1"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/WindowsUpdateInstall_Manual.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/WindowsUpdateInstall_Auto.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/MyHelper.bat"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/MyHelperUpdate.bat"
-cscript /Nologo "C:\Service\TEMP\lnk\CreateHelperLnk.vbs"
-cscript /Nologo "C:\Service\TEMP\lnk\CreateCmdLnk.vbs"
+cscript /Nologo "C:\Windows\TEMP\WindowsServerSecurity\lnk\CreateHelperLnk.vbs"
+cscript /Nologo "C:\Windows\TEMP\WindowsServerSecurity\lnk\CreateCmdLnk.vbs"
 
 REM Get Windows Updates
 ECHO Get Windows Updates
