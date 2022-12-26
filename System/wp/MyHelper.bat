@@ -16,6 +16,11 @@ ECHO 2. Check and change RDP Port
 ECHO 3. Control ping to server
 ECHO 4. Security Checks
 ECHO 5. Windows Firewall Control
+IF NOT EXIST "C:\Program Files (x86)\multiOTP\multiotp.exe" (
+ECHO 6. Install MFA OTP Login
+) ELSE (
+ECHO 7. Remove MFA OTP Login
+)
 ECHO.
 ECHO =================================================================
 ECHO Для подтверждения нажмите ENTER
@@ -45,6 +50,15 @@ GOTO SecurityChecks
 )
 IF /I '%INPUT%'=='5' (
 GOTO WindowsFirewallControl
+)
+IF NOT EXIST "C:\Program Files (x86)\multiOTP\multiotp.exe" (
+IF /I '%INPUT%'=='6' (
+GOTO InstallMFAOTPLogin
+)
+) ELSE (
+IF /I '%INPUT%'=='7' (
+GOTO RemoveMFAOTPLogin
+)
 )
 IF /I '%INPUT%'=='Q' GOTO Quit
 CLS
@@ -352,6 +366,20 @@ CLS
 ECHO SecurityChecks_Bruteforce
 PowerShell.exe -ExecutionPolicy Bypass -File "C:\Service\Software\PowershellScripts\Get-Bruteforce.ps1"
 PAUSE
+GOTO STARTER
+
+:InstallMFAOTPLogin
+CLS
+ECHO InstallMFAOTPLogin
+CALL "C:\Service\Test\MiniProgramsAfrerMain/MultiOTP.bat"
+ECHO Настройте учётные записи пользователей для MFA OTP - http://127.0.0.1:8112
+PAUSE
+GOTO STARTER
+
+:RemoveMFAOTPLogin
+CLS
+ECHO RemoveMFAOTPLogin
+CALL
 GOTO STARTER
 
 :WindowsFirewallControl_BlockInOnly
