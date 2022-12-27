@@ -34,11 +34,13 @@
     + Require use of specific security layer for remote (RDP) connections = SSL
     + Require user authentication for remote connections by using Network Level Authentication = Enabled
     + Set client connection encryption level = High
+> 29. Добавлена возможность автоматической настройки OTP Login (Только для удалённых подключений RDP).
 
 Для запуска сервиса настройки:
 > Cкопируйте пакет PrepareService_1.2.zip на рабочий стол. 
 > Распакуйте файлы в любую папку и запустите файл Prepare.bat
 > Следуйте указанием программы
+> Также в Wiki есть инструкция с картинками.
 
 Тестирование произоводилось на операционных системах:
 > Windows 2022 Server
