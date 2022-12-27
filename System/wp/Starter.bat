@@ -1,7 +1,7 @@
 @ECHO OFF
 REM Disable WS-Management
 ECHO Disable WS-Management (Windows Remote Management)
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-PSRemoting -Force -ErrorAction SilentlyContinue"
+REM PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-PSRemoting -Force -ErrorAction SilentlyContinue"
 net stop WinRM
 sc config WinRM start= disabled
 REM -----------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ for /F "tokens=3 delims=: " %%H in ('sc query "Dimension4" ^| findstr "        S
    CLS
    COLOR 47
    ECHO Сервис "Dimension4" не запущен. Запускаем!
-   TIMEOUT 2
+   TIMEOUT 5
    net start "Dimension4"
   )
 )

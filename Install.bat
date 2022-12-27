@@ -535,7 +535,7 @@ IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\lnk\" MD "C:\Windows\TEMP\Wi
 IF NOT EXIST "C:\Service\Software\PowershellScripts\" MD "C:\Service\Software\PowershellScripts\"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateHelperLnk.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\lnk\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Link/CreateCmdLnk.vbs"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/CreateBlock_RDP_Attack_Task.ps1"
+REM "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Software\PowershellScripts\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/CreateBlock_RDP_Attack_Task.ps1"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/WindowsUpdateInstall_Manual.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/WindowsUpdateInstall_Auto.vbs"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/MyHelper.bat"
