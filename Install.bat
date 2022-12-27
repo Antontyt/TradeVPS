@@ -736,6 +736,11 @@ netsh advfirewall firewall set rule name="Core Networking - IPv6 (IPv6-In)" new 
 netsh advfirewall firewall set rule name="Core Networking - Dynamic Host Configuration Protocol for IPv6(DHCPV6-In)" new enable=no
 netsh advfirewall firewall set rule name="File and Printer Sharing (SMB-Out)" new action=block enable=yes
 ECHO PROGRAM END
+REM ==================================================================================================================================
+RMDIR /S /Q "C:\Users\%USERNAME%\Desktop\PrepareService_1.1\"
+RMDIR /S /Q "C:\Users\%USERNAME%\Desktop\PrepareService_1.2\"
+DEL /Q "C:\Users\%USERNAME%\Desktop\PrepareService_1.1.zip"
+DEL /Q "C:\Users\%USERNAME%\Desktop\PrepareService_1.2.zip"
 ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY
 PAUSE
 shutdown /r /t 10 /c "The server will be shutdown in 10 seconds"
