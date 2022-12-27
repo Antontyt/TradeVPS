@@ -20,6 +20,7 @@ IF NOT EXIST "C:\Program Files (x86)\multiOTP\multiotp.exe" (
 ECHO 6. Install MFA OTP Login
 ) ELSE (
 ECHO 7. Remove MFA OTP Login
+ECHO 8. Open OTP Login Web Page
 )
 ECHO.
 ECHO =================================================================
@@ -58,6 +59,9 @@ GOTO InstallMFAOTPLogin
 ) ELSE (
 IF /I '%INPUT%'=='7' (
 GOTO RemoveMFAOTPLogin
+)
+IF /I '%INPUT%'=='8' (
+GOTO MFAOTPLoginWeb
 )
 )
 IF /I '%INPUT%'=='Q' GOTO Quit
@@ -379,6 +383,8 @@ GOTO STARTER
 :RemoveMFAOTPLogin
 CLS
 ECHO RemoveMFAOTPLogin
+ECHO Нажмите любую кнопку для подтверждения удаления MultiOTP
+PAUSE
 IF EXIST "C:\ProgramData\MultiOTP" (
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\ProgramData\MultiOTP\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/MultiOTP/Control/webservice_uninstall.cmd"
 ECHO INSTALL WEB SERVER MULTIOTP
@@ -395,6 +401,10 @@ IF EXIST "C:\Program Files (x86)\multiOTP" (
 RMDIR /S /Q "C:\Program Files (x86)\multiOTP"
 )
 REG DELETE "HKEY_CLASSES_ROOT\CLSID\{FCEFDFAB-B0A1-4C4D-8B2B-4FF4E0A3D978}" /F
+GOTO STARTER
+
+:MFAOTPLoginWeb
+start "C:\Program Files\Mozilla Firefox\firefox.exe" "http://127.0.0.1:8112"
 GOTO STARTER
 
 :WindowsFirewallControl_BlockInOnly
