@@ -1,4 +1,8 @@
 @ECHO OFF
+IF EXIST "%USERPROFILE%\Desktop\PrepareService_1.1\" RMDIR /S /Q "%USERPROFILE%\Desktop\PrepareService_1.1\"
+IF EXIST "%USERPROFILE%\Desktop\PrepareService_1.2\" RMDIR /S /Q "%USERPROFILE%\Desktop\PrepareService_1.2\"
+IF EXIST "%USERPROFILE%\Desktop\PrepareService_1.1.zip" DEL /Q "%USERPROFILE%\Desktop\PrepareService_1.1.zip"
+IF EXIST "%USERPROFILE%\Desktop\PrepareService_1.2.zip" DEL /Q "%USERPROFILE%\Desktop\PrepareService_1.2.zip"
 REM Disable WS-Management
 ECHO Disable WS-Management (Windows Remote Management)
 REM PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-PSRemoting -Force -ErrorAction SilentlyContinue"
@@ -24,6 +28,7 @@ for /F "tokens=3 delims=: " %%H in ('sc query "Dimension4" ^| findstr "        S
    ECHO Сервис "Dimension4" не запущен. Запускаем!
    TIMEOUT 5
    net start "Dimension4"
+   Start "" "C:\Program Files (x86)\D4\D4.exe"
   )
 )
 REM -----------------------------------------------------------------------------------------
