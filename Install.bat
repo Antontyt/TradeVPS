@@ -617,7 +617,7 @@ XCOPY /I /Z /Y "C:\Windows\TEMP\WindowsServerSecurity\D4\defaults.ini" "C:\Progr
 XCOPY /I /Z /Y "C:\Windows\TEMP\WindowsServerSecurity\D4\server.dat" "C:\Program Files (x86)\D4\"
 net start Dimension4
 timeout 5
-tasklist /fi "ImageName eq Dimension4.exe" /fo csv 2>NUL | find /I "myapp.exe">NUL
+tasklist /fi "ImageName eq Dimension4.exe" /fo csv 2>NUL | find /I "Dimension4.exe">NUL
 if "%ERRORLEVEL%"=="0" (
 echo Program is running
 ) else (
