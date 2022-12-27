@@ -52,7 +52,6 @@ reg query "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\
 if "%ERRORLEVEL%" NEQ "0" (
 "C:\Windows\Temp\WindowsServerSecurity\MultiOTP\vc_redist.x86.exe" /Q
 )
-PAUSE
 "C:\Program Files\7-Zip\7z.exe" t C:\Windows\Temp\WindowsServerSecurity\MultiOTP\multiotp.zip
 ECHO multiotp.zip - ERRORLEVEL: "%ERRORLEVEL%"
 "C:\Program Files\7-Zip\7z.exe" t C:\Windows\Temp\WindowsServerSecurity\MultiOTP\MultiOneTimePasswordCredentialProvider.zip
