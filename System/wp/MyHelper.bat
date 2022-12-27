@@ -8,7 +8,7 @@ For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Term
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO Current RDP Port: "%RDPPortNumber%"
 ECHO =================================================================
-ECHO VERSION 1.2.2 - 24.12.2022
+ECHO VERSION 1.2.4 - 27.12.2022
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -76,7 +76,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.2.2 - 24.12.2022
+ECHO VERSION 1.2.4 - 27.12.2022
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -120,7 +120,7 @@ REM ============================================================================
 CLS
 TITLE Смена порта RDP
 CLS
-ECHO VERSION 1.2.2 - 24.12.2022
+ECHO VERSION 1.2.4 - 27.12.2022
 ECHO.
 ECHO Для безопасности советую изменить номер порта RDP
 ECHO Стандартный порт:3389
@@ -198,7 +198,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.2.2 - 24.12.2022
+ECHO VERSION 1.2.4 - 27.12.2022
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -228,7 +228,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.2.2 - 24.12.2022
+ECHO VERSION 1.2.4 - 27.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -260,7 +260,7 @@ REM ============================================================================
 
 :WindowsFirewallControl
 CLS
-ECHO VERSION 1.2.2 - 24.12.2022
+ECHO VERSION 1.2.4 - 27.12.2022
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -371,7 +371,7 @@ GOTO STARTER
 :InstallMFAOTPLogin
 CLS
 ECHO InstallMFAOTPLogin
-CALL "C:\Service\Test\MiniProgramsAfrerMain/MultiOTP.bat"
+CALL "C:\Service\Test\MultiOTP.bat"
 ECHO Настройте учётные записи пользователей для MFA OTP - http://127.0.0.1:8112
 PAUSE
 GOTO STARTER
@@ -379,7 +379,22 @@ GOTO STARTER
 :RemoveMFAOTPLogin
 CLS
 ECHO RemoveMFAOTPLogin
-CALL
+IF EXIST "C:\ProgramData\MultiOTP" (
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\ProgramData\MultiOTP\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/MultiOTP/Control/webservice_uninstall.cmd"
+ECHO INSTALL WEB SERVER MULTIOTP
+CALL "C:\ProgramData\MultiOTP\webservice_uninstall.cmd"
+timeout 5
+NET STOP "MultiOTPService"
+NET STOP "MultiOTPradius"
+RMDIR /S /Q "C:\ProgramData\MultiOTP"
+)
+ECHO Remove MultiOTP Provider
+MsiExec.exe /x {2868DCFB-1A39-47FA-9B74-398B43C56875} /qn
+timeout 5
+IF EXIST "C:\Program Files (x86)\multiOTP" (
+RMDIR /S /Q "C:\Program Files (x86)\multiOTP"
+)
+REG DELETE "HKEY_CLASSES_ROOT\CLSID\{FCEFDFAB-B0A1-4C4D-8B2B-4FF4E0A3D978}" /F
 GOTO STARTER
 
 :WindowsFirewallControl_BlockInOnly
