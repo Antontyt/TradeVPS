@@ -416,6 +416,8 @@ start "C:\Program Files\Mozilla Firefox\firefox.exe" "http://127.0.0.1:8112"
 GOTO STARTER
 
 :OpenSSHServerInstall
+cls
+ECHO OpenSSHServerInstall
 REM # Uninstall the OpenSSH Client
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0"
 REM # Uninstall the OpenSSH Server
