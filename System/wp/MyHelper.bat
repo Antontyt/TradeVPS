@@ -8,7 +8,7 @@ For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Term
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO Current RDP Port: "%RDPPortNumber%"
 ECHO =================================================================
-ECHO VERSION 1.2.5 - 08.01.2023
+ECHO VERSION 1.2.6 - 08.01.2023
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -88,7 +88,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.2.5 - 08.01.2023
+ECHO VERSION 1.2.6 - 08.01.2023
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -132,7 +132,7 @@ REM ============================================================================
 CLS
 TITLE Смена порта RDP
 CLS
-ECHO VERSION 1.2.5 - 08.01.2023
+ECHO VERSION 1.2.6 - 08.01.2023
 ECHO.
 ECHO Для безопасности советую изменить номер порта RDP
 ECHO Стандартный порт:3389
@@ -210,7 +210,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.2.5 - 08.01.2023
+ECHO VERSION 1.2.6 - 08.01.2023
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -240,7 +240,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.2.5 - 08.01.2023
+ECHO VERSION 1.2.6 - 08.01.2023
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -272,7 +272,7 @@ REM ============================================================================
 
 :WindowsFirewallControl
 CLS
-ECHO VERSION 1.2.5 - 08.01.2023
+ECHO VERSION 1.2.6 - 08.01.2023
 ECHO.
 ECHO SecurityChecks
 ECHO.
