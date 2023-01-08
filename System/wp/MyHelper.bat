@@ -429,15 +429,15 @@ IF NOT EXIST "C:\Windows\Temp\WindowsServerSecurity\OpenSSH\" MD "C:\Windows\Tem
 "C:\Service\System\curl\curl.exe" -L --output C:\Windows\Temp\WindowsServerSecurity\OpenSSH\OpenSSH-Win64-v9.1.0.0.msi "https://github.com/PowerShell/Win32-OpenSSH/releases/download/v9.1.0.0p1-Beta/OpenSSH-Win64-v9.1.0.0.msi"
 msiexec /i "C:\Windows\Temp\WindowsServerSecurity\OpenSSH\OpenSSH-Win64-v9.1.0.0.msi" /qn
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-Item -Type File -Path C:\ProgramData\ssh\administrators_authorized_keys"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH SSH Server' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 23 -Program 'C:\Windows\System32\OpenSSH\sshd.exe'"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String -Force"
 "C:\Service\System\curl\curl.exe" -L --output C:\ProgramData\ssh\sshd_config "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/OpenSSH/sshd_config"
+netsh advfirewall firewall add rule name="OpenSSH SSH Server (sshd)" dir=in action=allow program="C:\Windows\System32\OpenSSH\sshd.exe" protocol=TCP localport=23 enable=yes
 :OpenSSHServerInstall_AFTER
 ECHO AFTEROpenSSHInstall
 IF NOT EXIST "C:\ProgramData\ssh\ssh_host_secret_ed25519_key" (
 ECHO SSH KEY GENERATOR
-ssh-keygen -t ed25519 -f C:\ProgramData\ssh\ssh_host_secret_ed25519_key
-ssh-add "C:\ProgramData\ssh\ssh_host_secret_ed25519_key"
+"C:\Program Files\OpenSSH\ssh-keygen.exe" -t ed25519 -f C:\ProgramData\ssh\ssh_host_secret_ed25519_key
+"C:\Program Files\OpenSSH\ssh-add.exe" "C:\ProgramData\ssh\ssh_host_secret_ed25519_key"
 )
 GOTO STARTER
 
@@ -471,6 +471,7 @@ netsh advfirewall firewall add rule name="Windows Time Service" dir=out action=b
 netsh advfirewall firewall add rule name="Core Networking - DNS (UDP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP remoteport=53 enable=yes
 netsh advfirewall firewall add rule name="Core Networking - Dynamic Host Configuration Protocol (DHCP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP localport=68 remoteport=67 enable=yes
 netsh advfirewall firewall add rule name="Simplewall" dir=out action=allow program="C:\Program Files\simplewall\simplewall.exe" enable=yes
+netsh advfirewall firewall add rule name="OpenSSH SSH Server (sshd)" dir=in action=allow program="C:\Windows\System32\OpenSSH\sshd.exe" protocol=TCP localport=23 enable=yes
 netsh advfirewall set currentprofile logging filename %systemroot%\system32\LogFiles\Firewall\pfirewall.log
 netsh advfirewall set currentprofile logging maxfilesize 4096
 netsh advfirewall set currentprofile logging droppedconnections enable
@@ -578,6 +579,7 @@ netsh advfirewall firewall add rule name="Windows Time Service" dir=out action=b
 netsh advfirewall firewall add rule name="Core Networking - DNS (UDP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP remoteport=53 enable=yes
 netsh advfirewall firewall add rule name="Core Networking - Dynamic Host Configuration Protocol (DHCP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP localport=68 remoteport=67 enable=yes
 netsh advfirewall firewall add rule name="Simplewall" dir=out action=allow program="C:\Program Files\simplewall\simplewall.exe" enable=yes
+netsh advfirewall firewall add rule name="OpenSSH SSH Server (sshd)" dir=in action=allow program="C:\Windows\System32\OpenSSH\sshd.exe" protocol=TCP localport=23 enable=yes
 netsh advfirewall set currentprofile logging filename %systemroot%\system32\LogFiles\Firewall\pfirewall.log
 netsh advfirewall set currentprofile logging maxfilesize 4096
 netsh advfirewall set currentprofile logging droppedconnections enable
