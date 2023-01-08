@@ -469,7 +469,7 @@ netsh advfirewall firewall add rule name="Windows Time Service" dir=out action=b
 netsh advfirewall firewall add rule name="Core Networking - DNS (UDP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP remoteport=53 enable=yes
 netsh advfirewall firewall add rule name="Core Networking - Dynamic Host Configuration Protocol (DHCP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP localport=68 remoteport=67 enable=yes
 netsh advfirewall firewall add rule name="Simplewall" dir=out action=allow program="C:\Program Files\simplewall\simplewall.exe" enable=yes
-netsh advfirewall firewall add rule name="OpenSSH SSH Server (sshd)" dir=in action=allow program="C:\Windows\System32\OpenSSH\sshd.exe" protocol=TCP localport=23 enable=yes
+netsh advfirewall firewall add rule name="OpenSSH SSH Server (sshd)" dir=in action=allow program="C:\Program Files\OpenSSH\sshd.exe" protocol=TCP localport=23 enable=yes
 netsh advfirewall set currentprofile logging filename %systemroot%\system32\LogFiles\Firewall\pfirewall.log
 netsh advfirewall set currentprofile logging maxfilesize 4096
 netsh advfirewall set currentprofile logging droppedconnections enable
@@ -577,7 +577,7 @@ netsh advfirewall firewall add rule name="Windows Time Service" dir=out action=b
 netsh advfirewall firewall add rule name="Core Networking - DNS (UDP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP remoteport=53 enable=yes
 netsh advfirewall firewall add rule name="Core Networking - Dynamic Host Configuration Protocol (DHCP-Out)" dir=out action=allow program="C:\Windows\system32\svchost.exe" protocol=UDP localport=68 remoteport=67 enable=yes
 netsh advfirewall firewall add rule name="Simplewall" dir=out action=allow program="C:\Program Files\simplewall\simplewall.exe" enable=yes
-netsh advfirewall firewall add rule name="OpenSSH SSH Server (sshd)" dir=in action=allow program="C:\Windows\System32\OpenSSH\sshd.exe" protocol=TCP localport=23 enable=yes
+netsh advfirewall firewall add rule name="OpenSSH SSH Server (sshd)" dir=in action=allow program="C:\Program Files\OpenSSH\sshd.exe" protocol=TCP localport=23 enable=yes
 netsh advfirewall set currentprofile logging filename %systemroot%\system32\LogFiles\Firewall\pfirewall.log
 netsh advfirewall set currentprofile logging maxfilesize 4096
 netsh advfirewall set currentprofile logging droppedconnections enable
