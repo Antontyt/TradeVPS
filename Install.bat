@@ -739,6 +739,7 @@ ECHO PROGRAM END
 REM ==================================================================================================================================
 RMDIR /S /Q "%USERPROFILE%\Desktop\PrepareService_1.1\"
 RMDIR /S /Q "%USERPROFILE%\Desktop\PrepareService_1.2\"
+RMDIR /S /Q "C:\Windows\TEMP\WindowsServerSecurity\"
 DEL /Q "%USERPROFILE%\Desktop\PrepareService_1.1.zip"
 DEL /Q "%USERPROFILE%\Desktop\PrepareService_1.2.zip"
 ECHO NEEDED REBOOT SERVER - PRESS BUTTON FOR REBOOT AUTOMATICALY

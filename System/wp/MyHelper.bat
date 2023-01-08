@@ -8,7 +8,7 @@ For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Term
 set /a RDPPortNumber=%RDPPortNumber%
 ECHO Current RDP Port: "%RDPPortNumber%"
 ECHO =================================================================
-ECHO VERSION 1.2.4 - 27.12.2022
+ECHO VERSION 1.2.5 - 08.01.2023
 ECHO.
 ECHO 0. Get and install Windows Updates
 ECHO 1. Control SMB2 and SMB3 Protocol
@@ -21,6 +21,9 @@ ECHO 6. Install MFA OTP Login
 ) ELSE (
 ECHO 7. Remove MFA OTP Login
 ECHO 8. Open OTP Login Web Page
+)
+IF NOT EXIST "C:\Program Files\OpenSSH" (
+ECHO 9. Install OpenSSH Server
 )
 ECHO.
 ECHO =================================================================
@@ -64,6 +67,11 @@ IF /I '%INPUT%'=='8' (
 GOTO MFAOTPLoginWeb
 )
 )
+IF NOT EXIST "C:\Program Files\OpenSSH" (
+IF /I '%INPUT%'=='9' (
+GOTO OpenSSHServerInstall
+)
+)
 IF /I '%INPUT%'=='Q' GOTO Quit
 CLS
 ECHO ================ Отсутствует выбранный параметр =================
@@ -80,7 +88,7 @@ REM ////////////////////////////////////////////////////////////////////////////
 REM =====================================================================================
 :ControlSMB2SMB3
 CLS
-ECHO VERSION 1.2.4 - 27.12.2022
+ECHO VERSION 1.2.5 - 08.01.2023
 ECHO.
 ECHO Control SMB2 and SMB3
 ECHO.
@@ -124,7 +132,7 @@ REM ============================================================================
 CLS
 TITLE Смена порта RDP
 CLS
-ECHO VERSION 1.2.4 - 27.12.2022
+ECHO VERSION 1.2.5 - 08.01.2023
 ECHO.
 ECHO Для безопасности советую изменить номер порта RDP
 ECHO Стандартный порт:3389
@@ -202,7 +210,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :ControlPING
 CLS
-ECHO VERSION 1.2.4 - 27.12.2022
+ECHO VERSION 1.2.5 - 08.01.2023
 ECHO.
 ECHO Control PING - Recomened Disable PING
 ECHO.
@@ -232,7 +240,7 @@ REM ============================================================================
 REM ////////////////////////////////////////////////////////////////////////////
 :SecurityChecks
 CLS
-ECHO VERSION 1.2.4 - 27.12.2022
+ECHO VERSION 1.2.5 - 08.01.2023
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -264,7 +272,7 @@ REM ============================================================================
 
 :WindowsFirewallControl
 CLS
-ECHO VERSION 1.2.4 - 27.12.2022
+ECHO VERSION 1.2.5 - 08.01.2023
 ECHO.
 ECHO SecurityChecks
 ECHO.
@@ -405,6 +413,30 @@ GOTO STARTER
 
 :MFAOTPLoginWeb
 start "C:\Program Files\Mozilla Firefox\firefox.exe" "http://127.0.0.1:8112"
+GOTO STARTER
+
+:OpenSSHServerInstall
+REM # Uninstall the OpenSSH Client
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0"
+REM # Uninstall the OpenSSH Server
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Remove-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0"
+
+REM Install OpenSSH
+IF EXIST "C:\Program Files\OpenSSH" GOTO OpenSSHServerInstall_AFTER
+IF NOT EXIST "C:\Windows\Temp\WindowsServerSecurity\OpenSSH\" MD "C:\Windows\Temp\WindowsServerSecurity\OpenSSH\"
+"C:\Service\System\curl\curl.exe" -L --output C:\Windows\Temp\WindowsServerSecurity\OpenSSH\OpenSSH-Win64-v9.1.0.0.msi "https://github.com/PowerShell/Win32-OpenSSH/releases/download/v9.1.0.0p1-Beta/OpenSSH-Win64-v9.1.0.0.msi"
+msiexec /i "C:\Windows\Temp\WindowsServerSecurity\OpenSSH\OpenSSH-Win64-v9.1.0.0.msi" /qn
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-Item -Type File -Path C:\ProgramData\ssh\administrators_authorized_keys"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH SSH Server' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 23 -Program 'C:\Windows\System32\OpenSSH\sshd.exe'"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String -Force"
+"C:\Service\System\curl\curl.exe" -L --output C:\ProgramData\ssh\sshd_config "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/OpenSSH/sshd_config"
+:OpenSSHServerInstall_AFTER
+ECHO AFTEROpenSSHInstall
+IF NOT EXIST "C:\ProgramData\ssh\ssh_host_secret_ed25519_key" (
+ECHO SSH KEY GENERATOR
+ssh-keygen -t ed25519 -f C:\ProgramData\ssh\ssh_host_secret_ed25519_key
+ssh-add "C:\ProgramData\ssh\ssh_host_secret_ed25519_key"
+)
 GOTO STARTER
 
 :WindowsFirewallControl_BlockInOnly
