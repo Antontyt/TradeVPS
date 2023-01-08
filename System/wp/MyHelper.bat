@@ -433,8 +433,8 @@ PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-ItemProperty -Path "HKL
 netsh advfirewall firewall add rule name="OpenSSH SSH Server (sshd)" dir=in action=allow program="C:\Windows\System32\OpenSSH\sshd.exe" protocol=TCP localport=23 enable=yes
 ECHO AFTEROpenSSHInstall
 ECHO SSH KEY GENERATOR
-"C:\Program Files\OpenSSH\ssh-keygen.exe" -t ed25519 -f C:\ProgramData\ssh\ssh_host_secret_ed25519_key
-"C:\Program Files\OpenSSH\ssh-add.exe" -k "C:\ProgramData\ssh\ssh_host_secret_ed25519_key"
+start /wait "ssh-keygen" "C:\Program Files\OpenSSH\ssh-keygen.exe" -t ed25519 -f C:\ProgramData\ssh\ssh_host_secret_ed25519_key
+start /wait "ssh-add" "C:\Program Files\OpenSSH\ssh-add.exe" -k C:\ProgramData\ssh\ssh_host_secret_ed25519_key
 ECHO OpenSSHServerInstall Done - PRESS ANY BUTTON FOR NEXT
 PAUSE
 GOTO STARTER
