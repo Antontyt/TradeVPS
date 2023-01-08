@@ -9,7 +9,7 @@ IF NOT EXIST "C:\Windows\Temp\WindowsServerSecurity\OpenSSH\" MD "C:\Windows\Tem
 "C:\Service\System\curl\curl.exe" -L --output C:\Windows\Temp\WindowsServerSecurity\OpenSSH\OpenSSH-Win64-v9.1.0.0.msi "https://github.com/PowerShell/Win32-OpenSSH/releases/download/v9.1.0.0p1-Beta/OpenSSH-Win64-v9.1.0.0.msi"
 msiexec /i "C:\Windows\Temp\WindowsServerSecurity\OpenSSH\OpenSSH-Win64-v9.1.0.0.msi" /qn
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-Item -Type File -Path C:\ProgramData\ssh\administrators_authorized_keys"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH SSH Server' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22 -Program 'C:\Windows\System32\OpenSSH\sshd.exe'"
+PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH SSH Server' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 23 -Program 'C:\Windows\System32\OpenSSH\sshd.exe'"
 PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String –Force"
 "C:\Service\System\curl\curl.exe" -L --output C:\ProgramData\ssh\sshd_config "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/OpenSSH/sshd_config"
 :AFTEROpenSSHInstall
