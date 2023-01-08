@@ -435,6 +435,8 @@ ECHO AFTEROpenSSHInstall
 ECHO SSH KEY GENERATOR
 "C:\Program Files\OpenSSH\ssh-keygen.exe" -t ed25519 -f C:\ProgramData\ssh\ssh_host_secret_ed25519_key
 "C:\Program Files\OpenSSH\ssh-add.exe" -k "C:\ProgramData\ssh\ssh_host_secret_ed25519_key"
+ECHO OpenSSHServerInstall Done - PRESS ANY BUTTON FOR NEXT
+PAUSE
 GOTO STARTER
 
 :WindowsFirewallControl_BlockInOnly
