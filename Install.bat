@@ -601,7 +601,8 @@ ECHO Dimension4 TimeSync
 IF EXIST "C:\Program Files (x86)\D4\D4.exe" GOTO D4CONFIG
 IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\D4\" MD "C:\Windows\TEMP\WindowsServerSecurity\D4\"
 REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\TEMP\WindowsServerSecurity\D4\ -o d4time531.msi "http://www.thinkman.com/dimension4/d4time531.msi"
+REM "C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\TEMP\WindowsServerSecurity\D4\ -o d4time531.msi "http://www.thinkman.com/dimension4/d4time531.msi"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\D4\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/blob/main/Soft/d4time531.msi
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\D4\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/D4/defaults.ini"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\D4\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Programs/D4/server.dat"
 timeout 5
