@@ -341,7 +341,7 @@ cscript /Nologo "C:\Windows\TEMP\WindowsServerSecurity\lnk\CreateFirefoxLnk.vbs"
 IF EXIST "C:\Program Files (x86)\Notepad++\notepad++.exe" GOTO TASKKILL
 REM Notepad++
 ECHO Notepad++
-"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\TEMP\WindowsServerSecurity\app\ -o NotepadPlusPlus.exe "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.7/npp.8.4.7.Installer.exe"
+"C:\Service\System\curl\curl.exe" -L --output-dir C:\Windows\TEMP\WindowsServerSecurity\app\ -o NotepadPlusPlus.exe "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/tag/v8.5/npp.8.5.Installer.exe"
 timeout 5
 "C:\Windows\TEMP\WindowsServerSecurity\app\NotepadPlusPlus.exe" /S
 
