@@ -18,4 +18,7 @@ REM "C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o TS
 REM timeout 5
 REM ECHO Install TSLab22BetaSetup
 REM CALL C:\Service\TEMP\app\TSLab22BetaSetup.exe /exenoui /quiet /qn
+REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+REM ADD RUN TSLAB
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /f /t REG_SZ /v "C:\Program Files\TSLab\TSLab 2.2 Beta\TSLab.exe" /d "RUNTSLAB"
 :END
