@@ -31,6 +31,8 @@ IF NOT EXIST "C:\Service\Test\" MD C:\Service\Test\
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/TSLab22Setup_silentInstall.bat"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/MultiOTP.bat"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Test\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/MiniProgramsAfrerMain/OpenSSH_Install.bat"
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\" MD "C:\Windows\TEMP\WindowsServerSecurity\"
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/TSLabAutoRun.bat"
 REM ===================================================================================================================================================================================
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\Temp\Registry\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Registry/RussiaLocale_ForNonUnicode.reg"
 regedit /s "C:\Windows\Temp\Registry\RussiaLocale_ForNonUnicode.reg"
