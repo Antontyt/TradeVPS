@@ -659,11 +659,12 @@ CALL C:\Windows\TEMP\WindowsServerSecurity\simplewall\simplewall-setup.exe /S /D
 IF EXIST "C:\Program Files\TSLab\TSLab 2.2\TSLab.exe" GOTO PROGRAM_END
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 REM TSLab
-IF NOT EXIST "C:\Service\TEMP\app\" MD C:\Service\TEMP\app\
+
 "C:\Service\System\curl\curl.exe" -L --output-dir C:\Service\TEMP\app\ -o TSLab22Setup.exe "https://files.tslab.pro/installer/TSLab22Setup.exe"
 timeout 5
 ECHO Install TSLab22Setup
 CALL C:\Service\TEMP\app\TSLab22Setup.exe /exenoui /quiet /qn
+IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\" MD "C:\Windows\TEMP\WindowsServerSecurity\"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/TSLabAutoRun.bat"
 REG ADD "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "RUNTSLAB" /t REG_SZ /d "C:\Windows\TEMP\WindowsServerSecurity\TSLabAutoRun.bat" /F
 
