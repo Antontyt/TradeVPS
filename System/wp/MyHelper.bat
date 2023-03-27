@@ -25,13 +25,15 @@ ECHO 8. Open OTP Login Web Page
 IF NOT EXIST "C:\Program Files\OpenSSH" (
 ECHO 9. Install OpenSSH Server
 )
+ECHO A. Setup Windows AutoLogin
+ECHO B. Disable Windows AutoLogin
 ECHO.
 ECHO =================================================================
 ECHO Для подтверждения нажмите ENTER
 ECHO.
  
 SET INPUT=
-SET /P INPUT=Числа от 0 до 4 для выбора или Q для выхода из программы:
+SET /P INPUT=Числа от 0 до 9 или буквы A,B для выбора или Q для выхода из программы:
 
 IF /I '%INPUT%'=='0' (
 GOTO WindowsUpdates
@@ -72,6 +74,15 @@ IF /I '%INPUT%'=='9' (
 GOTO OpenSSHServerInstall
 )
 )
+
+IF /I '%INPUT%'=='A' (
+GOTO WindowsAutoLoginEnable
+)
+
+IF /I '%INPUT%'=='B' (
+GOTO WindowsAutoLoginDisable
+)
+
 IF /I '%INPUT%'=='Q' GOTO Quit
 CLS
 ECHO ================ Отсутствует выбранный параметр =================
@@ -646,6 +657,37 @@ netsh advfirewall firewall set rule name="Core Networking - Dynamic Host Configu
 netsh advfirewall firewall set rule name="File and Printer Sharing (SMB-Out)" new action=block enable=yes
 REM =========================================================================
 ECHO WindowsFirewallControl Restore MiniSetup Done - PRESS ANY BUTTON FOR NEXT
+PAUSE
+GOTO STARTER
+
+:WindowsAutoLoginEnable
+ECHO Настройка автологина Windows
+ECHO Введите имя пользователя Windows
+ECHO.
+ECHO =================================================================
+ECHO.
+SET UserLogin=
+SET /p UserLogin="Для подтверждения после ввода нажмите Enter :"
+CLS
+ECHO Введите пароль пользователя
+SET UserPassword=
+SET /p UserPassword="Для подтверждения после ввода нажмите Enter :"
+reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" /v AutoAdminLogon /t REG_SZ /d 1 /F
+REM reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" /v ForceAutoLogon /t REG_DWORD /d 1 /F
+reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" /v DefaultUserName /t REG_SZ /d %UserLogin% /F
+reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" /v DefaultPassword /t REG_SZ /d %UserPassword% /F
+CLS
+ECHO Включение автологина успешно выполнено. Для возврата в начальное меню нажмите любую кнопку
+PAUSE
+GOTO STARTER
+
+:WindowsAutoLoginDisable
+reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" /v AutoAdminLogon /t REG_SZ /d 0 /F
+reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" /v ForceAutoLogon /t REG_DWORD /d 0 /F
+reg delete "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" /v DefaultUserName /t /F
+reg delete "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" /v DefaultPassword /t /F
+CLS
+ECHO Отключение автологина успешно выполнено. Для возврата в начальное меню нажмите любую кнопку
 PAUSE
 GOTO STARTER
 
