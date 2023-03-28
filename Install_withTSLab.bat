@@ -666,8 +666,8 @@ timeout 5
 ECHO Install TSLab22Setup
 CALL C:\Service\TEMP\app\TSLab22Setup.exe /exenoui /quiet /qn
 IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\" MD "C:\Windows\TEMP\WindowsServerSecurity\"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/TSLabAutoRun.bat"
-REG ADD "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "RUNTSLAB" /t REG_SZ /d "C:\Windows\TEMP\WindowsServerSecurity\TSLabAutoRun.bat" /F
+"C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Software\StartWindows\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/TSLabAutoRun.bat"
+REG ADD "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /v "RUNTSLAB" /t REG_SZ /d "C:\Service\Software\StartWindows\TSLabAutoRun.bat" /F
 
 REM TaskSheduled History Enable
 wevtutil set-log Microsoft-Windows-TaskScheduler/Operational /enabled:true
