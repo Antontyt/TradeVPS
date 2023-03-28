@@ -627,7 +627,7 @@ Start "" "C:\Program Files (x86)\D4\D4.exe"
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 :RestartOnCrash
 REM RestartOnCrash
-IF EXIST "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" GOTO PROGRAM_END
+IF EXIST "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" GOTO STARTER
 IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\RestartOnCrash\" MD "C:\Windows\TEMP\WindowsServerSecurity\RestartOnCrash\"
 TASKKILL /IM RestartOnCrash.exe /F /T
 RMDIR /S /Q "C:\Service\Software\RestartOnCrash\"
@@ -641,6 +641,7 @@ REG DELETE "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "wsRestartOnC
 REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "wsRestartOnCrash" /t REG_SZ /d "C:\Service\Software\RestartOnCrash\RestartOnCrash.exe" /F
 )
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+:STARTER
 REM Starter Windows
 IF NOT EXIST "C:\Service\Software\StartWindows\" MD "C:\Service\Software\StartWindows\"
 "C:\Service\System\curl\curl.exe" -O --output-dir C:\Service\Software\StartWindows\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/System/wp/Starter.bat"
