@@ -2,7 +2,7 @@
 chcp 866> nul
 TASKKILL /IM ServerManager.exe /F
 REM ======================================================================================================================
-REM VERSION 1.2.9 - 27.03.2022
+REM VERSION 1.3.1 - 28.03.2022
 REM ======================================================================================================================
 reg.exe delete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v RunScript /f
 reg add "HKCU\Console" /v "QuickEdit" /t REG_DWORD /d 0 /f
@@ -18,7 +18,7 @@ reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.
 reg add "HKCU\Console\%%SystemRoot%%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe" /v "InsertMode" /t REG_DWORD /d 0 /f
 REM ======================================================================================================================
 ECHO =====================================
-ECHO VERSION 1.2.9 - 27.03.2022
+ECHO VERSION 1.3.1 - 28.03.2022
 ECHO =====================================
 ECHO Проверка версии операционной системы
 for /F "skip=2 tokens=1,2*" %%I in ('%SystemRoot%\System32\reg.exe query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName 2^>nul') do if /I "%%I" == "ProductName" set "WindowsProduct=%%K"
@@ -29,6 +29,10 @@ SET WindowsProduct=WindowsServer2019Standard
 GOTO OPERATIONOS_OK
 )
 IF "%WindowsProduct%"=="Windows Server 2022 Standard" (
+SET WindowsProduct=WindowsServer2022Standard
+GOTO OPERATIONOS_OK
+)
+IF "%WindowsProduct%"=="Windows Server 2022 Datacenter" (
 SET WindowsProduct=WindowsServer2022Standard
 GOTO OPERATIONOS_OK
 )
@@ -56,7 +60,7 @@ REM ============================================================================
 :RENAME_USERNAME
 CLS
 ECHO =====================================
-ECHO VERSION 1.2.9 - 27.03.2022
+ECHO VERSION 1.3.1 - 28.03.2022
 ECHO =====================================
 ECHO.
 TITLE Переименование имени пользователя Administrator
