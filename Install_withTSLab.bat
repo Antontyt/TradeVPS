@@ -244,6 +244,8 @@ schtasks /Delete /TN "\Microsoft\Windows\Application Experience\ProgramDataUpdat
 REM Disable Defrag Task
 ECHO Disable Defrag Task
 schtasks /Delete /TN "\Microsoft\Windows\Defrag\ScheduledDefrag" /F
+ECHO STOP #1
+PAUSE
 
 REM Disable Admins share
 ECHO Disable Admins share
@@ -285,6 +287,8 @@ REM RemoteRegistry Disable
 ECHO RemoteRegistry Disable
 sc stop RemoteRegistry
 sc config "RemoteRegistry" start= disabled
+ECHO STOP #2
+PAUSE
 
 REM WindowsSearch Disable
 ECHO WindowsSearch Disable
@@ -305,15 +309,17 @@ REM Search on TaskBar
 ECHO Search on TaskBar
 REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /V SearchboxTaskbarMode /T REG_DWORD /D 1 /F
 
+REM =======================================================================================================================================================
 REM Setup Parameters for Network Adapters
-ECHO Setup Parameters for Network Adapters
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetAdapterBinding -Name * -DisplayName 'File and Printer Sharing for Microsoft Networks'"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetAdapterBinding -Name * -ComponentID 'ms_tcpip6'"
+REM ECHO Setup Parameters for Network Adapters
+REM PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetAdapterBinding -Name * -DisplayName 'File and Printer Sharing for Microsoft Networks'"
+REM PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-NetAdapterBinding -Name * -ComponentID 'ms_tcpip6'"
 
-REM LocalPolicy
-IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\LocalPolicy\" MD "C:\Windows\TEMP\WindowsServerSecurity\LocalPolicy\"
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\LocalPolicy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/LocalPolicy/LocalPolicy.inf"
-secedit /configure /db %temp%\temp.sdb /cfg "C:\Windows\TEMP\WindowsServerSecurity\LocalPolicy\LocalPolicy.inf"
+REM REM LocalPolicy
+REM IF NOT EXIST "C:\Windows\TEMP\WindowsServerSecurity\LocalPolicy\" MD "C:\Windows\TEMP\WindowsServerSecurity\LocalPolicy\"
+REM "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\LocalPolicy\ "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/LocalPolicy/LocalPolicy.inf"
+REM secedit /configure /db %temp%\temp.sdb /cfg "C:\Windows\TEMP\WindowsServerSecurity\LocalPolicy\LocalPolicy.inf"
+REM =======================================================================================================================================================
 
 REM Shutdown Event Tracker
 ECHO Shutdown Event Tracker
@@ -482,10 +488,14 @@ regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_O
 regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_email_for_device.reg"
 regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_Pictures_library_for_device.reg"
 regedit /s "C:\Windows\TEMP\WindowsServerSecurity\Registry\WindowsPrivacy\Turn_OFF_Windows_and_apps_acecss_to_Videos_library_for_device.reg"
+ECHO STOP #3
+PAUSE
 
+REM =============================================================================================================
 REM Disable NETBIOS for All NetworkAdapters
-"C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Windows "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Settings/NetBiosDisable.ps1"
-PowerShell.exe -ExecutionPolicy Bypass -File "C:\Windows\TEMP\WindowsServerSecurity\Windows\NetBiosDisable.ps1"
+REM "C:\Service\System\curl\curl.exe" -O --output-dir C:\Windows\TEMP\WindowsServerSecurity\Windows "https://raw.githubusercontent.com/Antontyt/WindowsServerSecurity/main/Settings/Windows/Settings/NetBiosDisable.ps1"
+REM PowerShell.exe -ExecutionPolicy Bypass -File "C:\Windows\TEMP\WindowsServerSecurity\Windows\NetBiosDisable.ps1"
+REM =============================================================================================================
 
 REM REGIONAL SETTINGS
 ECHO REGIONAL SETTINGS
@@ -511,27 +521,29 @@ ECHO Update Windows Defender
 CALL "%ProgramFiles%\Windows Defender\MpCmdRun.exe" -removedefinitions -dynamicsignatures
 CALL "%ProgramFiles%\Windows Defender\MpCmdRun.exe" -SignatureUpdate
 
-REM Enable Windows Firewall
-ECHO Enable Windows Firewall
-netsh advfirewall set currentprofile state on
-netsh advfirewall set allprofiles state on
-netsh advfirewall set domainprofile state on
-netsh advfirewall set privateprofile state on
-netsh advfirewall set publicprofile state on
-For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
-set /a RDPPortNumber=%RDPPortNumber%
-ECHO RDPPortNumber: "%RDPPortNumber%"
-REM RDP SSL Settings
-REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v fEncryptRPCTraffic /t REG_DWORD /d 1 /f
-REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v SecurityLayer /t REG_DWORD /d 2 /f
-REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v UserAuthentication /t REG_DWORD /d 1 /f
-REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v MinEncryptionLevel /t REG_DWORD /d 5 /f
-REM -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
-net stop termservice /y
-net start termservice /y
-REM "C:\Service\System\curl\curl.exe" -O --output-dir C:\Users\Public\Desktop\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/WindowsFirewall_Enable.bat"
+REM =============================================================================================================
+REM REM Enable Windows Firewall
+REM ECHO Enable Windows Firewall
+REM netsh advfirewall set currentprofile state on
+REM netsh advfirewall set allprofiles state on
+REM netsh advfirewall set domainprofile state on
+REM netsh advfirewall set privateprofile state on
+REM netsh advfirewall set publicprofile state on
+REM For /F tokens^=^3 %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber')DO SET "RDPPortNumber=%%i"
+REM set /a RDPPortNumber=%RDPPortNumber%
+REM ECHO RDPPortNumber: "%RDPPortNumber%"
+REM REM RDP SSL Settings
+REM REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v fEncryptRPCTraffic /t REG_DWORD /d 1 /f
+REM REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v SecurityLayer /t REG_DWORD /d 2 /f
+REM REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v UserAuthentication /t REG_DWORD /d 1 /f
+REM REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v MinEncryptionLevel /t REG_DWORD /d 5 /f
+REM REM -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+REM PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-TCP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol TCP -Action Allow"
+REM PowerShell -ExecutionPolicy ByPass -NoLogo -Command "New-NetFirewallRule -DisplayName "NewRDPPort-UDP-In" -Direction Inbound -LocalPort %RDPPortNumber% -Protocol UDP -Action Allow"
+REM net stop termservice /y
+REM net start termservice /y
+REM REM "C:\Service\System\curl\curl.exe" -O --output-dir C:\Users\Public\Desktop\ "https://raw.githubusercontent.com/Antontyt/TradeVPS/main/WindowsFirewall_Enable.bat"
+REM =============================================================================================================
 
 REM Copy Security Lnk
 ECHO Copy Security Lnk
@@ -580,13 +592,15 @@ IF EXIST "C:\Program Files\7-Zip" GOTO AFTER_INSTALL7z
 timeout 5
 MsiExec.exe /i "C:\Windows\TEMP\WindowsServerSecurity\app\7z2201-x64.msi" /qn
 :AFTER_INSTALL7z
+ECHO STOP #4
+PAUSE
 
 REM \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-REM Disable WS-Management
-ECHO Disable WS-Management (Windows Remote Management)
-PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-PSRemoting -Force"
-net stop WinRM
-sc config WinRM start= disabled
+REM REM Disable WS-Management
+REM ECHO Disable WS-Management (Windows Remote Management)
+REM PowerShell -ExecutionPolicy ByPass -NoLogo -Command "Disable-PSRemoting -Force"
+REM net stop WinRM
+REM sc config WinRM start= disabled
 REM ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ECHO Change Windows Settings
 w32tm /unregister
@@ -677,6 +691,8 @@ REM TaskSheduled History Enable
 wevtutil set-log Microsoft-Windows-TaskScheduler/Operational /enabled:true
 
 :PROGRAM_END
+ECHO STOP #5
+PAUSE
 REM Reset rules for default settings
 netsh advfirewall reset
 TIMEOUT 2
@@ -738,6 +754,7 @@ sc config lanmanserver start=disabled
 REM TCP порт 5000
 netsh advfirewall firewall add rule dir=in action=block protocol=tcp localport=5000 name="Block_TCP-5000"
 REM =========================================================================
+netsh advfirewall firewall set rule name="Core Networking Diagnostics - ICMP Echo Request (ICMPv4-Out)" new enable=yes
 netsh advfirewall firewall set rule name="Core Networking - Destination Unreachable (ICMPv6-In)" new enable=no
 netsh advfirewall firewall set rule name="Core Networking - Multicast Listener Done (ICMPv6-In)" new enable=no
 netsh advfirewall firewall set rule name="Core Networking - Multicast Listener Query (ICMPv6-In)" new enable=no
